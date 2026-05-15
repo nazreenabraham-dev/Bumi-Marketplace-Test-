@@ -1,0 +1,662 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --f:#1e2d12;--g:#6b8f3a;--gl:#a8c46a;--lc:#eef4de;--am:#b87333;
+  --pp:#f4efe6;--mu:#5a6b4a;--dk:#111a09;--wh:#ffffff;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--pp);color:var(--f);overflow-x:hidden}
+
+.lang-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:var(--dk);
+  display:flex;justify-content:flex-end;align-items:center;
+  padding:0.4rem 2rem;gap:0.5rem;
+  border-bottom:0.5px solid rgba(168,196,106,0.15);
+}
+.lang-btn{
+  font-size:11px;letter-spacing:0.08em;padding:3px 10px;
+  border-radius:20px;cursor:pointer;border:0.5px solid rgba(168,196,106,0.3);
+  background:transparent;color:rgba(238,244,222,0.5);font-family:'DM Sans',sans-serif;
+  transition:all 0.15s;
+}
+.lang-btn.active{background:var(--g);color:var(--lc);border-color:var(--g)}
+
+nav{
+  position:fixed;top:28px;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.75rem 2.5rem;
+  background:rgba(17,26,9,0.94);
+  backdrop-filter:blur(16px);
+  border-bottom:0.5px solid rgba(107,143,58,0.15);
+}
+.nav-wordmark{
+  font-family:'DM Serif Display',serif;font-size:22px;
+  color:var(--lc);letter-spacing:-0.3px;
+}
+.nav-links{display:flex;gap:1.75rem;list-style:none}
+.nav-links a{font-size:12px;color:rgba(238,244,222,0.5);text-decoration:none;letter-spacing:0.03em;transition:color 0.15s}
+.nav-links a:hover{color:var(--lc)}
+.nav-cta{
+  font-size:12px;background:var(--g);color:var(--lc);
+  padding:0.45rem 1.1rem;border-radius:24px;text-decoration:none;
+  letter-spacing:0.04em;font-weight:500;
+}
+
+.hero{
+  min-height:100vh;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:8rem 2.5rem 3.5rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-color:#1e2d12;
+  overflow:hidden;
+}
+.hero-photo{
+  position:absolute;inset:0;
+  background:url('/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg') center/cover no-repeat;
+  opacity:0.38;
+  filter:saturate(0.7) sepia(0.2);
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(17,26,9,0.96) 0%, rgba(17,26,9,0.55) 50%, rgba(17,26,9,0.2) 100%);
+}
+.hero-content{position:relative;z-index:2}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:8px;
+  font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gl);margin-bottom:1.5rem;
+}
+.eyebrow-line{width:32px;height:0.5px;background:var(--gl)}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(44px,7vw,76px);
+  line-height:1.0;color:var(--lc);
+  margin-bottom:1rem;max-width:680px;
+}
+.hero-title em{font-style:italic;color:var(--gl)}
+.hero-sub{
+  font-size:15px;color:rgba(238,244,222,0.6);
+  max-width:480px;line-height:1.75;
+  margin-bottom:2.5rem;font-weight:300;
+}
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap}
+.btn-primary{
+  background:var(--g);color:var(--lc);
+  padding:0.75rem 1.75rem;border-radius:28px;
+  text-decoration:none;font-size:13px;font-weight:500;
+  letter-spacing:0.04em;
+}
+.btn-ghost{
+  background:transparent;color:var(--lc);
+  border:0.5px solid rgba(238,244,222,0.25);
+  padding:0.75rem 1.75rem;border-radius:28px;
+  text-decoration:none;font-size:13px;font-weight:300;
+  letter-spacing:0.04em;
+}
+.hero-principles{
+  position:relative;z-index:2;
+  display:flex;gap:1.5rem;margin-top:2.5rem;
+  flex-wrap:wrap;
+}
+.principle-tag{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(168,196,106,0.5);
+  border:0.5px solid rgba(168,196,106,0.15);
+  padding:4px 12px;border-radius:20px;
+}
+
+.stat-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--dk);
+  border-top:0.5px solid rgba(107,143,58,0.2);
+}
+.stat-cell{
+  padding:1.5rem 1.75rem;
+  border-right:0.5px solid rgba(107,143,58,0.1);
+}
+.stat-cell:last-child{border-right:none}
+.stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;color:var(--lc);margin-bottom:4px;
+}
+.stat-l{font-size:11px;color:rgba(168,196,106,0.45);line-height:1.5}
+
+.section{padding:5rem 2.5rem}
+.sec-alt{background:var(--lc)}
+.sec-dark{background:var(--f)}
+.sec-deep{background:var(--dk)}
+.sec-photo{position:relative;overflow:hidden}
+
+.eyebrow{
+  font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--g);margin-bottom:0.875rem;
+}
+.eyebrow-lt{color:var(--gl)}
+h2.serif{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(26px,4vw,42px);
+  line-height:1.1;margin-bottom:1.25rem;
+}
+.body-text{font-size:14px;color:var(--mu);max-width:480px;line-height:1.8;font-weight:300}
+.body-text-lt{color:rgba(238,244,222,0.55)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+.photo-card{
+  border-radius:var(--border-radius-lg);overflow:hidden;
+  position:relative;height:320px;
+  background:#1e2d12;
+}
+.photo-card img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:0.75;filter:saturate(0.8) sepia(0.15);
+  display:block;
+}
+.photo-card-label{
+  position:absolute;bottom:1rem;left:1rem;
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--lc);
+  text-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+
+.feat-card{
+  padding:1.75rem;
+  border:0.5px solid rgba(107,143,58,0.2);
+  border-radius:var(--border-radius-lg);
+  background:var(--wh);
+}
+.feat-icon{
+  font-size:22px;color:var(--g);
+  margin-bottom:1rem;display:block;
+}
+.feat-name{font-size:14px;font-weight:500;margin-bottom:6px;color:var(--f)}
+.feat-desc{font-size:12.5px;color:var(--mu);line-height:1.65}
+
+.principle-card{
+  padding:1.5rem;
+  border-top:2px solid var(--g);
+  background:transparent;
+}
+.pc-num{
+  font-family:'DM Serif Display',serif;
+  font-size:32px;color:rgba(168,196,106,0.2);
+  margin-bottom:0.5rem;
+}
+.pc-title{font-size:13px;font-weight:500;color:var(--lc);margin-bottom:0.5rem}
+.pc-body{font-size:11.5px;color:rgba(238,244,222,0.45);line-height:1.6}
+
+.pricing-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.price-card{
+  padding:1.75rem;border-radius:var(--border-radius-lg);
+  border:0.5px solid rgba(107,143,58,0.2);
+  background:var(--wh);
+}
+.price-card.featured{
+  background:var(--f);color:var(--lc);
+  border:1.5px solid var(--g);
+}
+.price-tier{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mu);margin-bottom:4px}
+.price-tier-f{color:rgba(168,196,106,0.55)}
+.price-big{font-family:'DM Serif Display',serif;font-size:34px;color:var(--f);margin-bottom:2px}
+.price-big-f{color:var(--lc)}
+.price-period{font-size:11px;color:var(--mu);margin-bottom:1.25rem}
+.price-period-f{color:rgba(168,196,106,0.45)}
+.price-li{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12px;padding:5px 0;
+  border-bottom:0.5px solid rgba(107,143,58,0.1);color:var(--f);
+}
+.price-li-f{color:rgba(238,244,222,0.65);border-bottom:0.5px solid rgba(255,255,255,0.05)}
+.price-li:last-child,.price-li-f:last-child{border:none}
+.price-li i,.price-li-f i{color:var(--g);font-size:14px;flex-shrink:0;margin-top:1px}
+.price-cta{
+  display:block;text-align:center;margin-top:1.25rem;
+  padding:0.65rem;border-radius:24px;font-size:12.5px;
+  font-weight:500;text-decoration:none;letter-spacing:0.04em;
+  border:0.5px solid var(--g);color:var(--g);
+}
+.price-cta-f{background:var(--g);color:var(--lc);border-color:var(--g)}
+.badge-free{
+  display:inline-block;font-size:9px;
+  background:rgba(107,143,58,0.12);color:var(--g);
+  padding:3px 10px;border-radius:16px;margin-bottom:10px;
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+.badge-pop{
+  display:inline-block;font-size:9px;
+  background:var(--g);color:var(--lc);
+  padding:3px 10px;border-radius:16px;margin-bottom:10px;
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+
+.step-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.step-grid::before{
+  content:'';position:absolute;
+  top:22px;left:12%;right:12%;height:0.5px;
+  background:rgba(107,143,58,0.2);
+}
+.step{padding:0.875rem;text-align:center}
+.step-n{
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(107,143,58,0.08);
+  border:0.5px solid rgba(107,143,58,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:18px;
+  color:var(--lc);margin:0 auto 1rem;position:relative;z-index:1;
+}
+.step-title{font-size:12.5px;font-weight:500;margin-bottom:4px;color:var(--lc)}
+.step-desc{font-size:11px;color:rgba(238,244,222,0.4);line-height:1.55}
+
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.testi{
+  padding:1.5rem;border-radius:var(--border-radius-lg);
+  border:0.5px solid rgba(107,143,58,0.12);
+  background:rgba(255,255,255,0.02);
+}
+.testi-q{
+  font-family:'DM Serif Display',serif;
+  font-size:15px;color:var(--lc);line-height:1.55;
+  font-style:italic;margin-bottom:0.875rem;
+}
+.testi-who{font-size:11px;color:rgba(168,196,106,0.5)}
+.testi-name{font-weight:500;color:rgba(238,244,222,0.65);font-style:normal}
+
+.cta-band{
+  background:var(--g);padding:5rem 2.5rem;text-align:center;
+}
+.cta-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,5vw,50px);
+  color:var(--dk);margin-bottom:0.75rem;
+}
+.cta-sub{font-size:14px;color:rgba(17,26,9,0.6);margin-bottom:2rem;font-weight:300}
+.cta-d{
+  background:var(--dk);color:var(--lc);
+  padding:0.85rem 2rem;border-radius:28px;
+  text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.04em;
+  margin-right:0.75rem;
+}
+.cta-o{
+  background:transparent;color:var(--dk);
+  border:0.5px solid rgba(17,26,9,0.3);
+  padding:0.85rem 2rem;border-radius:28px;
+  text-decoration:none;font-size:13px;font-weight:300;letter-spacing:0.04em;
+}
+
+footer{
+  background:var(--dk);padding:2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:0.5px solid rgba(107,143,58,0.1);
+  flex-wrap:wrap;gap:1rem;
+}
+.foot-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--lc)}
+.foot-copy{font-size:11px;color:rgba(168,196,106,0.3)}
+.foot-links{display:flex;gap:1.25rem}
+.foot-links a{font-size:11px;color:rgba(168,196,106,0.3);text-decoration:none}
+
+.halal-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(184,115,51,0.1);color:var(--am);
+  border:0.5px solid rgba(184,115,51,0.25);
+  padding:5px 12px;border-radius:20px;
+  font-size:11px;font-weight:500;letter-spacing:0.05em;
+}
+.organic-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(107,143,58,0.1);color:var(--g);
+  border:0.5px solid rgba(107,143,58,0.25);
+  padding:5px 12px;border-radius:20px;
+  font-size:11px;font-weight:500;letter-spacing:0.05em;
+}
+
+.photo-strip{
+  display:grid;grid-template-columns:1.2fr 0.8fr 1fr;
+  gap:0;height:280px;overflow:hidden;
+}
+.strip-cell{
+  position:relative;overflow:hidden;
+  background:var(--f);
+}
+.strip-cell img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:0.65;filter:saturate(0.75) sepia(0.2);
+  display:block;
+}
+.strip-cell-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:1rem;
+  background:linear-gradient(to top,rgba(17,26,9,0.8),transparent);
+  font-size:12px;color:var(--lc);letter-spacing:0.05em;
+}
+
+.divider{height:0.5px;background:rgba(107,143,58,0.12);margin:0 2.5rem}
+
+.check{color:var(--g);font-size:13px}
+</style>
+
+<div id="page">
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('my')">BM</button>
+</div>
+
+<nav>
+  <div class="nav-wordmark">Bumi</div>
+  <ul class="nav-links">
+    <li><a href="#" class="d" data-en="Marketplace" data-my="Pasaran">Marketplace</a></li>
+    <li><a href="#" class="d" data-en="Hire a Farmer" data-my="Upah Petani">Hire a Farmer</a></li>
+    <li><a href="#" class="d" data-en="Community" data-my="Komuniti">Community</a></li>
+    <li><a href="#" class="d" data-en="Verification" data-my="Pengesahan">Verification</a></li>
+  </ul>
+  <a href="#" class="nav-cta d" data-en="Join free" data-my="Daftar percuma">Join free</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span class="d" data-en="Malaysia's farm-to-community platform" data-my="Platform ladang-ke-komuniti Malaysia">Malaysia's farm-to-community platform</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="d" data-en="From the earth," data-my="Dari bumi,">From the earth,</span><br>
+      <em class="d" data-en="for everyone." data-my="untuk semua.">for everyone.</em>
+    </h1>
+    <p class="hero-sub d" data-en="Bumi connects small-scale farmers, urban growers, and food-conscious communities across Malaysia — and beyond. Built on permaculture principles. Free for all farmers." data-my="Bumi menghubungkan petani kecil, pekebun bandar, dan komuniti sedar makanan di seluruh Malaysia — dan lebih jauh. Dibina atas prinsip permakultur. Percuma untuk semua petani.">
+      Bumi connects small-scale farmers, urban growers, and food-conscious communities across Malaysia — and beyond. Built on permaculture principles. Free for all farmers.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary d" data-en="Join as a farmer — free" data-my="Daftar sebagai petani — percuma">Join as a farmer — free</a>
+      <a href="#" class="btn-ghost d" data-en="Find local produce" data-my="Cari hasil tempatan">Find local produce</a>
+    </div>
+    <div class="hero-principles">
+      <span class="principle-tag d" data-en="Earth Care" data-my="Jagaan Bumi">Earth Care</span>
+      <span class="principle-tag d" data-en="People Care" data-my="Jagaan Manusia">People Care</span>
+      <span class="principle-tag d" data-en="Fair Share" data-my="Berkongsi Adil">Fair Share</span>
+      <span class="principle-tag d" data-en="Observe & Interact" data-my="Amati & Berinteraksi">Observe & Interact</span>
+      <span class="principle-tag d" data-en="Produce No Waste" data-my="Tiada Pembaziran">Produce No Waste</span>
+    </div>
+  </div>
+</section>
+
+<div class="stat-row">
+  <div class="stat-cell">
+    <div class="stat-n">3.2M</div>
+    <div class="stat-l d" data-en="Smallholder farmers in Malaysia with no digital home" data-my="Petani kecil di Malaysia tanpa kehadiran digital">Smallholder farmers in Malaysia with no digital home</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">RM 28B</div>
+    <div class="stat-l d" data-en="Annual agri-food market. Only 4% sold direct to consumer" data-my="Pasaran agri-makanan tahunan. Hanya 4% dijual terus">Annual agri-food market. Only 4% sold direct to consumer</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">70%</div>
+    <div class="stat-l d" data-en="Of fresh produce passes through middlemen before reaching you" data-my="Hasil segar melalui orang tengah sebelum sampai kepada anda">Of fresh produce passes through middlemen before reaching you</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">0</div>
+    <div class="stat-l d" data-en="Platforms built on permaculture ethics for Malaysian farmers. Until now." data-my="Platform berasaskan etika permakultur untuk petani Malaysia. Sehingga kini.">Platforms built on permaculture ethics for Malaysian farmers. Until now.</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="two-col">
+    <div>
+      <div class="eyebrow d" data-en="What is Bumi?" data-my="Apa itu Bumi?">What is Bumi?</div>
+      <h2 class="serif d" data-en="Where farmers thrive and communities grow." data-my="Di mana petani maju dan komuniti bertumbuh.">Where farmers thrive and communities grow.</h2>
+      <p class="body-text" style="margin-bottom:1.5rem">
+        <span class="d" data-en="Bumi is Malaysia's first farm-to-community super app — part marketplace, part hiring platform, part social community. Think LinkedIn meets Grab, meets a neighbourhood kebun. Rooted in the ethics of permaculture: Earth Care, People Care, Fair Share." data-my="Bumi adalah super app ladang-ke-komuniti pertama Malaysia — sebahagian pasaran, platform upah, komuniti sosial. Seperti LinkedIn bertemu Grab, bertemu kebun jiran. Berakar pada etika permakultur: Jagaan Bumi, Jagaan Manusia, Berkongsi Adil.">Bumi is Malaysia's first farm-to-community super app — part marketplace, part hiring platform, part social community. Think LinkedIn meets Grab, meets a neighbourhood kebun. Rooted in the ethics of permaculture: Earth Care, People Care, Fair Share.</span>
+      </p>
+      <div style="display:flex;flex-direction:column;gap:0.6rem">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i class="ti ti-check check" aria-hidden="true"></i>
+          <span style="font-size:13px;color:var(--mu)" class="d" data-en="List and sell fresh produce, seeds, seedlings, and agri-products" data-my="Senarai dan jual hasil segar, benih, anak pokok, dan produk pertanian">List and sell fresh produce, seeds, seedlings, and agri-products</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i class="ti ti-check check" aria-hidden="true"></i>
+          <span style="font-size:13px;color:var(--mu)" class="d" data-en="Offer and book farm consultations, workshops, and farm visits" data-my="Tawar dan tempah perundingan ladang, bengkel, dan lawatan ladang">Offer and book farm consultations, workshops, and farm visits</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i class="ti ti-check check" aria-hidden="true"></i>
+          <span style="font-size:13px;color:var(--mu)" class="d" data-en="Join community garden plots and co-invest in shared growing land" data-my="Sertai plot kebun komuniti dan kongsi pelaburan tanah bersama">Join community garden plots and co-invest in shared growing land</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i class="ti ti-check check" aria-hidden="true"></i>
+          <span style="font-size:13px;color:var(--mu)" class="d" data-en="Everything is free — pay only if you want organic or halal verification" data-my="Semuanya percuma — bayar hanya jika anda mahu pengesahan organik atau halal">Everything is free — pay only if you want organic or halal verification</span>
+        </div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg" alt="Cabbages growing in terracotta pots — urban farming in Malaysia">
+      <div class="photo-card-label d" data-en="Urban agroforestry, TTDI" data-my="Agroforestri bandar, TTDI">Urban agroforestry, TTDI</div>
+    </div>
+  </div>
+</section>
+
+<div class="photo-strip">
+  <div class="strip-cell">
+    <img src="/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg" alt="Fresh cabbage harvest">
+    <div class="strip-cell-label d" data-en="Kedai Bumi — Marketplace" data-my="Kedai Bumi — Pasaran">Kedai Bumi — Marketplace</div>
+  </div>
+  <div class="strip-cell">
+    <img src="/mnt/user-data/uploads/mykampungoasis1_2_.png" alt="Off-grid farm community">
+    <div class="strip-cell-label d" data-en="Cari Petani — Hire a Farmer" data-my="Cari Petani — Upah Petani">Cari Petani — Hire a Farmer</div>
+  </div>
+  <div class="strip-cell">
+    <img src="/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg" alt="Community garden">
+    <div class="strip-cell-label d" data-en="Komuniti Bumi — Grow Together" data-my="Komuniti Bumi — Bertumbuh Bersama">Komuniti Bumi — Grow Together</div>
+  </div>
+</div>
+
+<section class="section sec-alt">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="eyebrow d" data-en="Three pillars" data-my="Tiga tiang">Three pillars</div>
+    <h2 class="serif d" data-en="Everything a growing community needs." data-my="Semua yang komuniti bertumbuh perlukan.">Everything a growing community needs.</h2>
+  </div>
+  <div class="three-col">
+    <div class="feat-card">
+      <i class="ti ti-shopping-bag feat-icon" aria-hidden="true"></i>
+      <div class="feat-name d" data-en="Marketplace — Kedai Bumi" data-my="Pasaran — Kedai Bumi">Marketplace — Kedai Bumi</div>
+      <div class="feat-desc d" data-en="Browse and buy fresh produce, seeds, seedlings, and compost direct from local farmers. Delivery or self-pickup. Verified sellers. Free to list." data-my="Semak imbas dan beli hasil segar, benih, anak pokok, dan kompos terus dari petani tempatan. Penghantaran atau ambil sendiri. Penjual disahkan. Percuma untuk disenarai.">Browse and buy fresh produce, seeds, seedlings, and compost direct from local farmers. Delivery or self-pickup. Verified sellers. Free to list.</div>
+    </div>
+    <div class="feat-card">
+      <i class="ti ti-users feat-icon" aria-hidden="true"></i>
+      <div class="feat-name d" data-en="Hire a Farmer — Cari Petani" data-my="Upah Petani — Cari Petani">Hire a Farmer — Cari Petani</div>
+      <div class="feat-desc d" data-en="Book a certified farmer like booking a Grab. Permaculture design, farm consultations, workshops, farm visits. Rated and reviewed professionals." data-my="Tempah petani bertauliah seperti menempah Grab. Reka bentuk permakultur, perundingan ladang, bengkel, lawatan ladang. Profesional dinilai dan disemak.">Book a certified farmer like booking a Grab. Permaculture design, farm consultations, workshops, farm visits. Rated and reviewed professionals.</div>
+    </div>
+    <div class="feat-card">
+      <i class="ti ti-plant feat-icon" aria-hidden="true"></i>
+      <div class="feat-name d" data-en="Community — Komuniti Bumi" data-my="Komuniti — Komuniti Bumi">Community — Komuniti Bumi</div>
+      <div class="feat-desc d" data-en="A living feed of harvests, knowledge, and shared growing. Join community plots, co-invest in shared land, share your journey. Build food sovereignty together." data-my="Suapan hidup tuaian, pengetahuan, dan pertumbuhan bersama. Sertai plot komuniti, laburkan tanah bersama, kongsi perjalanan anda. Bina kedaulatan makanan bersama.">A living feed of harvests, knowledge, and shared growing. Join community plots, co-invest in shared land, share your journey. Build food sovereignty together.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-dark">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="eyebrow eyebrow-lt d" data-en="Permaculture principles in the platform" data-my="Prinsip permakultur dalam platform">Permaculture principles in the platform</div>
+    <h2 class="serif" style="color:var(--lc)" data-en="Not just a marketplace. A way of living." data-my="Bukan sekadar pasaran. Cara kehidupan.">
+      <span class="d" data-en="Not just a marketplace. A way of living." data-my="Bukan sekadar pasaran. Cara kehidupan.">Not just a marketplace. A way of living.</span>
+    </h2>
+  </div>
+  <div class="four-col">
+    <div class="principle-card">
+      <div class="pc-num">01</div>
+      <div class="pc-title d" data-en="Earth Care" data-my="Jagaan Bumi">Earth Care</div>
+      <div class="pc-body d" data-en="Every listing defaults to regenerative. Verified organic practices are recognised and visible on every farm profile." data-my="Setiap penyenaraian lalai kepada regeneratif. Amalan organik yang disahkan diiktiraf dan kelihatan di setiap profil ladang.">Every listing defaults to regenerative. Verified organic practices are recognised and visible on every farm profile.</div>
+    </div>
+    <div class="principle-card">
+      <div class="pc-num">02</div>
+      <div class="pc-title d" data-en="People Care" data-my="Jagaan Manusia">People Care</div>
+      <div class="pc-body d" data-en="Farmers pay nothing to list. The platform earns only through optional verification — never by taking from those who can least afford it." data-my="Petani tidak perlu bayar untuk menyenarai. Platform memperoleh hanya melalui pengesahan pilihan — tidak pernah mengambil dari mereka yang paling tidak mampu.">Farmers pay nothing to list. The platform earns only through optional verification — never by taking from those who can least afford it.</div>
+    </div>
+    <div class="principle-card">
+      <div class="pc-num">03</div>
+      <div class="pc-title d" data-en="Fair Share" data-my="Berkongsi Adil">Fair Share</div>
+      <div class="pc-body d" data-en="Surplus produce finds community buyers. Community plots distribute harvests equitably. Knowledge shared openly. No paywalls on learning." data-my="Lebihan hasil mencari pembeli komuniti. Plot komuniti mengagihkan tuaian secara saksama. Pengetahuan dikongsi secara terbuka. Tiada bayaran untuk belajar.">Surplus produce finds community buyers. Community plots distribute harvests equitably. Knowledge shared openly. No paywalls on learning.</div>
+    </div>
+    <div class="principle-card">
+      <div class="pc-num">04</div>
+      <div class="pc-title d" data-en="Observe & Interact" data-my="Amati & Berinteraksi">Observe & Interact</div>
+      <div class="pc-body d" data-en="Farmers log growing conditions, soil health, and harvests. The community feed is a living record of what works — season by season, zone by zone." data-my="Petani merekod keadaan pertumbuhan, kesihatan tanah, dan tuaian. Suapan komuniti adalah rekod hidup apa yang berjaya — musim demi musim, zon demi zon.">Farmers log growing conditions, soil health, and harvests. The community feed is a living record of what works — season by season, zone by zone.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-deep">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="eyebrow eyebrow-lt d" data-en="How it works" data-my="Cara ia berfungsi">How it works</div>
+    <h2 class="serif" style="color:var(--lc)">
+      <span class="d" data-en="From soil to screen in four steps." data-my="Dari tanah ke skrin dalam empat langkah.">From soil to screen in four steps.</span>
+    </h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-title d" data-en="Create your profile" data-my="Cipta profil anda">Create your profile</div>
+      <div class="step-desc d" data-en="Free for every farmer. List your land, methods, produce, and services. No subscription. No commission." data-my="Percuma untuk setiap petani. Senarai tanah, kaedah, hasil, dan perkhidmatan anda. Tiada langganan. Tiada komisen.">Free for every farmer. List your land, methods, produce, and services. No subscription. No commission.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-title d" data-en="Discover & connect" data-my="Temui & sambung">Discover & connect</div>
+      <div class="step-desc d" data-en="Browse by location, produce type, or farming method. Follow farmers. Join plots. Book services." data-my="Semak imbas mengikut lokasi, jenis hasil, atau kaedah bertani. Ikut petani. Sertai plot. Tempah perkhidmatan.">Browse by location, produce type, or farming method. Follow farmers. Join plots. Book services.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-title d" data-en="Transact safely" data-my="Berurusan selamat">Transact safely</div>
+      <div class="step-desc d" data-en="Secure in-app payments. Delivery or pickup. Escrow held until delivery confirmed. Reviews both ways." data-my="Pembayaran selamat dalam apl. Penghantaran atau ambil sendiri. Escrow ditahan sehingga penghantaran disahkan.">Secure in-app payments. Delivery or pickup. Escrow held until delivery confirmed. Reviews both ways.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-title d" data-en="Grow together" data-my="Bertumbuh bersama">Grow together</div>
+      <div class="step-desc d" data-en="Share harvests on the community feed. Log your plot. Learn from peers. Build food sovereignty." data-my="Kongsi tuaian di suapan komuniti. Log plot anda. Belajar dari rakan. Bina kedaulatan makanan.">Share harvests on the community feed. Log your plot. Learn from peers. Build food sovereignty.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-alt">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="eyebrow d" data-en="Pricing — always free to farm" data-my="Harga — sentiasa percuma untuk bertani">Pricing — always free to farm</div>
+    <h2 class="serif d" data-en="Pay only to prove your standards." data-my="Bayar hanya untuk buktikan standard anda.">Pay only to prove your standards.</h2>
+    <p class="body-text" style="margin:0 auto;text-align:center" data-en="Every feature — listings, marketplace, community, hiring — is completely free. Verification exists for farmers who want the world to know they go further." data-my="Setiap ciri — penyenaraian, pasaran, komuniti, pengambilan kerja — adalah percuma sepenuhnya. Pengesahan wujud untuk petani yang mahu dunia tahu mereka pergi lebih jauh.">
+      <span class="d" data-en="Every feature — listings, marketplace, community, hiring — is completely free. Verification exists for farmers who want the world to know they go further." data-my="Setiap ciri — penyenaraian, pasaran, komuniti, pengambilan kerja — adalah percuma sepenuhnya. Pengesahan wujud untuk petani yang mahu dunia tahu mereka pergi lebih jauh.">Every feature — listings, marketplace, community, hiring — is completely free. Verification exists for farmers who want the world to know they go further.</span>
+    </p>
+  </div>
+  <div class="pricing-row">
+
+    <div class="price-card">
+      <span class="badge-free d" data-en="Always free" data-my="Sentiasa percuma">Always free</span>
+      <div class="price-tier d" data-en="Benih · Seed" data-my="Benih · Percuma">Benih · Seed</div>
+      <div class="price-big">RM 0</div>
+      <div class="price-period d" data-en="forever, for every farmer" data-my="selamanya, untuk setiap petani">forever, for every farmer</div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Unlimited product listings" data-my="Penyenaraian produk tanpa had">Unlimited product listings</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Farmer profile & portfolio" data-my="Profil & portfolio petani">Farmer profile & portfolio</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Community feed & social tools" data-my="Suapan komuniti & alat sosial">Community feed & social tools</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Service listings (hire-a-farmer)" data-my="Penyenaraian perkhidmatan (upah petani)">Service listings (hire-a-farmer)</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Community plot participation" data-my="Penyertaan plot komuniti">Community plot participation</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="In-app secure payments" data-my="Pembayaran selamat dalam apl">In-app secure payments</span></div>
+      <a href="#" class="price-cta d" data-en="Get started free" data-my="Mulakan percuma">Get started free</a>
+    </div>
+
+    <div class="price-card featured">
+      <span class="badge-pop d" data-en="For verified farms" data-my="Untuk ladang disahkan">For verified farms</span>
+      <div class="price-tier price-tier-f d" data-en="Pokok · Organic Verified" data-my="Pokok · Organik Disahkan">Pokok · Organic Verified</div>
+      <div class="price-big price-big-f">RM 299</div>
+      <div class="price-period price-period-f d" data-en="one-time audit + RM 49/yr renewal" data-my="audit sekali + RM 49/thn pembaharuan">one-time audit + RM 49/yr renewal</div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Everything in Seed — free forever" data-my="Semua dalam Benih — percuma selamanya">Everything in Seed — free forever</span></div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Physical farm audit by trained verifier" data-my="Audit ladang fizikal oleh pengesah terlatih">Physical farm audit by trained verifier</span></div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Organic Verified badge on all listings" data-my="Lencana Organik Disahkan pada semua penyenaraian">Organic Verified badge on all listings</span></div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Priority placement in search results" data-my="Penempatan keutamaan dalam hasil carian">Priority placement in search results</span></div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Soil health & practice documentation" data-my="Dokumentasi kesihatan tanah & amalan">Soil health & practice documentation</span></div>
+      <div class="price-li price-li-f"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Annual renewal audit RM 49" data-my="Audit pembaharuan tahunan RM 49">Annual renewal audit RM 49</span></div>
+      <a href="#" class="price-cta price-cta-f d" data-en="Apply for verification" data-my="Mohon pengesahan">Apply for verification</a>
+    </div>
+
+    <div class="price-card">
+      <span class="halal-badge" style="margin-bottom:10px;display:inline-flex">
+        <i class="ti ti-star" style="font-size:13px" aria-hidden="true"></i>
+        <span class="d" data-en="Halal Certified" data-my="Halal Diperakui">Halal Certified</span>
+      </span>
+      <div class="price-tier d" data-en="Rimba · Halal + Organic" data-my="Rimba · Halal + Organik">Rimba · Halal + Organic</div>
+      <div class="price-big">RM 599</div>
+      <div class="price-period d" data-en="one-time + RM 99/yr renewal" data-my="sekali + RM 99/thn pembaharuan">one-time + RM 99/yr renewal</div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Everything in Organic Verified" data-my="Semua dalam Organik Disahkan">Everything in Organic Verified</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Full halal slaughter & handling audit" data-my="Audit sembelihan & pengendalian halal penuh">Full halal slaughter & handling audit</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Halal Certified badge on all listings" data-my="Lencana Halal Diperakui pada semua penyenaraian">Halal Certified badge on all listings</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="B2B sourcing access for restaurants" data-my="Akses perolehan B2B untuk restoran">B2B sourcing access for restaurants</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Linked to JAKIM compliance framework" data-my="Dikaitkan dengan kerangka pematuhan JAKIM">Linked to JAKIM compliance framework</span></div>
+      <div class="price-li"><i class="ti ti-check" aria-hidden="true"></i><span class="d" data-en="Annual renewal audit RM 99" data-my="Audit pembaharuan tahunan RM 99">Annual renewal audit RM 99</span></div>
+      <a href="#" class="price-cta d" data-en="Apply for halal verification" data-my="Mohon pengesahan halal">Apply for halal verification</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section sec-deep">
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="eyebrow eyebrow-lt d" data-en="Voices from the land" data-my="Suara dari tanah">Voices from the land</div>
+    <h2 class="serif" style="color:var(--lc)">
+      <span class="d" data-en="Built from lived experience." data-my="Dibina dari pengalaman sebenar.">Built from lived experience.</span>
+    </h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi">
+      <p class="testi-q"><span class="d" data-en='"I have been selling through WhatsApp for three years. A platform that truly understands how a small urban farm operates — this is what we have been waiting for."' data-my='"Saya menjual melalui WhatsApp selama tiga tahun. Platform yang benar-benar memahami bagaimana ladang bandar kecil beroperasi — inilah yang kami tunggu."'>"I have been selling through WhatsApp for three years. A platform that truly understands how a small urban farm operates — this is what we have been waiting for."</span></p>
+      <div class="testi-who"><span class="testi-name">Nazreen Abraham Stein</span> · Mukha Tree, TTDI</div>
+    </div>
+    <div class="testi">
+      <p class="testi-q"><span class="d" data-en='"Every weekend I want to do something meaningful with my hands. I just never knew how to find the right farm to join."' data-my='"Setiap hujung minggu saya mahu buat sesuatu yang bermakna dengan tangan saya. Saya cuma tidak tahu bagaimana nak cari ladang yang sesuai untuk disertai."'>"Every weekend I want to do something meaningful with my hands. I just never knew how to find the right farm to join."</span></p>
+      <div class="testi-who"><span class="testi-name d" data-en="Farah Amirah" data-my="Farah Amirah">Farah Amirah</span> · <span class="d" data-en="Urban community member, PJ" data-my="Ahli komuniti bandar, PJ">Urban community member, PJ</span></div>
+    </div>
+    <div class="testi">
+      <p class="testi-q"><span class="d" data-en='"Our café sources 60% of ingredients locally. Managing that through WhatsApp is chaos. A structured platform with real farm profiles changes everything."' data-my='"Kafe kami sumber 60% bahan secara tempatan. Mengurus itu melalui WhatsApp adalah kacau bilau. Platform berstruktur dengan profil ladang sebenar mengubah segalanya."'>"Our café sources 60% of ingredients locally. Managing that through WhatsApp is chaos. A structured platform with real farm profiles changes everything."</span></p>
+      <div class="testi-who"><span class="testi-name">Mukha Café</span> · TTDI, Kuala Lumpur</div>
+    </div>
+    <div class="testi">
+      <p class="testi-q"><span class="d" data-en='"I teach permaculture workshops but filling seats is always a struggle. If people could book me the way they book a Grab, everything changes."' data-my='"Saya mengajar bengkel permakultur tetapi mengisi tempat duduk sentiasa susah. Jika orang boleh tempah saya seperti mereka tempah Grab, segalanya berubah."'>"I teach permaculture workshops but filling seats is always a struggle. If people could book me the way they book a Grab, everything changes."</span></p>
+      <div class="testi-who"><span class="testi-name">Ard'a Consultancy</span> · <span class="d" data-en="Regenerative agriculture educator" data-my="Pendidik pertanian regeneratif">Regenerative agriculture educator</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2 class="cta-title d" data-en="The land is ready. Are you?" data-my="Tanah sudah bersedia. Adakah anda?">The land is ready. Are you?</h2>
+  <p class="cta-sub d" data-en="Join the early access waitlist. Free forever. Rooted in the earth." data-my="Sertai senarai akses awal. Percuma selamanya. Berakar di bumi.">Join the early access waitlist. Free forever. Rooted in the earth.</p>
+  <a href="#" class="cta-d d" data-en="Join as a farmer" data-my="Daftar sebagai petani">Join as a farmer</a>
+  <a href="#" class="cta-o d" data-en="Find local produce" data-my="Cari hasil tempatan">Find local produce</a>
+</section>
+
+<footer>
+  <div class="foot-name">Bumi</div>
+  <div class="foot-copy d" data-en="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia" data-my="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia">© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia</div>
+  <div class="foot-links">
+    <a href="#" class="d" data-en="About" data-my="Tentang">About</a>
+    <a href="#" class="d" data-en="Farmers" data-my="Petani">Farmers</a>
+    <a href="#" class="d" data-en="Community" data-my="Komuniti">Community</a>
+    <a href="#" class="d" data-en="Contact" data-my="Hubungi">Contact</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('.d').forEach(function(el){
+    var t=el.getAttribute('data-'+l);
+    if(t)el.textContent=t;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===l||(l==='my'&&b.textContent.trim()==='BM'));
+  });
+}
+</script>
