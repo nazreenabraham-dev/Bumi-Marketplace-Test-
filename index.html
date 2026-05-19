@@ -325,9 +325,10 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div class="nav-brand" onclick="goPage('home')">Bumi</div>
   <ul class="nav-links">
     <li><a onclick="goPage('home')" id="nav-home" class="active" data-en="Home" data-my="Utama">Home</a></li>
-    <li><a onclick="goPage('market')" id="nav-market" data-en="Marketplace" data-my="Pasaran">Marketplace</a></li>
-    <li><a onclick="goPage('hire')" id="nav-hire" data-en="Hire a Farmer" data-my="Upah Petani">Hire a Farmer</a></li>
+    <li><a onclick="goPage('market')" id="nav-market" data-en="Pasar" data-my="Pasaran">Pasar</a></li>
+    <li><a onclick="goPage('hire')" id="nav-hire" data-en="Grow Together" data-my="Upah Petani">Grow Together</a></li>
     <li><a onclick="goPage('community')" id="nav-community" data-en="Community" data-my="Komuniti">Community</a></li>
+    <li><a onclick="goPage('land')" id="nav-land" data-en="Land Rental" data-my="Sewa Tanah">Land Rental</a></li>
     <li><a onclick="goPage('dashboard')" id="nav-dashboard" data-en="Farm Dashboard" data-my="Papan Pemuka Ladang">Farm Dashboard</a></li>
     <li><a onclick="goPage('verify')" id="nav-verify" data-en="Verification" data-my="Pengesahan">Verification</a></li>
   </ul>
@@ -343,9 +344,9 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <div class="hero-photo-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content container">
-      <div class="hero-eyebrow"><span class="eyebrow-line"></span><span data-en="Malaysia's farm-to-community platform" data-my="Platform ladang-ke-komuniti Malaysia">Malaysia's farm-to-community platform</span></div>
-      <h1 class="hero-title serif"><span data-en="From the earth," data-my="Dari bumi,">From the earth,</span><br><em data-en="for everyone." data-my="untuk semua.">for everyone.</em></h1>
-      <p class="hero-sub" data-en="Bumi connects small-scale farmers, urban growers, and food-conscious communities across Malaysia. Free for every farmer — always. Built on permaculture principles." data-my="Bumi menghubungkan petani kecil, pekebun bandar, dan komuniti sedar makanan di seluruh Malaysia. Percuma untuk setiap petani — selalu. Dibina atas prinsip permakultur.">Bumi connects small-scale farmers, urban growers, and food-conscious communities across Malaysia. Free for every farmer — always. Built on permaculture principles.</p>
+      <div class="hero-eyebrow"><span class="eyebrow-line"></span><span data-en="A digital pasar for land, food, culture, and community" data-my="Platform ladang-ke-komuniti Malaysia">A digital pasar for land, food, culture, and community</span></div>
+      <h1 class="hero-title serif"><span data-en="Grow food." data-my="Dari bumi,">Grow food.</span><br><em data-en="Grow community." data-my="untuk semua.">Grow community.</em></h1>
+      <p class="hero-sub" data-en="Bumi helps people grow, sell, learn, and share land together — from kampung farms and urban rooftops to regenerative community plots across Malaysia." data-my="Bumi menghubungkan petani kecil, pekebun bandar, dan komuniti sedar makanan di seluruh Malaysia. Percuma untuk setiap petani — selalu. Dibina atas prinsip permakultur.">Bumi helps people grow, sell, learn, and share land together — from kampung farms and urban rooftops to regenerative community plots across Malaysia.</p>
       <div class="hero-actions">
         <button class="btn btn-green btn-xl" onclick="openModal('signup')" data-en="Join as a farmer — free" data-my="Daftar sebagai petani — percuma">Join as a farmer — free</button>
         <button class="btn btn-white btn-xl" onclick="goPage('market')" data-en="Find local produce" data-my="Cari hasil tempatan">Find local produce</button>
@@ -360,7 +361,22 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     </div>
   </section>
 
-  <div class="stat-bar">
+  
+<section class="section sec-white">
+  <div class="container" style="max-width:820px;text-align:center">
+    <div class="eyebrow">Why Bumi Exists</div>
+    <h2 class="serif">Malaysia is losing its relationship with the land.</h2>
+    <p class="lead large-text" style="margin-bottom:1.5rem">
+      Farmland disappears every year. Seed knowledge fades. Young people cannot afford land.
+      Small growers depend on middlemen while communities become disconnected from where food comes from.
+    </p>
+    <p class="lead large-text">
+      Bumi exists to reconnect people, land, food, culture, and livelihood — through a living digital pasar built for Southeast Asian communities.
+    </p>
+  </div>
+</section>
+
+<div class="stat-bar">
     <div class="sc"><div class="sc-n">3.2M</div><div class="sc-l" data-en="Smallholder farmers in Malaysia with no digital home" data-my="Petani kecil Malaysia tanpa kehadiran digital">Smallholder farmers in Malaysia with no digital home</div></div>
     <div class="sc"><div class="sc-n">RM 28B</div><div class="sc-l" data-en="Annual agri-food market — only 4% sold direct" data-my="Pasaran agri-makanan tahunan — hanya 4% dijual terus">Annual agri-food market — only 4% sold direct</div></div>
     <div class="sc"><div class="sc-n">70%</div><div class="sc-l" data-en="Of fresh produce passes through middlemen" data-my="Hasil segar melalui orang tengah">Of fresh produce passes through middlemen</div></div>
@@ -419,7 +435,43 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   </section>
 
   <!-- ACCESSIBLE SECTION -->
-  <section class="section" style="background:#f0ede4">
+  
+<section class="section sec-white">
+  <div class="container">
+    <div class="text-center mb2">
+      <div class="eyebrow">Stories From The Soil</div>
+      <h2 class="serif">Not products. People.</h2>
+    </div>
+
+    <div class="g3">
+      <div class="card">
+        <img src="/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg" style="width:100%;height:220px;object-fit:cover">
+        <div class="card-pad">
+          <h3 class="serif">Pak Din · Perak</h3>
+          <p class="lead">Growing turmeric and banana using regenerative methods beside a small river inherited from his grandfather.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="/mnt/user-data/uploads/mykampungoasis1_2_.png" style="width:100%;height:220px;object-fit:cover">
+        <div class="card-pad">
+          <h3 class="serif">Aisyah · KL Rooftop Grower</h3>
+          <p class="lead">Transforming abandoned rooftops into food forests and supplying herbs directly to neighbourhood cafés.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="/mnt/user-data/uploads/21__A_new_bloom__2011_.jpg" style="width:100%;height:220px;object-fit:cover">
+        <div class="card-pad">
+          <h3 class="serif">Orang Asli Community Plot</h3>
+          <p class="lead">A collective growing project focused on seed preservation, forest medicine, and community-led cultivation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#f0ede4">
     <div class="container g2-asym" style="gap:2.5rem">
       <div>
         <div class="eyebrow" data-en="Designed for everyone" data-my="Direka untuk semua orang">Designed for everyone</div>
@@ -436,7 +488,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
       <div style="background:var(--f);border-radius:20px;padding:2rem">
         <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gl);margin-bottom:1rem" data-en="Quick actions" data-my="Tindakan pantas">Quick actions</div>
         <div style="display:flex;flex-direction:column;gap:.75rem">
-          <button class="btn btn-green w-full" style="font-size:16px;padding:1rem;justify-content:center;border-radius:14px" onclick="goPage('market')"><i class="ti ti-shopping-bag"></i><span data-en="Browse marketplace" data-my="Semak pasaran">Browse marketplace</span></button>
+          <button class="btn btn-green w-full" style="font-size:16px;padding:1rem;justify-content:center;border-radius:14px" onclick="goPage('market')"><i class="ti ti-shopping-bag"></i><span data-en="Browse the Pasar" data-my="Semak pasaran">Browse the Pasar</span></button>
           <button class="btn btn-outline w-full" style="font-size:16px;padding:1rem;justify-content:center;border-radius:14px;border-color:rgba(238,244,222,.2);color:var(--lc)" onclick="goPage('dashboard')"><i class="ti ti-chart-bar"></i><span data-en="My farm dashboard" data-my="Papan pemuka ladang saya">My farm dashboard</span></button>
           <button class="btn w-full" style="font-size:16px;padding:1rem;justify-content:center;border-radius:14px;background:rgba(107,143,58,.15);color:var(--gl)" onclick="goPage('community')"><i class="ti ti-users"></i><span data-en="Community feed" data-my="Suapan komuniti">Community feed</span></button>
           <button class="btn w-full" style="font-size:16px;padding:1rem;justify-content:center;border-radius:14px;background:rgba(184,115,51,.12);color:var(--am)" onclick="goPage('verify')"><i class="ti ti-certificate"></i><span data-en="Get verified" data-my="Dapatkan pengesahan">Get verified</span></button>
@@ -445,7 +497,29 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     </div>
   </section>
 
-  <section class="section sec-dark">
+  
+<section class="section" style="background:#e9e4d8">
+  <div class="container">
+    <div class="text-center mb2">
+      <div class="eyebrow">Growing Near You</div>
+      <h2 class="serif">A living network of growers, plots, rooftops, and farms.</h2>
+      <p class="lead" style="max-width:680px;margin:0 auto">
+        Discover community gardens, unused land, regenerative farms, and workshops happening across Malaysia.
+      </p>
+    </div>
+
+    <div class="card" style="padding:2rem;background:var(--f);color:var(--lc)">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">
+        <div><div style="font-size:34px;font-family:'DM Serif Display',serif;color:var(--gl)">43</div><div>Active Growers</div></div>
+        <div><div style="font-size:34px;font-family:'DM Serif Display',serif;color:var(--gl)">18</div><div>Land Plots Available</div></div>
+        <div><div style="font-size:34px;font-family:'DM Serif Display',serif;color:var(--gl)">12</div><div>Community Kebuns</div></div>
+        <div><div style="font-size:34px;font-family:'DM Serif Display',serif;color:var(--gl)">RM14k</div><div>Paid Directly To Farmers</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section sec-dark">
     <div class="container">
       <div class="text-center mb2">
         <div class="eyebrow eyebrow-lt" data-en="Permaculture in the platform" data-my="Permakultur dalam platform">Permaculture in the platform</div>
@@ -475,17 +549,25 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     </div>
   </section>
 
-  <section class="cta-band">
+  
+<section style="background:var(--gold);padding:1rem 1.5rem;text-align:center">
+  <div class="container" style="display:flex;justify-content:center;gap:1rem;align-items:center;flex-wrap:wrap">
+    <strong style="font-size:14px;color:var(--dk)">Founding Growers Program — First 100 vendors receive featured profiles & priority visibility.</strong>
+    <button class="btn btn-dark btn-sm">Apply Now</button>
+  </div>
+</section>
+
+<section class="cta-band">
     <div class="container">
       <h2 class="cta-title" data-en="The land is ready. Are you?" data-my="Tanah sudah bersedia. Adakah anda?">The land is ready. Are you?</h2>
       <p class="cta-sub" data-en="Join free. No credit card. No subscription. Built for every Malaysian farmer." data-my="Sertai percuma. Tiada kad kredit. Tiada langganan. Dibina untuk setiap petani Malaysia.">Join free. No credit card. No subscription. Built for every Malaysian farmer.</p>
       <div style="display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap">
         <button class="btn btn-dark btn-xl" onclick="openModal('signup')" data-en="Join as a farmer — free" data-my="Daftar sebagai petani — percuma">Join as a farmer — free</button>
-        <button class="btn btn-white btn-xl" onclick="goPage('market')" data-en="Explore marketplace" data-my="Terokai pasaran">Explore marketplace</button>
+        <button class="btn btn-white btn-xl" onclick="goPage('market')" data-en="Explore the Pasar" data-my="Terokai pasaran">Explore the Pasar</button>
       </div>
     </div>
   </section>
-  <footer><div class="foot-brand">Bumi</div><div class="foot-copy" data-en="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia" data-my="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia">© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')" data-en="Marketplace" data-my="Pasaran">Marketplace</a><a onclick="goPage('hire')" data-en="Hire" data-my="Upah">Hire</a><a onclick="goPage('verify')" data-en="Verify" data-my="Sahkan">Verify</a></div></footer>
+  <footer><div class="foot-brand">Bumi</div><div class="foot-copy" data-en="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia" data-my="© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia">© 2025 Bumi Sdn. Bhd. · Kuala Lumpur, Malaysia</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')" data-en="Pasar" data-my="Pasaran">Pasar</a><a onclick="goPage('hire')" data-en="Hire" data-my="Upah">Hire</a><a onclick="goPage('verify')" data-en="Verify" data-my="Sahkan">Verify</a></div></footer>
 </div>
 
 <!-- ══════════════ MARKETPLACE ══════════════ -->
@@ -513,7 +595,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 <div class="page" id="page-hire">
   <section class="section" style="padding-bottom:1rem">
     <div class="container">
-      <div class="eyebrow" data-en="Hire a Farmer" data-my="Upah Petani">Hire a Farmer</div>
+      <div class="eyebrow" data-en="Grow Together" data-my="Upah Petani">Hire a Farmer</div>
       <h2 class="serif" data-en="Book expertise, straight from the land." data-my="Tempah kepakaran, terus dari tanah.">Book expertise, straight from the land.</h2>
       <p class="lead" style="max-width:540px" data-en="Find and book certified farmers for consultations, permaculture design, workshops, and farm visits. Like Grab, but for growing things. All bookings include automatic invoice generation." data-my="Cari dan tempah petani bertauliah. Seperti Grab, tetapi untuk menanam. Semua tempahan termasuk penjanaan invois automatik.">Find and book certified farmers for consultations, permaculture design, workshops, and farm visits. Like Grab, but for growing things. All bookings include automatic invoice generation.</p>
     </div>
@@ -562,6 +644,103 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     </div>
   </div>
   <footer style="margin-top:1rem"><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')" data-en="Home" data-my="Utama">Home</a></div></footer>
+</div>
+
+
+<!-- ══════════════ LAND RENTAL ══════════════ -->
+<div class="page" id="page-land">
+  <section class="section sec-white">
+    <div class="container">
+      <div class="eyebrow" data-en="Grow on shared land" data-my="Bertani di tanah bersama">Grow on shared land</div>
+      <h2 class="serif" data-en="Rent land. Start growing." data-my="Sewa tanah. Mulakan bertani.">Rent land. Start growing.</h2>
+      <p class="lead" style="max-width:720px" data-en="Bumi connects unused landowners with growers, urban farmers, regenerative agriculture projects, and community food initiatives across Malaysia." data-my="Bumi menghubungkan pemilik tanah terbiar dengan pekebun, petani bandar, projek pertanian regeneratif, dan inisiatif makanan komuniti di seluruh Malaysia.">Bumi connects unused landowners with growers, urban farmers, regenerative agriculture projects, and community food initiatives across Malaysia.</p>
+
+      <div class="g3 mt2">
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-avatar">K</div>
+            <div>
+              <div class="service-name">Kebun Komas</div>
+              <div class="service-role">Rawang · Selangor</div>
+            </div>
+          </div>
+          <div class="service-body">
+            1 acre secondary land with water access and partial shade. Ideal for herbs, vegetables, and syntropic agroforestry trials.
+          </div>
+          <div class="product-tags">
+            <span class="tag tag-organic">Water Access</span>
+            <span class="tag tag-green">Community Friendly</span>
+          </div>
+          <div class="service-footer">
+            <div class="service-rate">RM 850 <span>/ month</span></div>
+            <button class="btn btn-green btn-sm" onclick="openModal('signup')">Apply</button>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-avatar">B</div>
+            <div>
+              <div class="service-name">Bentong Food Forest Plot</div>
+              <div class="service-role">Bentong · Pahang</div>
+            </div>
+          </div>
+          <div class="service-body">
+            Hillside plot suited for regenerative farming, bamboo, medicinal herbs, and eco-tourism projects. Nearby river access.
+          </div>
+          <div class="product-tags">
+            <span class="tag tag-amber">River Access</span>
+            <span class="tag tag-organic">Regenerative</span>
+          </div>
+          <div class="service-footer">
+            <div class="service-rate">RM 1,500 <span>/ month</span></div>
+            <button class="btn btn-green btn-sm" onclick="openModal('signup')">Apply</button>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <div class="service-avatar">U</div>
+            <div>
+              <div class="service-name">Urban Rooftop Plots</div>
+              <div class="service-role">Kuala Lumpur</div>
+            </div>
+          </div>
+          <div class="service-body">
+            Shared rooftop growing spaces for microgreens, edible flowers, and experimental urban agriculture collectives.
+          </div>
+          <div class="product-tags">
+            <span class="tag tag-green">Urban Farming</span>
+            <span class="tag tag-organic">Beginner Friendly</span>
+          </div>
+          <div class="service-footer">
+            <div class="service-rate">RM 250 <span>/ month</span></div>
+            <button class="btn btn-green btn-sm" onclick="openModal('signup')">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-pad mt3">
+        <div class="flex-between">
+          <div>
+            <div class="eyebrow" data-en="For landowners" data-my="Untuk pemilik tanah">For landowners</div>
+            <h3 class="serif">List your unused land</h3>
+            <p class="lead">Turn idle land into productive ecological spaces by connecting with growers, educators, and regenerative farming communities.</p>
+          </div>
+          <button class="btn btn-dark btn-lg" onclick="openModal('signup')">List a Plot</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:2rem">
+    <div class="foot-brand">Bumi</div>
+    <div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div>
+    <div class="foot-links">
+      <a onclick="goPage('home')">Home</a>
+      <a onclick="goPage('market')">Pasar</a>
+    </div>
+  </footer>
 </div>
 
 <!-- ══════════════ DASHBOARD ══════════════ -->
@@ -1187,5 +1366,10 @@ renderPlots();
 renderWorkshops();
 renderDashboard();
 </script>
+
+<a href="https://wa.me/60123456789" target="_blank" style="position:fixed;bottom:24px;left:24px;z-index:999;background:#25D366;color:white;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25)">
+  <i class="ti ti-brand-whatsapp"></i>
+</a>
+
 </body>
 </html>
