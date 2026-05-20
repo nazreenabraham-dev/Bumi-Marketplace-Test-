@@ -244,6 +244,166 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 .modal-sub{font-size:13px;color:var(--mu);margin-bottom:1.25rem}
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--f);color:var(--lc);padding:.875rem 1.25rem;border-radius:14px;font-size:13.5px;display:flex;align-items:center;gap:.625rem;opacity:0;transform:translateY(10px);transition:.3s;z-index:1000;pointer-events:none;max-width:320px}
 .toast.show{opacity:1;transform:translateY(0)}
+
+/* ── MOBILE NAV ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-hamburger span{display:block;width:22px;height:2px;background:rgba(238,244,222,.7);border-radius:2px;transition:.2s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav-drawer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(17,26,9,.98);z-index:190;padding-top:86px;overflow-y:auto}
+.mobile-nav-drawer.open{display:flex;flex-direction:column}
+.mobile-nav-drawer ul{list-style:none;padding:1.5rem}
+.mobile-nav-drawer ul li a{display:block;font-size:18px;font-family:'DM Serif Display',serif;color:rgba(238,244,222,.6);padding:1rem 0;border-bottom:.5px solid rgba(107,143,58,.1);text-decoration:none;cursor:pointer;transition:.15s}
+.mobile-nav-drawer ul li a:active,.mobile-nav-drawer ul li a.active{color:var(--gl)}
+.mobile-nav-actions{padding:1.5rem;display:flex;flex-direction:column;gap:.75rem}
+.community-layout{display:grid;grid-template-columns:1fr 340px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto}
+.dash-mobile-nav{display:none;overflow-x:auto;background:var(--f);padding:.5rem;gap:.375rem;scrollbar-width:none;border-bottom:1px solid rgba(107,143,58,.15)}
+.dash-mobile-btn{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:.5rem .875rem;border-radius:20px;font-size:12px;color:rgba(238,244,222,.5);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.dash-mobile-btn.active{background:rgba(107,143,58,.15);color:var(--gl)}
+.farms-grid-pad{padding:0 1.5rem 2rem;gap:1rem}
+
+/* ── TABLET (≤900px) ── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-login{display:none}
+  .nav-hamburger{display:flex}
+
+  .g3{grid-template-columns:1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .g2-asym{grid-template-columns:1fr;gap:2rem}
+
+  .stat-bar{grid-template-columns:1fr 1fr}
+  .sc{border-right:none;border-bottom:.5px solid rgba(107,143,58,.08)}
+  .sc:nth-child(odd){border-right:.5px solid rgba(107,143,58,.08)}
+  .sc:last-child{border:none}
+
+  .testi-grid{grid-template-columns:1fr}
+
+  .strip{grid-template-columns:1fr;height:auto}
+  .strip-cell{height:140px}
+
+  .product-grid{grid-template-columns:1fr 1fr}
+
+  .kpi-row{grid-template-columns:1fr 1fr}
+
+  .dash-layout{grid-template-columns:1fr}
+  .dash-sidebar{display:none}
+  .dash-mobile-nav{display:flex}
+
+  .community-layout{grid-template-columns:1fr}
+  .community-sidebar{display:none}
+
+  .hero{padding:3rem 1.25rem 2.5rem}
+  .hero-sub{font-size:15px}
+
+  .profile-hero .container > div[style*="display:flex"]{flex-direction:column!important}
+
+  .inv-meta{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+
+  footer{flex-direction:column;text-align:center;gap:.75rem}
+  .foot-links{justify-content:center;flex-wrap:wrap}
+
+  .section{padding:3rem 1.25rem}
+}
+
+/* ── MOBILE (≤600px) ── */
+@media(max-width:600px){
+  #lang-bar{padding:5px 1rem}
+  #nav{padding:.6rem 1rem}
+  .nav-brand{font-size:20px}
+  .page{padding-top:82px}
+  .mobile-nav-drawer{padding-top:82px}
+
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr}
+  .g4{grid-template-columns:1fr 1fr;gap:.75rem}
+
+  .stat-bar{grid-template-columns:1fr 1fr}
+
+  .strip{grid-template-columns:1fr;height:auto}
+  .strip-cell{height:120px}
+
+  .hero{padding:2.5rem 1rem 2rem;min-height:auto}
+  .hero-actions{flex-direction:column;gap:.625rem}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .btn-xl{padding:.9rem 1.5rem;font-size:15px}
+
+  .product-grid{grid-template-columns:1fr 1fr;gap:.75rem;padding:.75rem 1rem}
+
+  .kpi-row{grid-template-columns:1fr 1fr;gap:.75rem}
+  .kpi-n{font-size:22px}
+
+  .section{padding:2.5rem 1rem}
+  .container{padding:0}
+
+  h2.serif{font-size:clamp(20px,5vw,28px)}
+  .lead{font-size:14px}
+  .large-text{font-size:15px}
+
+  .filter-bar{padding:.625rem 1rem;gap:.375rem;overflow-x:auto;flex-wrap:nowrap}
+  .filter-btn{font-size:11.5px;padding:5px 12px;min-height:34px;flex-shrink:0}
+
+  .search-bar{padding:.625rem 1rem}
+
+  .feature-card{padding:1.25rem}
+
+  .cta-band{padding:2.5rem 1rem}
+  .cta-band .btn{width:100%;justify-content:center}
+  .cta-band > .container > div{flex-direction:column!important;align-items:stretch!important}
+
+  .testi-grid{grid-template-columns:1fr}
+
+  .verify-tier{padding:1.25rem}
+  #page-verify .g3{grid-template-columns:1fr}
+  .vt-price{font-size:28px}
+
+  .modal{padding:1.25rem;border-radius:16px}
+  .modal-bg{padding:.75rem}
+
+  .toast{bottom:1rem;right:1rem;left:1rem;max-width:none}
+
+  footer{padding:1.5rem 1rem;flex-direction:column;text-align:center;gap:.5rem}
+  .foot-links{justify-content:center;flex-wrap:wrap}
+
+  .dash-main{padding:1rem}
+
+  .table-wrap{overflow-x:auto}
+  table{min-width:480px}
+
+  .inv-meta{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+
+  .profile-hero{padding:2rem 1rem 1.5rem}
+  .profile-name{font-size:22px}
+  .profile-tabs{padding:0 .75rem;overflow-x:auto}
+  .profile-tab{flex-shrink:0}
+  .profile-tab-content{padding:1rem}
+
+  #page-home .g3{grid-template-columns:1fr}
+
+  .plot-card .flex-between{flex-direction:column;align-items:flex-start;gap:.75rem}
+
+  .community-layout{padding:.75rem 1rem;gap:1rem}
+
+  .section[style*="padding:1rem"]{padding:.75rem 1rem!important}
+
+  a[href*="wa.me"]{width:52px;height:52px;font-size:26px;bottom:16px;left:16px}
+
+  #page-hire .g3,#page-farms .g3{grid-template-columns:1fr;padding:.75rem 1rem}
+  .farms-grid-pad{padding:0 1rem 1.5rem!important}
+}
+
+/* ── SMALL MOBILE (≤400px) ── */
+@media(max-width:400px){
+  .product-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:1fr}
+  .g4{grid-template-columns:1fr}
+  .stat-bar{grid-template-columns:1fr}
+  .sc{border-right:none}
+  .filter-bar{gap:.25rem}
+}
 </style>
 </head>
 <body>
@@ -256,7 +416,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-brand" onclick="goPage('home')">Bumi</div>
+  <div class="nav-brand" onclick="goPage('home');closeMobileNav()">Bumi</div>
   <ul class="nav-links">
     <li><a onclick="goPage('home')" id="nav-home" class="active">Home</a></li>
     <li><a onclick="goPage('market')" id="nav-market">Pasar</a></li>
@@ -269,8 +429,28 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div class="nav-r">
     <button class="nav-login" onclick="openModal('login')">Log in</button>
     <button class="nav-cta" onclick="openModal('signup')">Join free</button>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav-drawer" id="mobile-drawer">
+  <ul>
+    <li><a onclick="goPage('home');closeMobileNav()">Home</a></li>
+    <li><a onclick="goPage('market');closeMobileNav()">Pasar — Marketplace</a></li>
+    <li><a onclick="goPage('hire');closeMobileNav()">Hire a Farmer</a></li>
+    <li><a onclick="goPage('community');closeMobileNav()">Community</a></li>
+    <li><a onclick="goPage('plots');closeMobileNav()">Plots</a></li>
+    <li><a onclick="goPage('farms');closeMobileNav()">Farm Directory</a></li>
+    <li><a onclick="goPage('verify');closeMobileNav()">Verify my Farm</a></li>
+    <li><a onclick="goPage('dashboard');closeMobileNav()">My Dashboard</a></li>
+  </ul>
+  <div class="mobile-nav-actions">
+    <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="openModal('signup');closeMobileNav()">Join free — zero cost</button>
+    <button class="btn btn-outline" style="justify-content:center;font-size:15px" onclick="openModal('login');closeMobileNav()">Log in</button>
+  </div>
+</div>
 
 <!-- HOME PAGE -->
 <div class="page active" id="page-home">
@@ -555,9 +735,9 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <button class="filter-btn" onclick="filterFeed(this,'learn')">Learning</button>
     <button class="filter-btn" onclick="filterFeed(this,'plot')">Plots &amp; Spaces</button>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto">
+  <div class="community-layout" style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto">
     <div id="feed-grid"></div>
-    <div>
+    <div class="community-sidebar">
       <div style="background:var(--wh);border:1px solid var(--bd);border-radius:16px;padding:1.25rem;margin-bottom:1rem">
         <div class="eyebrow">Upcoming Workshops</div>
         <div id="workshops-sidebar"></div>
@@ -624,6 +804,16 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 
 <!-- DASHBOARD PAGE -->
 <div class="page" id="page-dashboard">
+  <!-- MOBILE DASHBOARD NAV -->
+  <div class="dash-mobile-nav" id="dash-mobile-nav">
+    <button class="dash-mobile-btn active" onclick="showDash(this,'overview')"><i class="ti ti-layout-dashboard"></i> Overview</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'orders')"><i class="ti ti-shopping-cart"></i> Orders</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'inventory')"><i class="ti ti-package"></i> Inventory</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'invoices')"><i class="ti ti-receipt"></i> Invoices</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'harvests')"><i class="ti ti-leaf"></i> Harvests</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'earnings')"><i class="ti ti-chart-bar"></i> Earnings</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'listings')"><i class="ti ti-list"></i> Listings</button>
+  </div>
   <div class="dash-layout">
     <div class="dash-sidebar">
       <div style="padding:1rem 1.5rem;margin-bottom:.5rem">
@@ -807,7 +997,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <button class="filter-btn" onclick="filterFarms(this,'kl')">Klang Valley</button>
   </div>
   <div style="padding:.5rem 1.5rem"><div style="font-size:12px;color:var(--mu)" id="farms-count">Loading...</div></div>
-  <div class="g3" style="padding:0 1.5rem 2rem;gap:1rem" id="farms-grid"></div>
+  <div class="g3 farms-grid-pad" id="farms-grid"></div>
   <footer style="margin-top:2rem"><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')">Marketplace</a></div></footer>
 </div>
 
@@ -1047,9 +1237,28 @@ document.addEventListener('click',function(e){if(e.target.classList.contains('mo
 function showDash(el,s){
   document.querySelectorAll('.dash-section').forEach(function(d){d.classList.remove('active')});
   document.querySelectorAll('.dash-nav-item').forEach(function(d){d.classList.remove('active')});
+  document.querySelectorAll('.dash-mobile-btn').forEach(function(d){d.classList.remove('active')});
   var sec=document.getElementById('dash-'+s);
   if(sec)sec.classList.add('active');
-  if(el)el.classList.add('active');
+  if(el){el.classList.add('active');}
+  // sync both sidebars
+  document.querySelectorAll('.dash-nav-item, .dash-mobile-btn').forEach(function(d){
+    if(d.getAttribute('onclick')&&d.getAttribute('onclick').includes("'"+s+"'")){d.classList.add('active');}
+  });
+}
+
+// ── MOBILE NAV ──
+function toggleMobileNav(){
+  var drawer=document.getElementById('mobile-drawer');
+  var hb=document.getElementById('hamburger');
+  var open=drawer.classList.toggle('open');
+  hb.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobileNav(){
+  document.getElementById('mobile-drawer').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
 }
 
 // ── TOAST ──
