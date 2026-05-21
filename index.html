@@ -451,6 +451,175 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 .farmer-score{display:flex;flex-direction:column;align-items:center;padding:.75rem 1rem;background:rgba(107,143,58,.06);border-radius:12px;border:.5px solid rgba(107,143,58,.12)}
 .farmer-score-n{font-family:'DM Serif Display',serif;font-size:22px;color:var(--f)}
 .farmer-score-l{font-size:10px;color:var(--mu);text-align:center;line-height:1.4;margin-top:2px}
+
+/* ── CART ── */
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:100vw;background:var(--wh);z-index:600;transform:translateX(100%);transition:.28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,.18)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-overlay{position:fixed;inset:0;background:rgba(17,26,9,.55);z-index:599;opacity:0;pointer-events:none;transition:.25s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid var(--bd);background:var(--f)}
+.cart-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--lc);display:flex;align-items:center;gap:.75rem}
+.cart-badge{background:var(--g);color:var(--lc);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif}
+.cart-close{background:none;border:none;color:rgba(238,244,222,.5);font-size:22px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.cart-close:hover{background:rgba(255,255,255,.08)}
+.cart-body{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--mu);padding:2rem}
+.cart-empty-icon{font-size:52px;opacity:.2}
+.cart-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem 0;border-bottom:.5px solid var(--bd)}
+.cart-item:last-child{border:none}
+.cart-item-icon{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--f),var(--g));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:14px;font-weight:500;color:var(--f);margin-bottom:2px}
+.cart-item-farm{font-size:11.5px;color:var(--mu)}
+.cart-item-price{font-family:'DM Serif Display',serif;font-size:17px;color:var(--f);margin-top:4px}
+.cart-item-qty{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--bd);background:var(--pp);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--f);font-weight:500;line-height:1}
+.qty-btn:hover{border-color:var(--g);color:var(--g)}
+.qty-val{font-size:14px;font-weight:500;min-width:20px;text-align:center}
+.cart-remove{background:none;border:none;color:rgba(192,57,43,.4);cursor:pointer;font-size:14px;padding:0;margin-top:.25rem;font-family:'DM Sans',sans-serif;transition:.15s}
+.cart-remove:hover{color:var(--red)}
+.cart-foot{padding:1.25rem 1.5rem;border-top:1px solid var(--bd);background:var(--pp)}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;color:var(--mu);margin-bottom:.5rem}
+.cart-row.total{font-size:16px;font-weight:600;color:var(--f);font-family:'DM Serif Display',serif;border-top:1px solid var(--bd);padding-top:.75rem;margin-top:.5rem}
+.cart-wainfo{font-size:11.5px;color:var(--mu);display:flex;align-items:flex-start;gap:5px;margin-bottom:1rem;line-height:1.5}
+.cart-wainfo i{color:#25D366;font-size:16px;flex-shrink:0;margin-top:1px}
+.cart-nav-btn{position:relative;cursor:pointer;background:none;border:none;color:rgba(238,244,222,.7);font-size:20px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.15s}
+.cart-nav-btn:hover{background:rgba(107,143,58,.1)}
+.cart-nav-badge{position:absolute;top:2px;right:2px;background:var(--am);color:var(--wh);border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.cart-nav-badge.show{display:flex}
+
+/* ── SEARCH OVERLAY ── */
+.search-overlay{position:fixed;inset:0;z-index:700;background:rgba(17,26,9,.92);display:none;flex-direction:column;padding:4rem 1.5rem 1.5rem;overflow-y:auto}
+.search-overlay.open{display:flex}
+.search-overlay-bar{display:flex;gap:.75rem;align-items:center;background:var(--wh);border-radius:14px;padding:.875rem 1.25rem;margin-bottom:1.5rem;max-width:680px;width:100%;margin-left:auto;margin-right:auto}
+.search-overlay-input{flex:1;background:none;border:none;outline:none;font-size:17px;font-family:'DM Sans',sans-serif;color:var(--f)}
+.search-overlay-close{background:none;border:none;font-size:22px;color:var(--mu);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
+.search-overlay-close:hover{background:var(--pp)}
+.search-results{max-width:680px;width:100%;margin:0 auto}
+.search-section-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(168,196,106,.45);margin-bottom:.625rem;margin-top:1.25rem}
+.search-result-item{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;background:rgba(255,255,255,.04);border-radius:12px;cursor:pointer;margin-bottom:.375rem;transition:.12s;border:.5px solid rgba(107,143,58,.1)}
+.search-result-item:hover{background:rgba(255,255,255,.08);border-color:rgba(107,143,58,.3)}
+.search-result-icon{width:40px;height:40px;border-radius:10px;background:rgba(107,143,58,.12);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.search-result-name{font-size:14px;font-weight:500;color:var(--lc);margin-bottom:1px}
+.search-result-sub{font-size:12px;color:rgba(168,196,106,.4)}
+.search-result-tag{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(107,143,58,.1);color:var(--gl)}
+.search-empty{text-align:center;color:rgba(168,196,106,.3);padding:2rem;font-size:14px}
+.search-suggestions{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem;max-width:680px;margin-left:auto;margin-right:auto}
+.search-pill{font-size:12px;padding:5px 14px;border-radius:20px;border:.5px solid rgba(107,143,58,.2);color:rgba(168,196,106,.5);cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif;transition:.12s}
+.search-pill:hover{background:rgba(107,143,58,.1);color:var(--gl);border-color:rgba(107,143,58,.4)}
+
+/* ── ONBOARDING ── */
+.onboard-modal{background:var(--wh);border-radius:20px;padding:0;width:100%;max-width:520px;overflow:hidden;position:relative}
+.onboard-step{display:none;padding:2.25rem 2rem}
+.onboard-step.active{display:block}
+.onboard-header{text-align:center;margin-bottom:1.75rem}
+.onboard-emoji{font-size:44px;margin-bottom:.875rem}
+.onboard-title{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:.5rem;color:var(--f)}
+.onboard-sub{font-size:14px;color:var(--mu);line-height:1.7}
+.onboard-options{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem}
+.onboard-opt{border:1.5px solid var(--bd);border-radius:14px;padding:1.25rem;cursor:pointer;transition:.15s;text-align:center}
+.onboard-opt:hover{border-color:var(--g);background:var(--lc)}
+.onboard-opt.sel{border-color:var(--g);background:var(--lc)}
+.onboard-opt-icon{font-size:28px;margin-bottom:.5rem}
+.onboard-opt-label{font-size:13.5px;font-weight:500;color:var(--f)}
+.onboard-opt-sub{font-size:11.5px;color:var(--mu);margin-top:2px}
+.onboard-progress{display:flex;gap:5px;justify-content:center;padding:1rem 2rem;background:var(--pp)}
+.onboard-dot{width:8px;height:8px;border-radius:50%;background:var(--bd);transition:.2s}
+.onboard-dot.active{background:var(--g);width:24px;border-radius:4px}
+
+/* ── IMPACT DASHBOARD ── */
+.impact-stat{text-align:center;padding:1.5rem;background:var(--wh);border:1px solid var(--bd);border-radius:16px}
+.impact-num{font-family:'DM Serif Display',serif;font-size:42px;color:var(--f);line-height:1;margin-bottom:.25rem}
+.impact-unit{font-size:12px;color:var(--g);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem}
+.impact-desc{font-size:12.5px;color:var(--mu);line-height:1.55}
+.impact-bar-wrap{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+.impact-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:.5rem}
+.impact-bar-track{height:8px;background:var(--lc);border-radius:4px}
+.impact-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--g),var(--gl));transition:1s}
+
+/* ── ALERT / NOTIFY ── */
+.alert-pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid rgba(37,211,102,.3);background:rgba(37,211,102,.06);color:#1a9b4e;cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif}
+.alert-pill:hover{background:rgba(37,211,102,.12)}
+.alert-pill.set{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.5);font-weight:500}
+.alert-pill i{font-size:13px;color:#25D366}
+
+/* ── SEASONAL CALENDAR ── */
+.season-cal{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;margin-top:.625rem}
+.season-cell{height:18px;border-radius:3px;background:var(--lc);position:relative;cursor:default}
+.season-cell.active{background:var(--g)}
+.season-cell.partial{background:var(--gl);opacity:.6}
+.season-month-labels{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;margin-top:3px}
+.season-month-label{font-size:9px;color:var(--mu);text-align:center}
+
+/* ── EMPTY STATE ── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3.5rem 1.5rem;text-align:center;grid-column:1/-1}
+.empty-state-art{font-size:56px;margin-bottom:1rem;opacity:.5}
+.empty-state-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--f);margin-bottom:.5rem}
+.empty-state-sub{font-size:13.5px;color:var(--mu);max-width:320px;line-height:1.7;margin-bottom:1.25rem}
+
+/* ── BACK TO TOP ── */
+.back-top{position:fixed;bottom:96px;right:22px;z-index:200;width:44px;height:44px;border-radius:50%;background:var(--f);border:.5px solid rgba(107,143,58,.3);color:var(--gl);font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:.2s;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.back-top.show{display:flex}
+.back-top:hover{background:var(--g);color:var(--lc)}
+
+/* ── FORM VALIDATION ── */
+.form-input.error,.form-select.error{border-color:var(--red);background:rgba(192,57,43,.04)}
+.field-error{font-size:11.5px;color:var(--red);margin-top:4px;display:none}
+.field-error.show{display:block}
+
+/* ── CHECKOUT ── */
+.checkout-step{display:none}.checkout-step.active{display:block}
+.payment-opt{border:1.5px solid var(--bd);border-radius:12px;padding:.875rem 1rem;cursor:pointer;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem;transition:.15s}
+.payment-opt:hover{border-color:var(--g);background:var(--lc)}
+.payment-opt.sel{border-color:var(--g);background:var(--lc)}
+.payment-opt-icon{font-size:22px;flex-shrink:0}
+.payment-opt-label{font-size:14px;font-weight:500;color:var(--f)}
+.payment-opt-sub{font-size:11.5px;color:var(--mu)}
+.order-success{text-align:center;padding:1.5rem 0}
+.order-success-icon{font-size:56px;color:var(--g);margin-bottom:1rem}
+.order-number{font-family:'DM Serif Display',serif;font-size:22px;color:var(--f);margin-bottom:.5rem}
+
+/* ── PWA INSTALL BANNER ── */
+.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:400;background:var(--f);border-top:.5px solid rgba(107,143,58,.2);padding:.875rem 1.5rem;display:flex;align-items:center;gap:.875rem;transform:translateY(100%);transition:.3s}
+.pwa-banner.show{transform:translateY(0)}
+.pwa-banner-text{flex:1;font-size:13.5px;color:rgba(238,244,222,.7)}
+.pwa-banner-text strong{color:var(--lc);display:block;font-size:14px}
+
+/* ── MAP ── */
+#farm-map-wrap{height:460px;border-radius:14px;overflow:hidden;border:1px solid var(--bd);background:var(--f);position:relative;margin-top:1rem}
+#farm-map-wrap iframe{width:100%;height:100%;border:none}
+.map-toggle{display:flex;gap:.5rem;margin-bottom:1rem}
+.map-toggle-btn{font-size:12.5px;padding:6px 16px;border-radius:20px;cursor:pointer;border:1px solid var(--bd);background:transparent;color:var(--mu);font-family:'DM Sans',sans-serif;transition:.15s}
+.map-toggle-btn.on{background:var(--f);color:var(--lc);border-color:var(--f)}
+
+/* ── PLOT CALCULATOR ── */
+.calc-wrap{background:var(--wh);border:1px solid var(--bd);border-radius:16px;padding:1.5rem;margin-top:1.5rem}
+.calc-slider{width:100%;accent-color:var(--g);margin:.625rem 0}
+.calc-output{background:var(--lc);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;text-align:center}
+.calc-out-n{font-family:'DM Serif Display',serif;font-size:24px;color:var(--f)}
+.calc-out-l{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* ── VERIFICATION TRACKER ── */
+.verify-progress-band{background:var(--f);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem}
+.verify-live-stat{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.vls-n{font-family:'DM Serif Display',serif;font-size:32px;color:var(--lc)}
+.vls-l{font-size:12px;color:rgba(168,196,106,.5);line-height:1.5}
+.vls-dot{width:8px;height:8px;border-radius:50%;background:var(--g);animation:pulse-dot 1.8s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* ── HARVEST ALERTS ── */
+.harvest-alert-list{margin-top:1rem}
+.hal-item{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:.5px solid var(--bd)}
+.hal-item:last-child{border:none}
+.hal-name{font-size:13.5px;font-weight:500;color:var(--f)}
+.hal-farm{font-size:11.5px;color:var(--mu)}
+
+@media(max-width:600px){
+  .cart-drawer{width:100vw}
+  .onboard-options{grid-template-columns:1fr}
+  .calc-output{grid-template-columns:1fr 1fr}
+  #farm-map-wrap{height:320px}
+}
 </style>
 </head>
 <body>
@@ -472,8 +641,11 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <li><a onclick="goPage('plots')" id="nav-plots">Plots</a></li>
     <li><a onclick="goPage('farms')" id="nav-farms">Farms</a></li>
     <li><a onclick="goPage('verify')" id="nav-verify">Verify</a></li>
+    <li><a onclick="goPage('impact')" id="nav-impact">Impact</a></li>
   </ul>
   <div class="nav-r">
+    <button class="cart-nav-btn" onclick="openSearch()" title="Search" aria-label="Search"><i class="ti ti-search"></i></button>
+    <button class="cart-nav-btn" onclick="openCart()" title="Basket" aria-label="Basket"><i class="ti ti-shopping-bag"></i><span class="cart-nav-badge" id="cart-badge">0</span></button>
     <button class="nav-login" onclick="openModal('login')">Log in</button>
     <button class="nav-cta" onclick="openModal('signup')">Join free</button>
     <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -491,6 +663,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <li><a onclick="goPage('plots');closeMobileNav()">Plots</a></li>
     <li><a onclick="goPage('farms');closeMobileNav()">Farm Directory</a></li>
     <li><a onclick="goPage('verify');closeMobileNav()">Verify my Farm</a></li>
+    <li><a onclick="goPage('impact');closeMobileNav()">Impact</a></li>
     <li><a onclick="goPage('dashboard');closeMobileNav()">My Dashboard</a></li>
   </ul>
   <div class="mobile-nav-actions">
@@ -844,6 +1017,23 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
           <button class="btn btn-dark btn-lg" onclick="openModal('signup')">List a Plot</button>
         </div>
       </div>
+
+      <!-- PLOT INVESTMENT CALCULATOR -->
+      <div class="calc-wrap">
+        <div class="eyebrow">Plot investment calculator</div>
+        <h3 class="serif">How much produce will your contribution yield?</h3>
+        <p class="lead" style="font-size:13.5px;margin-bottom:1rem">Adjust your monthly contribution to see estimated returns per harvest cycle (every ~8 weeks).</p>
+        <label style="font-size:13px;font-weight:500;color:var(--f)">Monthly contribution: <strong id="calc-rm-label" style="color:var(--g)">RM 100</strong></label>
+        <input type="range" class="calc-slider" id="plot-calc" min="50" max="500" step="50" value="100" oninput="updateCalc(this.value)">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mu);margin-top:-4px;margin-bottom:.5rem"><span>RM 50</span><span>RM 500</span></div>
+        <div class="calc-output">
+          <div><div class="calc-out-n" id="calc-veg">~8 kg</div><div class="calc-out-l">Vegetables per cycle</div></div>
+          <div><div class="calc-out-n" id="calc-cycles">6</div><div class="calc-out-l">Cycles per year</div></div>
+          <div><div class="calc-out-n" id="calc-val">RM 160</div><div class="calc-out-l">Estimated value / year</div></div>
+        </div>
+        <p style="font-size:11.5px;color:var(--mu);margin-top:.75rem">Estimates based on Kebun-Kebun Bangsar and Urban Hijau plot yields. Actual returns vary by season and plot type.</p>
+        <button class="btn btn-green btn-sm mt1" onclick="openModal('joinplot')">Join a community plot →</button>
+      </div>
     </div>
   </section>
   <footer style="margin-top:2rem"><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')">Pasar</a></div></footer>
@@ -1044,6 +1234,19 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <button class="filter-btn" onclick="filterFarms(this,'kl')">Klang Valley</button>
   </div>
   <div style="padding:.5rem 1.5rem"><div style="font-size:12px;color:var(--mu)" id="farms-count">Loading...</div></div>
+  <div style="padding:0 1.5rem .5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+    <div class="map-toggle">
+      <button class="map-toggle-btn on" id="view-grid-btn" onclick="setFarmsView('grid')"><i class="ti ti-layout-grid"></i> Grid</button>
+      <button class="map-toggle-btn" id="view-map-btn" onclick="setFarmsView('map')"><i class="ti ti-map-pin"></i> Map</button>
+    </div>
+    <a href="https://wa.me/60123456789?text=Hi%20Bumi%2C%20I'd%20like%20to%20know%20more%20about%20farms%20near%20me" target="_blank" class="btn btn-sm" style="background:rgba(37,211,102,.1);color:#1a9b4e;border:1px solid rgba(37,211,102,.25);font-size:12px"><i class="ti ti-brand-whatsapp"></i> Ask us on WhatsApp</a>
+  </div>
+  <div id="farms-map-view" style="display:none;padding:0 1.5rem 2rem">
+    <div id="farm-map-wrap">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=100.3%2C1.2%2C103.5%2C5.5&layer=mapnik&marker=3.148%2C101.6958" allowfullscreen loading="lazy" title="Bumi Farm Map"></iframe>
+    </div>
+    <p style="font-size:12px;color:var(--mu);margin-top:.5rem;padding:.5rem 0">Map shows approximate regions of listed farms and organisations. Click any farm card for exact location details.</p>
+  </div>
   <div class="g3 farms-grid-pad" id="farms-grid"></div>
   <footer style="margin-top:2rem"><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')">Marketplace</a></div></footer>
 </div>
@@ -1053,7 +1256,277 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div id="profile-content"></div>
 </div>
 
-<!-- MODALS -->
+<!-- IMPACT PAGE -->
+<div class="page" id="page-impact">
+  <section class="section" style="padding-bottom:1.5rem">
+    <div class="container">
+      <div class="eyebrow">Bumi Impact Report — Live</div>
+      <h2 class="serif">The land is speaking. Here is what it says.</h2>
+      <p class="lead" style="max-width:580px;margin-bottom:2rem">Real numbers from real farms. Updated as transactions, verifications, and harvests are logged on the platform.</p>
+
+      <!-- LIVE STATS -->
+      <div class="g4" style="margin-bottom:2rem">
+        <div class="impact-stat">
+          <div class="impact-num" id="imp-kg">0</div>
+          <div class="impact-unit">kg produce</div>
+          <div class="impact-desc">Sold direct from farmer to buyer, bypassing middlemen</div>
+        </div>
+        <div class="impact-stat">
+          <div class="impact-num" id="imp-farms">0</div>
+          <div class="impact-unit">Farms listed</div>
+          <div class="impact-desc">Active Malaysian farms and ecological organisations on Bumi</div>
+        </div>
+        <div class="impact-stat">
+          <div class="impact-num" id="imp-rm">0</div>
+          <div class="impact-unit">RM paid direct</div>
+          <div class="impact-desc">Revenue going directly into farmers' accounts, not aggregators</div>
+        </div>
+        <div class="impact-stat">
+          <div class="impact-num" id="imp-trees">0</div>
+          <div class="impact-unit">Trees gifted</div>
+          <div class="impact-desc">Via Free Tree Society, Rimbun Dahan, and partner organisations since 2013</div>
+        </div>
+      </div>
+
+      <!-- PROGRESS BARS -->
+      <div class="g2" style="margin-bottom:2rem">
+        <div>
+          <h3 class="serif" style="margin-bottom:1.25rem">Verification progress</h3>
+          <div class="verify-progress-band">
+            <div class="verify-live-stat">
+              <div><div class="vls-n">14</div><div class="vls-l">Organic<br>Verified farms</div></div>
+              <div><div class="vls-n">3</div><div class="vls-l">Halal + Organic<br>Certified farms</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><div class="vls-dot"></div><div style="font-size:12px;color:rgba(168,196,106,.5)">3 applications<br>in review</div></div>
+            </div>
+          </div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-label"><span>Organic coverage</span><span style="font-weight:600;color:var(--g)">48%</span></div>
+            <div class="impact-bar-track"><div class="impact-bar-fill" id="bar-organic" style="width:0%"></div></div>
+          </div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-label"><span>Halal + Organic coverage</span><span style="font-weight:600;color:var(--am)">10%</span></div>
+            <div class="impact-bar-track"><div class="impact-bar-fill" id="bar-halal" style="width:0%;background:linear-gradient(90deg,var(--am),#e8943a)"></div></div>
+          </div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-label"><span>Direct sales (no middleman)</span><span style="font-weight:600;color:var(--g)">73%</span></div>
+            <div class="impact-bar-track"><div class="impact-bar-fill" id="bar-direct" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div>
+          <h3 class="serif" style="margin-bottom:1.25rem">Produce by category</h3>
+          <div style="background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem">
+            <div id="produce-chart" style="height:180px;display:flex;align-items:flex-end;gap:8px;padding-bottom:4px"></div>
+            <div id="produce-labels" style="display:flex;gap:8px;margin-top:.5rem;flex-wrap:wrap"></div>
+          </div>
+          <div style="background:var(--f);border-radius:14px;padding:1.25rem;margin-top:1rem">
+            <div class="eyebrow eyebrow-lt">Farms by state</div>
+            <div style="margin-top:.75rem" id="state-breakdown"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HARVEST ALERTS MANAGER -->
+      <div class="card card-pad" style="margin-bottom:2rem">
+        <div class="flex-between" style="margin-bottom:1rem">
+          <div>
+            <div class="eyebrow">Harvest alerts</div>
+            <h3 class="serif">Get notified via WhatsApp</h3>
+            <p class="lead" style="font-size:13.5px">When a product you want comes back in stock, Bumi sends you a WhatsApp message.</p>
+          </div>
+          <button class="btn btn-green btn-sm" onclick="openModal('alert-add')"><i class="ti ti-bell-plus"></i> Add alert</button>
+        </div>
+        <div class="harvest-alert-list" id="alert-list">
+          <div class="hal-item"><div><div class="hal-name">Ulam Raja (200g)</div><div class="hal-farm">Mukha Tree · TTDI</div></div><button class="alert-pill set" onclick="removeAlert(this)"><i class="ti ti-bell-check"></i> Notifying via WA</button></div>
+          <div class="hal-item"><div><div class="hal-name">Seasonal Fruit Box</div><div class="hal-farm">A Little Wild · Kota Tinggi</div></div><button class="alert-pill set" onclick="removeAlert(this)"><i class="ti ti-bell-check"></i> Notifying via WA</button></div>
+        </div>
+      </div>
+
+      <!-- KNOWLEDGE BASE -->
+      <h3 class="serif" style="margin-bottom:1rem">Knowledge base — Perpustakaan Bumi</h3>
+      <div class="g3">
+        <div class="feature-card" style="cursor:pointer" onclick="showToast('kb')">
+          <i class="ti ti-plant-2 feat-icon"></i>
+          <div class="feat-name">Composting Guide (BM + EN)</div>
+          <div class="feat-desc">A complete guide to hot composting, worm farming, and bokashi for Malaysian conditions — from kitchen scraps to garden gold.</div>
+          <div class="mt1"><span class="tag tag-green" style="font-size:10.5px">Free download</span></div>
+        </div>
+        <div class="feature-card" style="cursor:pointer" onclick="showToast('kb')">
+          <i class="ti ti-droplet feat-icon"></i>
+          <div class="feat-name">Soil Health for Tropical Farms</div>
+          <div class="feat-desc">Understanding pH, organic matter, mycorrhizae, and water retention in Malaysian red laterite soils. Written by Bumi verified farmers.</div>
+          <div class="mt1"><span class="tag tag-green" style="font-size:10.5px">Free download</span></div>
+        </div>
+        <div class="feature-card" style="cursor:pointer" onclick="showToast('kb')">
+          <i class="ti ti-seeding feat-icon"></i>
+          <div class="feat-name">Seed Saving — Menyimpan Benih</div>
+          <div class="feat-desc">How to select, ferment, dry, and store heritage seeds from 40 Malaysian vegetable and herb varieties. Bilingual.</div>
+          <div class="mt1"><span class="tag tag-green" style="font-size:10.5px">Free download</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('farms')">Farms</a><a onclick="goPage('verify')">Verify</a></div></footer>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-head">
+    <div class="cart-title"><i class="ti ti-shopping-bag" style="font-size:20px"></i> My Basket <span class="cart-badge" id="cart-count-head">0</span></div>
+    <button class="cart-close" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-body" id="cart-items-wrap">
+    <div class="cart-empty"><div class="cart-empty-icon">🌿</div><div style="font-size:15px;font-weight:500;color:var(--f);margin-bottom:4px">Your basket is empty</div><div style="font-size:13px;color:var(--mu)">Browse the Pasar and add fresh produce from Malaysian farms.</div><button class="btn btn-green btn-sm mt2" onclick="closeCart();goPage('market')">Browse the Pasar →</button></div>
+  </div>
+  <div class="cart-foot" id="cart-foot" style="display:none">
+    <div class="cart-row"><span>Subtotal</span><span id="cart-subtotal">RM 0</span></div>
+    <div class="cart-row"><span>Delivery estimate</span><span>Calculated at checkout</span></div>
+    <div class="cart-row total"><span>Total</span><span id="cart-total">RM 0</span></div>
+    <div class="cart-wainfo"><i class="ti ti-brand-whatsapp"></i><span>Order confirmed via WhatsApp. You'll receive a message from each farm within 2 hours with pickup or delivery details.</span></div>
+    <button class="btn btn-green w-full" style="font-size:15px;margin-bottom:.625rem" onclick="openCheckout()"><i class="ti ti-credit-card"></i> Checkout securely</button>
+    <button class="btn btn-outline w-full" style="font-size:14px" onclick="orderWhatsApp()"><i class="ti ti-brand-whatsapp" style="color:#25D366"></i> Order via WhatsApp</button>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div style="max-width:680px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+    <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(168,196,106,.35)">Search everything on Bumi</div>
+    <button class="search-overlay-close" onclick="closeSearch()" style="color:rgba(238,244,222,.4)">×</button>
+  </div>
+  <div class="search-overlay-bar">
+    <i class="ti ti-search" style="color:var(--mu);font-size:20px;flex-shrink:0"></i>
+    <input class="search-overlay-input" id="search-main-input" type="text" placeholder="Ulam raja, Tirtha Quddus, Gopeng, permaculture..." oninput="globalSearch(this.value)" autocomplete="off">
+    <button class="search-overlay-close" onclick="clearSearch()"><i class="ti ti-x" style="font-size:16px"></i></button>
+  </div>
+  <div class="search-suggestions" id="search-suggestions">
+    <button class="search-pill" onclick="doSearch('ulam raja')">Ulam raja</button>
+    <button class="search-pill" onclick="doSearch('compost')">Compost</button>
+    <button class="search-pill" onclick="doSearch('organic')">Organic</button>
+    <button class="search-pill" onclick="doSearch('Janda Baik')">Janda Baik</button>
+    <button class="search-pill" onclick="doSearch('permaculture')">Permaculture</button>
+    <button class="search-pill" onclick="doSearch('syntropic')">Syntropic</button>
+    <button class="search-pill" onclick="doSearch('seeds')">Seeds</button>
+    <button class="search-pill" onclick="doSearch('goat')">Goat</button>
+  </div>
+  <div class="search-results" id="search-results"></div>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div class="modal-bg" id="modal-onboard" style="align-items:center">
+  <div class="onboard-modal">
+    <div class="onboard-progress">
+      <div class="onboard-dot active" id="od1"></div>
+      <div class="onboard-dot" id="od2"></div>
+      <div class="onboard-dot" id="od3"></div>
+    </div>
+    <div class="onboard-step active" id="onb-1">
+      <div class="onboard-header">
+        <div class="onboard-emoji">🌱</div>
+        <div class="onboard-title">Welcome to Bumi</div>
+        <div class="onboard-sub">Malaysia's regenerative farm platform. Let's set up your experience in 3 quick steps.</div>
+      </div>
+      <div class="onboard-options">
+        <div class="onboard-opt" onclick="selectOnboard(this,'role','farmer')"><div class="onboard-opt-icon">🧑‍🌾</div><div class="onboard-opt-label">I am a Farmer</div><div class="onboard-opt-sub">I grow or sell produce</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'role','buyer')"><div class="onboard-opt-icon">🛒</div><div class="onboard-opt-label">I am a Buyer</div><div class="onboard-opt-sub">I want fresh local food</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'role','cafe')"><div class="onboard-opt-icon">☕</div><div class="onboard-opt-label">Café / Restaurant</div><div class="onboard-opt-sub">I source for my business</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'role','community')"><div class="onboard-opt-icon">🌳</div><div class="onboard-opt-label">Community</div><div class="onboard-opt-sub">I want to learn and connect</div></div>
+      </div>
+      <button class="btn btn-green w-full" onclick="nextOnboard(2)">Continue →</button>
+    </div>
+    <div class="onboard-step" id="onb-2">
+      <div class="onboard-header">
+        <div class="onboard-emoji">📍</div>
+        <div class="onboard-title">Where are you based?</div>
+        <div class="onboard-sub">We'll show you farms, markets, and community spaces near you first.</div>
+      </div>
+      <div class="onboard-options" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','kl')"><div class="onboard-opt-icon">🏙️</div><div class="onboard-opt-label">Klang Valley</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','penang')"><div class="onboard-opt-icon">🌊</div><div class="onboard-opt-label">Penang</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','johor')"><div class="onboard-opt-icon">🌴</div><div class="onboard-opt-label">Johor</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','pahang')"><div class="onboard-opt-icon">⛰️</div><div class="onboard-opt-label">Pahang</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','perak')"><div class="onboard-opt-icon">🌿</div><div class="onboard-opt-label">Perak</div></div>
+        <div class="onboard-opt" onclick="selectOnboard(this,'region','other')"><div class="onboard-opt-icon">📦</div><div class="onboard-opt-label">Other</div></div>
+      </div>
+      <div style="display:flex;gap:.75rem">
+        <button class="btn btn-outline" onclick="nextOnboard(1)" style="min-width:90px">← Back</button>
+        <button class="btn btn-green" style="flex:1" onclick="nextOnboard(3)">Continue →</button>
+      </div>
+    </div>
+    <div class="onboard-step" id="onb-3">
+      <div class="onboard-header">
+        <div class="onboard-emoji">🎉</div>
+        <div class="onboard-title">You're all set!</div>
+        <div class="onboard-sub">Your Bumi account is ready. Here are the best places to start:</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem" id="onb-ctas"></div>
+      <button class="btn btn-green w-full" style="font-size:15px" onclick="finishOnboard()">Start exploring →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-bg" id="modal-checkout"><div class="modal" style="max-width:500px">
+  <button class="modal-close" onclick="closeModal('checkout')">×</button>
+  <div id="checkout-inner">
+    <div class="checkout-step active" id="cs-1">
+      <div class="modal-title serif">Checkout</div>
+      <div class="modal-sub" id="cs1-sub">2 items from 2 farms</div>
+      <div class="form-group"><label class="form-label">Delivery address</label><input class="form-input" id="delivery-addr" type="text" placeholder="Your address or 'pickup at farm'"><div class="field-error" id="err-addr">Please enter your delivery address.</div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Name</label><input class="form-input" id="checkout-name" type="text" placeholder="Ahmad Rozali"><div class="field-error" id="err-name">Please enter your name.</div></div><div class="form-group"><label class="form-label">WhatsApp</label><input class="form-input" id="checkout-wa" type="tel" placeholder="+60 12 345 6789"><div class="field-error" id="err-wa">Please enter your WhatsApp number.</div></div></div>
+      <label class="form-label" style="margin-bottom:.75rem">Payment method</label>
+      <div class="payment-opt sel" onclick="selectPayment(this,'duitnow')"><div class="payment-opt-icon">🏦</div><div><div class="payment-opt-label">DuitNow / FPX</div><div class="payment-opt-sub">Instant bank transfer</div></div></div>
+      <div class="payment-opt" onclick="selectPayment(this,'ewallet')"><div class="payment-opt-icon">📱</div><div><div class="payment-opt-label">eWallet</div><div class="payment-opt-sub">Touch 'n Go, GrabPay, Boost</div></div></div>
+      <div class="payment-opt" onclick="selectPayment(this,'card')"><div class="payment-opt-icon">💳</div><div><div class="payment-opt-label">Visa / Mastercard</div><div class="payment-opt-sub">Secured by Stripe</div></div></div>
+      <div class="payment-opt" onclick="selectPayment(this,'cod')"><div class="payment-opt-icon">💵</div><div><div class="payment-opt-label">Cash on pickup</div><div class="payment-opt-sub">Pay when you collect</div></div></div>
+      <div style="height:.5px;background:var(--bd);margin:1rem 0"></div>
+      <div id="cs1-order-lines" style="margin-bottom:.875rem"></div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;font-size:15px;margin-bottom:1.25rem"><span>Total</span><span id="cs1-total">RM 0</span></div>
+      <button class="btn btn-green w-full" style="font-size:15px" onclick="placeOrder()"><i class="ti ti-lock"></i> Place order securely</button>
+      <p style="font-size:11.5px;color:var(--mu);text-align:center;margin-top:.625rem">Your order details will be sent via WhatsApp + email. Escrow protected.</p>
+    </div>
+    <div class="checkout-step" id="cs-2">
+      <div class="order-success">
+        <div class="order-success-icon"><i class="ti ti-circle-check-filled"></i></div>
+        <div class="order-number" id="order-num">Order #BM-2025-0481</div>
+        <p style="font-size:14px;color:var(--mu);margin-bottom:1.5rem;line-height:1.75">Your order has been placed. You'll receive a WhatsApp confirmation within minutes from each farm. Invoice emailed to you now.</p>
+        <div style="background:var(--pp);border-radius:12px;padding:1rem;text-align:left;margin-bottom:1.5rem">
+          <div style="font-size:12px;color:var(--mu);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em">What happens next</div>
+          <div style="font-size:13.5px;color:var(--f);line-height:1.8">1. Farm confirms your order via WhatsApp<br>2. Harvest or packing happens (1–2 days)<br>3. Delivery or pickup as arranged<br>4. Receipt auto-sent to your email</div>
+        </div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center">
+          <button class="btn btn-green" onclick="closeModal('checkout');closeCart();goPage('dashboard')">View in dashboard</button>
+          <button class="btn btn-outline" onclick="closeModal('checkout');closeCart()">Continue shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ALERT ADD MODAL -->
+<div class="modal-bg" id="modal-alert-add"><div class="modal">
+  <button class="modal-close" onclick="closeModal('alert-add')">×</button>
+  <div class="modal-title serif">Add a harvest alert</div>
+  <div class="modal-sub">We'll message you on WhatsApp when this product is available.</div>
+  <div class="form-group"><label class="form-label">Product or farm to watch</label><input class="form-input" type="text" id="alert-product" placeholder="e.g. Ulam Raja, Tirtha Quddus, Pegaga..."></div>
+  <div class="form-group"><label class="form-label">Your WhatsApp number</label><input class="form-input" type="tel" id="alert-wa" placeholder="+60 12 345 6789"></div>
+  <div class="form-group"><label class="form-label">Notify me when</label><select class="form-select"><option>Product is back in stock</option><option>New harvest is listed</option><option>Farm posts an update</option></select></div>
+  <button class="btn btn-green w-full" style="font-size:14px;padding:.875rem" onclick="addAlert()">Set harvest alert</button>
+</div></div>
+
+<!-- PWA INSTALL BANNER -->
+<div class="pwa-banner" id="pwa-banner">
+  <div style="font-size:28px">🌿</div>
+  <div class="pwa-banner-text"><strong>Add Bumi to your home screen</strong>Browse farms and order fresh produce even offline</div>
+  <button class="btn btn-green btn-sm" onclick="installPwa()">Install</button>
+  <button style="background:none;border:none;color:rgba(238,244,222,.4);cursor:pointer;font-size:20px;padding:0 .25rem" onclick="dismissPwa()">×</button>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i class="ti ti-arrow-up"></i></button>
+
+<!-- PLOTS PAGE: inject calculator via JS -->
+
 <div class="modal-bg" id="modal-signup"><div class="modal">
   <button class="modal-close" onclick="closeModal('signup')">×</button>
   <div class="modal-title serif">Join Bumi — free</div>
@@ -1063,7 +1536,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div class="form-group"><label class="form-label">Phone (WhatsApp)</label><input class="form-input" type="tel" placeholder="+60 12 345 6789"><div class="help-tip"><i class="ti ti-info-circle"></i> We send order updates via WhatsApp</div></div>
   <div class="form-group"><label class="form-label">I am joining as</label><select class="form-select"><option>A farmer / grower</option><option>A consumer / buyer</option><option>A café or restaurant</option><option>A community member</option></select></div>
   <div class="form-group"><label class="form-label">State / Region</label><select class="form-select"><option>Kuala Lumpur</option><option>Selangor</option><option>Penang</option><option>Johor</option><option>Perak</option><option>Pahang</option><option>Sabah</option><option>Sarawak</option><option>Other</option></select></div>
-  <button class="btn btn-green w-full" style="font-size:15px;padding:.875rem" onclick="showToast('signup');closeModal('signup')">Create free account</button>
+  <button class="btn btn-green w-full" style="font-size:15px;padding:.875rem" onclick="handleSignup()">Create free account</button>
   <p style="font-size:12px;color:var(--mu);text-align:center;margin-top:.875rem">Need help? Call us: 03-1234 5678 or WhatsApp</p>
 </div></div>
 
@@ -1905,6 +2378,367 @@ function submitReview(){
 // Extend msgs for new toasts
 msgs['review-err']='Please select a star rating first.';
 msgs['review-ok']='Your review has been posted. Shukran!';
+
+msgs.ok='Done!';
+msgs.kb='Guide downloading... (feature in development)';
+msgs.err='Please check the highlighted fields and try again.';
+
+// ── HANDLE SIGNUP → ONBOARDING ──
+function handleSignup(){
+  var nameEl=document.querySelector('#modal-signup input[placeholder="Ahmad"]');
+  var emailEl=document.querySelector('#modal-signup input[type="email"]');
+  var phoneEl=document.querySelector('#modal-signup input[type="tel"]');
+  var valid=true;
+  if(nameEl&&!nameEl.value.trim()){nameEl.classList.add('error');valid=false;}else if(nameEl)nameEl.classList.remove('error');
+  if(emailEl&&!emailEl.value.includes('@')){emailEl.classList.add('error');valid=false;}else if(emailEl)emailEl.classList.remove('error');
+  if(phoneEl&&phoneEl.value.replace(/\D/g,'').length<8){phoneEl.classList.add('error');valid=false;}else if(phoneEl)phoneEl.classList.remove('error');
+  if(!valid){showToast('err','Please fill in all required fields correctly.');return;}
+  closeModal('signup');
+  setTimeout(function(){openModal('onboard');},300);
+}
+
+// ── ONBOARDING ──
+var onbData={role:'',region:''};
+function selectOnboard(el,key,val){
+  onbData[key]=val;
+  el.closest('.onboard-options').querySelectorAll('.onboard-opt').forEach(function(o){o.classList.remove('sel');});
+  el.classList.add('sel');
+}
+function nextOnboard(step){
+  document.querySelectorAll('.onboard-step').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.onboard-dot').forEach(function(d,i){d.classList.toggle('active',i<step);});
+  var el=document.getElementById('onb-'+step);
+  if(el)el.classList.add('active');
+  if(step===3)buildOnbCTAs();
+}
+function buildOnbCTAs(){
+  var role=onbData.role||'buyer';
+  var ctas={
+    farmer:[{icon:'📦',label:'Add your first listing',action:"closeModal('onboard');goPage('dashboard')"},{icon:'✅',label:'Apply for Organic Verification',action:"closeModal('onboard');goPage('verify')"},{icon:'👥',label:'Join the community feed',action:"closeModal('onboard');goPage('community')"}],
+    buyer:[{icon:'🛒',label:'Browse the Pasar',action:"closeModal('onboard');goPage('market')"},{icon:'🏡',label:'Find a farm near you',action:"closeModal('onboard');goPage('farms')"},{icon:'🔔',label:'Set a harvest alert',action:"closeModal('onboard');goPage('impact')"}],
+    cafe:[{icon:'🌿',label:'Browse verified organic farms',action:"closeModal('onboard');goPage('farms')"},{icon:'📋',label:'Hire a farm consultant',action:"closeModal('onboard');goPage('hire')"},{icon:'🧾',label:'See the invoice system',action:"closeModal('onboard');goPage('dashboard')"}],
+    community:[{icon:'🌱',label:'Explore the community feed',action:"closeModal('onboard');goPage('community')"},{icon:'🗺️',label:'Find a plot near you',action:"closeModal('onboard');goPage('plots')"},{icon:'📚',label:'Browse knowledge base',action:"closeModal('onboard');goPage('impact')"}]
+  };
+  var list=ctas[role]||ctas.buyer;
+  var el=document.getElementById('onb-ctas');
+  if(el)el.innerHTML=list.map(function(c){
+    return '<div class="onboard-opt" style="text-align:left;display:flex;align-items:center;gap:.875rem;grid-column:1/-1" onclick="'+c.action+'">'
+      +'<div style="font-size:24px;flex-shrink:0">'+c.icon+'</div>'
+      +'<div style="font-size:14px;font-weight:500;color:var(--f)">'+c.label+'</div>'
+      +'<i class="ti ti-arrow-right" style="margin-left:auto;color:var(--g)"></i>'
+      +'</div>';
+  }).join('');
+}
+function finishOnboard(){closeModal('onboard');showToast('signup','Welcome to Bumi! Your account is ready.');}
+
+// ── CART ENGINE ──
+var cart=[];
+function cartTotal(){return cart.reduce(function(s,i){return s+i.price*i.qty;},0);}
+function cartCount(){return cart.reduce(function(s,i){return s+i.qty;},0);}
+function updateCartBadge(){
+  var n=cartCount();
+  var b=document.getElementById('cart-badge');
+  if(b){b.textContent=n;b.classList.toggle('show',n>0);}
+  var ch=document.getElementById('cart-count-head');
+  if(ch)ch.textContent=n;
+}
+function addToCart(id){
+  var p=products.find(function(x){return x.id===id;});
+  if(!p)return;
+  var priceNum=parseFloat(p.price.replace('RM','').trim());
+  var ex=cart.find(function(x){return x.id===id;});
+  if(ex){ex.qty++;}else{cart.push({id:id,name:p.name,farm:p.farm,price:priceNum,qty:1,icon:p.icon});}
+  updateCartBadge();renderCart();
+  showToast('cart',p.name+' added to basket.');
+  openCart();
+}
+function removeFromCart(id){cart=cart.filter(function(x){return x.id!==id;});updateCartBadge();renderCart();}
+function changeQty(id,delta){
+  var ex=cart.find(function(x){return x.id===id;});
+  if(!ex)return;
+  ex.qty+=delta;
+  if(ex.qty<=0)removeFromCart(id);
+  else{updateCartBadge();renderCart();}
+}
+function renderCart(){
+  var wrap=document.getElementById('cart-items-wrap');
+  var foot=document.getElementById('cart-foot');
+  if(!wrap)return;
+  if(!cart.length){
+    wrap.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🌿</div><div style="font-size:15px;font-weight:500;color:var(--f);margin-bottom:4px">Your basket is empty</div><div style="font-size:13px;color:var(--mu)">Browse the Pasar and add fresh produce from Malaysian farms.</div><button class="btn btn-green btn-sm mt2" onclick="closeCart();goPage(\'market\')">Browse the Pasar →</button></div>';
+    if(foot)foot.style.display='none';
+    return;
+  }
+  if(foot){
+    foot.style.display='block';
+    var tot=cartTotal();
+    var sub=document.getElementById('cart-subtotal');
+    var tn=document.getElementById('cart-total');
+    if(sub)sub.textContent='RM '+tot.toFixed(2);
+    if(tn)tn.textContent='RM '+tot.toFixed(2);
+  }
+  wrap.innerHTML=cart.map(function(item){
+    return '<div class="cart-item">'
+      +'<div class="cart-item-icon">'+item.icon+'</div>'
+      +'<div class="cart-item-info">'
+      +'<div class="cart-item-name">'+item.name+'</div>'
+      +'<div class="cart-item-farm">'+item.farm+'</div>'
+      +'<div class="cart-item-price">RM '+(item.price*item.qty).toFixed(2)+'</div>'
+      +'<div class="cart-item-qty">'
+      +'<button class="qty-btn" onclick="changeQty('+item.id+',-1)">−</button>'
+      +'<span class="qty-val">'+item.qty+'</span>'
+      +'<button class="qty-btn" onclick="changeQty('+item.id+',1)">+</button>'
+      +'</div>'
+      +'<button class="cart-remove" onclick="removeFromCart('+item.id+')">Remove</button>'
+      +'</div></div>';
+  }).join('');
+}
+function openCart(){
+  document.getElementById('cart-drawer').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function orderWhatsApp(){
+  if(!cart.length){showToast('err','Your basket is empty.');return;}
+  var lines=cart.map(function(i){return i.qty+'x '+i.name+' (RM '+i.price.toFixed(2)+')'}).join('%0A');
+  var msg='Hi Bumi farm! I would like to order:%0A'+lines+'%0ATotal: RM '+cartTotal().toFixed(2);
+  window.open('https://wa.me/60123456789?text='+msg,'_blank');
+}
+function openCheckout(){
+  if(!cart.length){showToast('err','Your basket is empty.');return;}
+  var lines=cart.map(function(i){return '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>'+i.name+' x'+i.qty+'</span><span>RM '+(i.price*i.qty).toFixed(2)+'</span></div>'}).join('');
+  var el=document.getElementById('cs1-order-lines');if(el)el.innerHTML=lines;
+  var tot=document.getElementById('cs1-total');if(tot)tot.textContent='RM '+cartTotal().toFixed(2);
+  var sub=document.getElementById('cs1-sub');if(sub)sub.textContent=cart.length+' item'+(cart.length!==1?'s':'')+' from Bumi';
+  document.querySelectorAll('.checkout-step').forEach(function(s){s.classList.remove('active');});
+  var cs1=document.getElementById('cs-1');if(cs1)cs1.classList.add('active');
+  closeCart();openModal('checkout');
+}
+function selectPayment(el){document.querySelectorAll('.payment-opt').forEach(function(o){o.classList.remove('sel');});el.classList.add('sel');}
+function placeOrder(){
+  var addr=document.getElementById('delivery-addr');
+  var nameEl=document.getElementById('checkout-name');
+  var wa=document.getElementById('checkout-wa');
+  var valid=true;
+  function chk(el,errId,test){
+    if(!el)return;
+    var ok=test(el.value);
+    el.classList.toggle('error',!ok);
+    var errEl=document.getElementById(errId);
+    if(errEl)errEl.classList.toggle('show',!ok);
+    if(!ok)valid=false;
+  }
+  chk(addr,'err-addr',function(v){return v.trim().length>4;});
+  chk(nameEl,'err-name',function(v){return v.trim().length>1;});
+  chk(wa,'err-wa',function(v){return v.replace(/\D/g,'').length>=8;});
+  if(!valid)return;
+  var ord='BM-2025-0'+Math.floor(400+Math.random()*500);
+  var ordEl=document.getElementById('order-num');if(ordEl)ordEl.textContent='Order #'+ord;
+  document.querySelectorAll('.checkout-step').forEach(function(s){s.classList.remove('active');});
+  var cs2=document.getElementById('cs-2');if(cs2)cs2.classList.add('active');
+  cart=[];updateCartBadge();renderCart();
+}
+// Rebind product card Add buttons to use real cart
+var _origRenderProductsCartV9=renderProducts;
+renderProducts=function(cat,search){
+  _origRenderProductsCartV9(cat,search);
+  setTimeout(function(){
+    document.querySelectorAll('.product-card').forEach(function(card){
+      var onclick=card.getAttribute('onclick')||'';
+      var match=onclick.match(/openProduct\((\d+)\)/);
+      if(!match)return;
+      var pid=parseInt(match[1]);
+      var btn=card.querySelector('.btn-green');
+      if(btn)btn.onclick=function(e){e.stopPropagation();addToCart(pid);};
+    });
+  },50);
+};
+
+// ── GLOBAL SEARCH ──
+function openSearch(){
+  var ov=document.getElementById('search-overlay');
+  if(ov)ov.classList.add('open');
+  setTimeout(function(){var i=document.getElementById('search-main-input');if(i)i.focus();},100);
+}
+function closeSearch(){var ov=document.getElementById('search-overlay');if(ov)ov.classList.remove('open');}
+function clearSearch(){
+  var i=document.getElementById('search-main-input');if(i)i.value='';
+  var r=document.getElementById('search-results');if(r)r.innerHTML='';
+  var s=document.getElementById('search-suggestions');if(s)s.style.display='flex';
+}
+function doSearch(q){var i=document.getElementById('search-main-input');if(i)i.value=q;globalSearch(q);}
+function globalSearch(q){
+  var sugg=document.getElementById('search-suggestions');
+  var results=document.getElementById('search-results');
+  if(!q||!q.trim()){if(results)results.innerHTML='';if(sugg)sugg.style.display='flex';return;}
+  if(sugg)sugg.style.display='none';
+  var ql=q.toLowerCase();var out='';
+  var pHits=products.filter(function(p){return p.name.toLowerCase().includes(ql)||p.farm.toLowerCase().includes(ql)||(p.desc&&p.desc.toLowerCase().includes(ql));});
+  if(pHits.length){
+    out+='<div class="search-section-title">Produce ('+pHits.length+')</div>';
+    out+=pHits.slice(0,4).map(function(p){return '<div class="search-result-item" onclick="closeSearch();openProduct('+p.id+')"><div class="search-result-icon">'+p.icon+'</div><div style="flex:1"><div class="search-result-name">'+p.name+'</div><div class="search-result-sub">'+p.farm+'</div></div><div class="search-result-tag">'+p.price+'</div></div>';}).join('');
+  }
+  var fHits=farms.filter(function(f){return f.name.toLowerCase().includes(ql)||f.loc.toLowerCase().includes(ql)||f.type.toLowerCase().includes(ql)||f.desc.toLowerCase().includes(ql)||f.tags.some(function(t){return t.toLowerCase().includes(ql);});});
+  if(fHits.length){
+    out+='<div class="search-section-title">Farms & Organisations ('+fHits.length+')</div>';
+    out+=fHits.slice(0,4).map(function(f){return '<div class="search-result-item" onclick="closeSearch();openFarmProfile('+f.id+')"><div class="search-result-icon" style="font-family:DM Serif Display,serif;font-size:18px;color:var(--lc)">'+f.name[0]+'</div><div style="flex:1"><div class="search-result-name">'+f.name+'</div><div class="search-result-sub">'+f.type+' - '+f.loc+'</div></div>'+(f.organic?'<div class="search-result-tag">Organic</div>':'')+'</div>';}).join('');
+  }
+  var faHits=farmers.filter(function(fa){return fa.name.toLowerCase().includes(ql)||fa.role.toLowerCase().includes(ql)||fa.loc.toLowerCase().includes(ql)||fa.bio.toLowerCase().includes(ql);});
+  if(faHits.length){
+    out+='<div class="search-section-title">Farmers & Educators ('+faHits.length+')</div>';
+    out+=faHits.slice(0,3).map(function(fa){return '<div class="search-result-item" onclick="closeSearch();openFarmerProfile('+fa.id+')"><div class="search-result-icon" style="background:rgba(107,143,58,.2);color:var(--gl);font-family:DM Serif Display,serif;font-size:18px">'+fa.name[0]+'</div><div style="flex:1"><div class="search-result-name">'+fa.name+'</div><div class="search-result-sub">'+fa.role.split("·")[0].trim()+' - '+fa.loc+'</div></div><div class="search-result-tag">'+fa.rate+'</div></div>';}).join('');
+  }
+  var poHits=posts.filter(function(p){return p.body.toLowerCase().includes(ql)||p.name.toLowerCase().includes(ql)||p.farm.toLowerCase().includes(ql);});
+  if(poHits.length){
+    out+='<div class="search-section-title">Community ('+poHits.length+')</div>';
+    out+=poHits.slice(0,2).map(function(p){return '<div class="search-result-item" onclick="closeSearch();goPage('community')"><div class="search-result-icon" style="background:rgba(107,143,58,.12);color:var(--gl);font-family:DM Serif Display,serif;font-size:18px">'+p.ini+'</div><div style="flex:1"><div class="search-result-name">'+p.name+'</div><div class="search-result-sub">'+p.body.substring(0,70)+'...</div></div></div>';}).join('');
+  }
+  if(!out)out='<div class="search-empty"><div style="font-size:40px;margin-bottom:.75rem;opacity:.3">🔍</div><div>No results for "'+q+'"</div><div style="font-size:12px;margin-top:.5rem">Try: ulam, compost, Janda Baik, permaculture</div></div>';
+  if(results)results.innerHTML=out;
+}
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}
+  if(e.key==='Escape'){closeSearch();}
+});
+
+// ── FARMS MAP/GRID TOGGLE ──
+function setFarmsView(v){
+  var grid=document.getElementById('farms-grid');
+  var mapView=document.getElementById('farms-map-view');
+  var gb=document.getElementById('view-grid-btn');
+  var mb=document.getElementById('view-map-btn');
+  if(v==='grid'){if(grid)grid.style.display='';if(mapView)mapView.style.display='none';if(gb)gb.classList.add('on');if(mb)mb.classList.remove('on');}
+  else{if(grid)grid.style.display='none';if(mapView)mapView.style.display='block';if(gb)gb.classList.remove('on');if(mb)mb.classList.add('on');}
+}
+
+// ── PLOT CALCULATOR ──
+function updateCalc(v){
+  v=parseInt(v);
+  var label=document.getElementById('calc-rm-label');if(label)label.textContent='RM '+v;
+  document.getElementById('calc-veg').textContent='~'+Math.round(v*0.08)+' kg';
+  document.getElementById('calc-cycles').textContent='6';
+  document.getElementById('calc-val').textContent='RM '+Math.round(v*0.16*6);
+}
+
+// ── IMPACT DASHBOARD ──
+function animateCount(id,target,prefix,suffix,duration){
+  var el=document.getElementById(id);if(!el)return;
+  var start=0,steps=60,step=target/steps;
+  var t=setInterval(function(){
+    start+=step;if(start>=target){start=target;clearInterval(t);}
+    var d=start>=1000?(start/1000).toFixed(1)+'k':Math.round(start);
+    el.textContent=(prefix||'')+d+(suffix||'');
+  },duration/steps);
+}
+function renderImpact(){
+  var ib=document.getElementById('bar-organic');var hb=document.getElementById('bar-halal');var db=document.getElementById('bar-direct');
+  setTimeout(function(){
+    if(ib)ib.style.width='48%';if(hb)hb.style.width='10%';if(db)db.style.width='73%';
+    animateCount('imp-kg',14382,'','',1200);
+    animateCount('imp-farms',29,'','',800);
+    animateCount('imp-rm',48600,'RM ','',1400);
+    animateCount('imp-trees',40042,'','',1600);
+  },200);
+  var pc=document.getElementById('produce-chart');var pl=document.getElementById('produce-labels');
+  if(pc){
+    var cats=[{l:'Vegetables',v:32,c:'var(--g)'},{l:'Herbs',v:24,c:'var(--gl)'},{l:'Fruits',v:18,c:'var(--am)'},{l:'Seeds',v:14,c:'#8bc34a'},{l:'Compost',v:8,c:'#795548'},{l:'Livestock',v:4,c:'#ff9800'}];
+    var max=Math.max.apply(null,cats.map(function(c){return c.v;}));
+    pc.innerHTML=cats.map(function(c){return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;border-radius:4px 4px 0 0;background:'+c.c+';height:'+(c.v/max*160)+'px;opacity:.85"></div><div style="font-size:10px;color:var(--mu);text-align:center">'+c.v+'%</div></div>';}).join('');
+    if(pl)pl.innerHTML=cats.map(function(c){return '<span style="font-size:10px;color:var(--mu);display:flex;align-items:center;gap:3px"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+c.c+'"></span>'+c.l+'</span>';}).join('');
+  }
+  var sb=document.getElementById('state-breakdown');
+  if(sb)sb.innerHTML=[{n:'Kuala Lumpur / Selangor',c:14},{n:'Pahang (Janda Baik area)',c:6},{n:'Johor',c:2},{n:'Perak',c:2},{n:'Penang',c:1},{n:'Langkawi, Kedah',c:1},{n:'National / Malaysia-wide',c:3}].map(function(s){return '<div style="display:flex;align-items:center;gap:.625rem;margin-bottom:.5rem"><div style="flex:1;font-size:12.5px;color:rgba(238,244,222,.6)">'+s.n+'</div><div style="font-size:13px;font-weight:600;color:var(--lc)">'+s.c+'</div></div>';}).join('');
+}
+
+// ── HARVEST ALERTS ──
+function removeAlert(btn){if(btn&&btn.closest)btn.closest('.hal-item').remove();showToast('ok','Alert removed.');}
+function addAlert(){
+  var prod=document.getElementById('alert-product');
+  var wa=document.getElementById('alert-wa');
+  if(prod&&!prod.value.trim()){prod.classList.add('error');return;}
+  if(wa&&wa.value.replace(/\D/g,'').length<8){wa.classList.add('error');return;}
+  if(prod)prod.classList.remove('error');if(wa)wa.classList.remove('error');
+  var list=document.getElementById('alert-list');
+  if(list&&prod&&wa){
+    var item=document.createElement('div');item.className='hal-item';
+    item.innerHTML='<div><div class="hal-name">'+prod.value+'</div><div class="hal-farm">WA: '+wa.value+'</div></div><button class="alert-pill set" onclick="removeAlert(this)"><i class="ti ti-bell-check"></i> Notifying</button>';
+    list.appendChild(item);
+  }
+  closeModal('alert-add');showToast('ok','Harvest alert set via WhatsApp!');
+}
+
+// ── BACK TO TOP ──
+window.addEventListener('scroll',function(){var bt=document.getElementById('back-top');if(bt)bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+
+// ── FORM VALIDATION ──
+document.addEventListener('input',function(e){
+  if(e.target&&(e.target.classList.contains('form-input')||e.target.classList.contains('form-select'))){
+    if(e.target.value.trim())e.target.classList.remove('error');
+  }
+});
+
+// ── SEASONAL CALENDAR ──
+var seasonData={
+  'Ulam Raja':[1,1,1,1,1,1,1,1,1,1,1,1],
+  'Kangkung':[1,1,1,1,1,1,1,1,1,1,1,1],
+  'Pegaga':[1,1,1,1,1,1,1,1,1,1,1,1],
+  'Rambutan':[0,0,0,0,0,1,1,1,0,0,0,0],
+  'Durian':[0,0,0,0,1,1,1,0,0,0,0,0],
+  'Papaya':[1,1,1,1,0,0,0,0,1,1,1,1]
+};
+var monthsShort=['J','F','M','A','M','J','J','A','S','O','N','D'];
+function buildSeasonalCalendar(name){
+  var data=seasonData[name];if(!data)return '';
+  var cur=new Date().getMonth();
+  return '<div style="margin-top:.875rem">'
+    +'<div style="font-size:12px;font-weight:500;color:var(--f);margin-bottom:5px">Seasonal availability</div>'
+    +'<div class="season-cal">'+data.map(function(v,i){return '<div class="season-cell'+(v?' active':'')+(i===cur?' partial':'')+'" title="'+monthsShort[i]+'"></div>';}).join('')+'</div>'
+    +'<div class="season-month-labels">'+monthsShort.map(function(m){return '<div class="season-month-label">'+m+'</div>';}).join('')+'</div></div>';
+}
+
+// ── PATCH product modal: add seasonal cal + WA button + real cart button ──
+var _origOpenProductFinal=openProduct;
+openProduct=function(id){
+  _origOpenProductFinal(id);
+  var p=products.find(function(x){return x.id===id;});if(!p)return;
+  setTimeout(function(){
+    var mc=document.getElementById('product-modal-content');if(!mc)return;
+    if(!mc.querySelector('.season-cal')){
+      var pn=Object.keys(seasonData).find(function(k){return p.name.toLowerCase().includes(k.toLowerCase());});
+      if(pn){
+        var refEl=mc.querySelector('[style*="background:var(--pp)"]');
+        if(refEl){var cd=document.createElement('div');cd.innerHTML=buildSeasonalCalendar(pn);refEl.parentNode.insertBefore(cd,refEl);}
+      }
+    }
+    var btnRow=mc.querySelector('.btn-green[style*="justify-content:center"]');
+    if(btnRow){
+      btnRow.onclick=function(){addToCart(id);closeModal('product');};
+      if(btnRow.parentNode&&!btnRow.parentNode.querySelector('.wa-order-btn')){
+        var waBtn=document.createElement('a');
+        waBtn.href='https://wa.me/60123456789?text=Hi%2C%20I%20found%20'+encodeURIComponent(p.name)+'%20on%20Bumi%20and%20would%20like%20to%20order.';
+        waBtn.target='_blank';waBtn.className='btn wa-order-btn';
+        waBtn.style.cssText='flex:1;justify-content:center;background:rgba(37,211,102,.1);color:#1a9b4e;border:1px solid rgba(37,211,102,.25)';
+        waBtn.innerHTML='<i class="ti ti-brand-whatsapp" style="color:#25D366"></i> Order via WhatsApp';
+        btnRow.parentNode.appendChild(waBtn);
+      }
+    }
+  },30);
+};
+
+// ── PWA ──
+var pwaPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();pwaPrompt=e;setTimeout(function(){var b=document.getElementById('pwa-banner');if(b)b.classList.add('show');},8000);});
+function installPwa(){if(pwaPrompt){pwaPrompt.prompt();pwaPrompt=null;}dismissPwa();}
+function dismissPwa(){var b=document.getElementById('pwa-banner');if(b)b.classList.remove('show');}
+
+// ── PATCH goPage to run impact animations ──
+var _origGoPageFinal=goPage;
+goPage=function(p){_origGoPageFinal(p);if(p==='impact')setTimeout(renderImpact,120);};
 
 // ── PATCH: inject ratings into farm profiles ──
 var _origOpenFarmProfile=openFarmProfile;
