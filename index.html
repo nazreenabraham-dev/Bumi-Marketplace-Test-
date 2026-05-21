@@ -404,6 +404,53 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   .sc{border-right:none}
   .filter-bar{gap:.25rem}
 }
+
+/* ── RATINGS & REVIEWS ── */
+.rating-summary{display:flex;gap:1.5rem;align-items:center;padding:1.25rem;background:var(--pp);border-radius:14px;margin-bottom:1.25rem;flex-wrap:wrap}
+.rating-big{text-align:center;flex-shrink:0}
+.rating-big-num{font-family:'DM Serif Display',serif;font-size:48px;color:var(--f);line-height:1}
+.rating-big-stars{display:flex;gap:2px;justify-content:center;margin:.25rem 0}
+.rating-big-count{font-size:12px;color:var(--mu)}
+.rating-bars{flex:1;min-width:180px}
+.rating-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rating-bar-label{font-size:11px;color:var(--mu);width:10px;text-align:right;flex-shrink:0}
+.rating-bar-track{flex:1;height:6px;background:var(--lc);border-radius:3px;overflow:hidden}
+.rating-bar-fill{height:100%;background:var(--am);border-radius:3px;transition:.4s}
+.rating-bar-pct{font-size:11px;color:var(--mu);width:28px;text-align:right;flex-shrink:0}
+.review-list{margin-top:1rem}
+.review-item{padding:1rem 0;border-bottom:.5px solid var(--bd)}
+.review-item:last-child{border:none}
+.review-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:14px;color:var(--lc);flex-shrink:0}
+.review-meta{flex:1}
+.review-name{font-size:13.5px;font-weight:500;color:var(--f)}
+.review-date{font-size:11px;color:var(--mu)}
+.review-stars{display:flex;gap:2px}
+.review-stars i{font-size:13px;color:var(--am)}
+.review-stars i.empty{color:rgba(184,115,51,.2)}
+.review-body{font-size:13.5px;color:var(--f);line-height:1.75}
+.review-helpful{display:flex;align-items:center;gap:8px;margin-top:.625rem}
+.review-helpful-btn{font-size:11.5px;color:var(--mu);background:none;border:1px solid var(--bd);padding:3px 10px;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.review-helpful-btn:hover{border-color:var(--g);color:var(--g)}
+.review-helpful-btn.voted{background:rgba(107,143,58,.08);border-color:var(--g);color:var(--g)}
+.review-tag{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;padding:2px 8px;border-radius:10px;background:rgba(107,143,58,.08);color:var(--g);font-weight:500}
+.review-write{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem}
+.star-input{display:flex;gap:4px;margin:.5rem 0 1rem}
+.star-input i{font-size:26px;color:rgba(184,115,51,.2);cursor:pointer;transition:.1s}
+.star-input i.lit{color:var(--am)}
+.star-input i:hover{transform:scale(1.15)}
+.rating-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:rgba(184,115,51,.1);color:var(--am);font-size:12px;font-weight:600;cursor:pointer}
+.rating-chip i{font-size:13px;color:var(--am)}
+.rating-chip:hover{background:rgba(184,115,51,.18)}
+.verified-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(107,143,58,.1);color:var(--g);margin-left:4px}
+.sort-row{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.sort-btn{font-size:11.5px;padding:4px 12px;border-radius:16px;border:1px solid var(--bd);background:transparent;color:var(--mu);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.12s}
+.sort-btn.on{background:var(--f);color:var(--lc);border-color:var(--f)}
+.review-photos{display:flex;gap:6px;flex-wrap:wrap;margin-top:.5rem}
+.review-photo{width:60px;height:60px;border-radius:8px;background:var(--lc);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:1px solid var(--bd)}
+.farmer-score{display:flex;flex-direction:column;align-items:center;padding:.75rem 1rem;background:rgba(107,143,58,.06);border-radius:12px;border:.5px solid rgba(107,143,58,.12)}
+.farmer-score-n{font-family:'DM Serif Display',serif;font-size:22px;color:var(--f)}
+.farmer-score-l{font-size:10px;color:var(--mu);text-align:center;line-height:1.4;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1096,6 +1143,48 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div id="product-modal-content"></div>
 </div></div>
 
+<!-- REVIEW MODAL -->
+<div class="modal-bg" id="modal-review"><div class="modal" style="max-width:520px">
+  <button class="modal-close" onclick="closeModal('review')">×</button>
+  <div class="modal-title serif" id="review-modal-title">Write a review</div>
+  <div class="modal-sub" id="review-modal-sub">Share your honest experience.</div>
+  <div class="form-group">
+    <label class="form-label">Your rating</label>
+    <div class="star-input" id="star-input-modal">
+      <i class="ti ti-star" data-v="1" onclick="setModalStars(1)"></i>
+      <i class="ti ti-star" data-v="2" onclick="setModalStars(2)"></i>
+      <i class="ti ti-star" data-v="3" onclick="setModalStars(3)"></i>
+      <i class="ti ti-star" data-v="4" onclick="setModalStars(4)"></i>
+      <i class="ti ti-star" data-v="5" onclick="setModalStars(5)"></i>
+    </div>
+    <div id="star-label" style="font-size:12px;color:var(--mu);height:16px"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">What best describes your experience?</label>
+    <div style="display:flex;gap:.375rem;flex-wrap:wrap;margin-top:.25rem" id="review-tags-wrap">
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Quality produce</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">On time</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Great communication</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Organic practices</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Knowledgeable</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Would hire again</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Fresh harvest</button>
+      <button class="sort-btn" onclick="toggleReviewTag(this)">Good value</button>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Your review <span style="color:var(--mu);font-weight:300">(optional)</span></label>
+    <textarea class="form-input" id="review-text-input" rows="3" style="resize:vertical" placeholder="Tell others what you experienced — the freshness, the knowledge, the care..."></textarea>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Your name</label>
+    <input class="form-input" id="review-name-input" type="text" placeholder="e.g. Amirah R. or Anonymous">
+  </div>
+  <input type="hidden" id="review-entity-type" value="">
+  <input type="hidden" id="review-entity-id" value="">
+  <button class="btn btn-green w-full" style="font-size:14px;padding:.875rem" onclick="submitReview()">Post review</button>
+</div></div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"><i class="ti ti-check" style="color:var(--gl);font-size:18px"></i><span id="toast-msg"></span></div>
 
@@ -1553,6 +1642,462 @@ renderPlots();
 renderWorkshopsSidebar();
 renderDashboard();
 renderFarms('all');
+
+// ══════════════════════════════════════════════
+// RATINGS & REVIEWS ENGINE
+// ══════════════════════════════════════════════
+
+var starLabels=['','Terrible','Poor','Okay','Good','Excellent'];
+var modalStarVal=0;
+
+// ── SEED REVIEWS DATA ──
+var reviewsDB={
+  farm:{
+    1:[
+      {id:'r1',name:'Aliya Hassan',ini:'A',rating:5,date:'12 May 2025',body:'The ulam and herbs from Mukha Tree are the freshest I have found in KL. Bought at the Saturday session — everything is harvested same morning. The syntropic system is truly impressive to walk through.',tags:['Quality produce','Fresh harvest'],helpful:14,voted:false,verified:true},
+      {id:'r2',name:'Dr. Rashdan',ini:'R',rating:5,date:'3 Apr 2025',body:'Attended Nazreen\'s composting workshop. Extremely knowledgeable and generous with information. Left with a bag of compost and enough knowledge to start my own system at home.',tags:['Knowledgeable','Great communication'],helpful:9,voted:false,verified:true},
+      {id:'r3',name:'Mei Ling C.',ini:'M',rating:4,date:'18 Mar 2025',body:'Love the community feel here. The farm events are well-organised and the produce quality is excellent. Wish there were more weekend pickup slots.',tags:['Quality produce','Good value'],helpful:6,voted:false,verified:false}
+    ],
+    2:[
+      {id:'r4',name:'Farouk & Family',ini:'F',rating:5,date:'20 Apr 2025',body:'Stayed two nights at Tirtha Quddus. Abas and Safia are incredibly warm hosts. The permaculture farm tour was genuinely educational — we left knowing so much more about growing food and caring for land.',tags:['Knowledgeable','Great communication'],helpful:18,voted:false,verified:true},
+      {id:'r5',name:'Nurul Ain',ini:'N',rating:5,date:'5 Mar 2025',body:'The ladies art retreat was one of the most restorative weekends I have had. The soap-making session, the farm walks, the meals — everything felt intentional and deeply nourishing.',tags:['Quality produce','Would hire again'],helpful:11,voted:false,verified:true}
+    ],
+    3:[
+      {id:'r6',name:'Priya Nambiar',ini:'P',rating:5,date:'8 May 2025',body:'Visited A Little Wild in Kota Tinggi and was blown away. What was once oil palm is now a thriving agroforest. The team is passionate, the produce is delicious, and the educational walk is worth every ringgit.',tags:['Knowledgeable','Organic practices'],helpful:22,voted:false,verified:true},
+      {id:'r7',name:'Ben Lim',ini:'B',rating:4,date:'14 Apr 2025',body:'Great syntropic agroforestry farm. The fruit box is well curated. Travel from KL is a 2-hour drive but absolutely worth it for a full experience. Would recommend the workshop.',tags:['Quality produce','Good value'],helpful:8,voted:false,verified:false}
+    ],
+    4:[
+      {id:'r8',name:'Hazwani Idris',ini:'H',rating:5,date:'30 Mar 2025',body:'Amy and Vladislav\'s Self-Sufficient Living Course changed how I think about food. The hands-on composting day was transformative. Their story — rebuilding after losing Permaculture Perak — is incredibly inspiring.',tags:['Knowledgeable','Would hire again'],helpful:19,voted:false,verified:true}
+    ],
+    8:[
+      {id:'r9',name:'Corporate Team, Axiata',ini:'C',rating:5,date:'22 Feb 2025',body:'Urban Hijau ran a full-day corporate sustainability workshop for our 40-person team. The integrated systems approach was eye-opening. Several team members have since started home gardens.',tags:['Knowledgeable','Great communication'],helpful:7,voted:false,verified:true}
+    ],
+    10:[
+      {id:'r10',name:'Cikgu Rozita',ini:'R',rating:5,date:'15 Apr 2025',body:'ESR built our school edible garden over three weekends. The students are obsessed with it. Best investment our school has made. The team is professional, patient, and genuinely passionate about food education.',tags:['Quality produce','Great communication'],helpful:15,voted:false,verified:true}
+    ],
+    15:[
+      {id:'r11',name:'Salmah Yusof',ini:'S',rating:5,date:'2 May 2025',body:'Free Tree Society gave us native seedlings for our taman. The volunteer session was so educational. My children now know the Malay names of 20 trees they pass every day.',tags:['Knowledgeable','Good value'],helpful:12,voted:false,verified:true}
+    ],
+    18:[
+      {id:'r12',name:'Dato Zul & Lisa',ini:'Z',rating:5,date:'1 May 2025',body:'The Sunday farm lunch at A Little Farm on the Hill is the best meal we have had in Malaysia this year. Pete and Lisa have created something truly special. Everything from soil to plate is done with intention.',tags:['Quality produce','Fresh harvest'],helpful:31,voted:false,verified:true},
+      {id:'r13',name:'Tan Wei Ren',ini:'T',rating:5,date:'10 Apr 2025',body:'Cheese-making class was brilliant. Lisa is a fantastic teacher. The farm tour with Pete afterwards was a genuine education in organic soil management. We left with cheese and a renewed respect for farmers.',tags:['Knowledgeable','Would hire again'],helpful:17,voted:false,verified:true}
+    ],
+    24:[
+      {id:'r14',name:'Izzat Mahamad',ini:'I',rating:5,date:'29 Mar 2025',body:"Angela's guided garden tour at Rimbun Dahan was extraordinary. She knows every tree by name, history, and ecology. The arboretum is a living library. One of Malaysia's finest spaces.",tags:['Knowledgeable','Organic practices'],helpful:24,voted:false,verified:true}
+    ],
+    28:[
+      {id:'r15',name:'Puan Siti Radziah',ini:'S',rating:5,date:'17 May 2025',body:'Kebun-Kebun Bangsar is a sanctuary inside the city. The Saturday gotong-royong is genuinely joyful — strangers become friends over composting. Ng Sek San has built something rare here.',tags:['Great communication','Organic practices'],helpful:28,voted:false,verified:true},
+      {id:'r16',name:'Kids of SJKC Jalan Ipoh',ini:'K',rating:5,date:'5 Apr 2025',body:'School visit with 35 students. The guides were wonderful with children. Every student got to harvest vegetables and take them home. Many wrote about it in their essays weeks later.',tags:['Knowledgeable','Good value'],helpful:16,voted:false,verified:true}
+    ]
+  },
+  farmer:{
+    1:[
+      {id:'f1',name:'Dina Osman',ini:'D',rating:5,date:'10 May 2025',body:'Booked Nazreen for a syntropic garden assessment of our Ampang property. She walked the land for two hours, had a plan within days, and her recommendations were both practical and deeply rooted in ecological principles.',tags:['Knowledgeable','Great communication'],helpful:8,voted:false,verified:true},
+      {id:'f2',name:'Muhammad Aiman',ini:'M',rating:5,date:'22 Mar 2025',body:'The composting workshop was worth every ringgit. Came home and built a system the following weekend. Three months later, I have the best soil I have ever grown in.',tags:['Knowledgeable','Would hire again'],helpful:6,voted:false,verified:true}
+    ],
+    2:[
+      {id:'f3',name:'Kampung Baru Residents',ini:'K',rating:5,date:'18 Apr 2025',body:'Nuraishah helped us set up our community garden in Kampung Baru. Her soil-building approach is patient and community-centred — she taught us, not just did it for us.',tags:['Knowledgeable','Great communication'],helpful:11,voted:false,verified:true}
+    ],
+    3:[
+      {id:'f4',name:'Syazwan Hamid',ini:'S',rating:5,date:'2 May 2025',body:'Irfan designed our 0.3-acre home food forest in Semenyih. The multi-layer planting, the water harvesting swales, the compost zone — all beautifully thought out. One year in, the system is thriving.',tags:['Knowledgeable','Organic practices'],helpful:13,voted:false,verified:true}
+    ],
+    5:[
+      {id:'f5',name:'Yap Shu Wen',ini:'Y',rating:5,date:'28 Apr 2025',body:'Kelefeh transformed our bare garden into an edible native landscape. He has a rare ability to see what a space wants to become. The plants he chose are all thriving and attracting incredible biodiversity.',tags:['Knowledgeable','Organic practices'],helpful:9,voted:false,verified:true}
+    ],
+    10:[
+      {id:'f6',name:'Ustaz Hafidz Family',ini:'U',rating:5,date:'5 May 2025',body:'Stayed at Tirtha Quddus for a four-day retreat. Abas and Safia are extraordinary hosts. Their knowledge of permaculture, their crafts, and their deep commitment to the land is felt in every corner of the farm.',tags:['Knowledgeable','Would hire again'],helpful:14,voted:false,verified:true}
+    ],
+    11:[
+      {id:'f7',name:'Kak Rohani',ini:'R',rating:5,date:'12 Apr 2025',body:'Pete and Lisa\'s organic farming consultation for my Bentong land was deeply practical. Pete understands soil at a level most people never will. Their farm is living proof of their approach.',tags:['Knowledgeable','Great communication'],helpful:10,voted:false,verified:true}
+    ],
+    12:[
+      {id:'f8',name:'Pn. Azreen',ini:'A',rating:5,date:'20 Mar 2025',body:"Amy and Vladislav's Self-Sufficient Living Course was a turning point for me. I came knowing nothing. I left with a composting system, propagation skills, and a completely different relationship with food.",tags:['Knowledgeable','Would hire again'],helpful:16,voted:false,verified:true}
+    ]
+  },
+  product:{
+    1:[
+      {id:'p1',name:'Iman K.',ini:'I',rating:5,date:'19 May 2025',body:'Freshest ulam I have found in KL. Harvested same morning — you can taste it. The pegaga is extraordinary. Will be ordering every week.',tags:['Fresh harvest','Quality produce'],helpful:7,voted:false,verified:true},
+      {id:'p2',name:'Puan Roslina',ini:'R',rating:4,date:'10 May 2025',body:'Excellent quality. Would love larger pack sizes for the family.',tags:['Quality produce'],helpful:3,voted:false,verified:false}
+    ],
+    2:[
+      {id:'p3',name:'Johor Expat Community',ini:'J',rating:5,date:'5 May 2025',body:'The seasonal fruit box from A Little Wild is unlike anything from a supermarket. The rambutan, papaya, and star fruit are all grown in forest conditions. Pure flavour.',tags:['Quality produce','Fresh harvest'],helpful:12,voted:false,verified:true}
+    ],
+    3:[
+      {id:'p4',name:'Chef Zaki, Brasserie 25',ini:'Z',rating:5,date:'1 May 2025',body:'Janda Baik goat is in a different class. Grass-fed, clean flavour, no gaminess. We now use it exclusively for our menu. Halal confirmed, always fresh.',tags:['Quality produce','Organic practices'],helpful:9,voted:false,verified:true}
+    ],
+    9:[
+      {id:'p5',name:'Keluarga Tan',ini:'K',rating:5,date:'15 Apr 2025',body:"Tiga Biri's produce box is beautifully curated. Amy clearly grows with love. Everything in the box this week was at peak flavour — the ulam raja was outstanding.",tags:['Fresh harvest','Good value'],helpful:6,voted:false,verified:true}
+    ],
+    13:[
+      {id:'p6',name:'Suraya M.',ini:'S',rating:5,date:'8 May 2025',body:'Lovely Organic Farm box is the best weekly investment I make. Everything is clean, certified organic, and arrives in perfect condition. Switching to a larger box next week.',tags:['Quality produce','Good value'],helpful:5,voted:false,verified:true}
+    ]
+  }
+};
+
+// Compute average rating from reviews array
+function avgRating(arr){
+  if(!arr||!arr.length)return 0;
+  return arr.reduce(function(s,r){return s+r.rating},0)/arr.length;
+}
+
+// Render star icons (filled/empty) at given size
+function renderStars(n,size){
+  size=size||14;
+  var full=Math.round(n);
+  var out='';
+  for(var i=1;i<=5;i++){
+    out+='<i class="ti '+(i<=full?'ti-star-filled':'ti-star')+'" style="font-size:'+size+'px;color:'+(i<=full?'var(--am)':'rgba(184,115,51,.2)')+'"></i>';
+  }
+  return out;
+}
+
+// Render the rating distribution bars
+function ratingBars(arr){
+  var counts=[0,0,0,0,0]; // index 0=1star … index4=5star
+  arr.forEach(function(r){if(r.rating>=1&&r.rating<=5)counts[r.rating-1]++;});
+  var total=arr.length||1;
+  var html='';
+  for(var i=5;i>=1;i--){
+    var pct=Math.round(counts[i-1]/total*100);
+    html+='<div class="rating-bar-row">'
+      +'<div class="rating-bar-label">'+i+'</div>'
+      +'<div class="rating-bar-track"><div class="rating-bar-fill" style="width:'+pct+'%"></div></div>'
+      +'<div class="rating-bar-pct">'+pct+'%</div>'
+      +'</div>';
+  }
+  return html;
+}
+
+// Build the full reviews section HTML
+function buildReviewsSection(type,id,name){
+  var list=reviewsDB[type]&&reviewsDB[type][id]?reviewsDB[type][id]:[];
+  var avg=avgRating(list);
+  var avgFmt=list.length?avg.toFixed(1):'—';
+  var section='<div id="reviews-section-'+type+'-'+id+'">';
+  // Summary bar
+  section+='<div class="rating-summary">'
+    +'<div class="rating-big">'
+    +'<div class="rating-big-num">'+avgFmt+'</div>'
+    +'<div class="rating-big-stars">'+renderStars(avg,16)+'</div>'
+    +'<div class="rating-big-count">'+list.length+' review'+(list.length!==1?'s':'')+'</div>'
+    +'</div>'
+    +'<div class="rating-bars">'+ratingBars(list)+'</div>'
+    +'</div>';
+  // Write review button
+  section+='<div class="review-write">'
+    +'<div style="font-size:14px;font-weight:500;margin-bottom:.375rem;color:var(--f)">Share your experience with '+name+'</div>'
+    +'<div style="font-size:12.5px;color:var(--mu);margin-bottom:.875rem">Your review helps the Bumi community make better choices.</div>'
+    +'<button class="btn btn-green btn-sm" onclick="openReviewModal(\''+type+'\',\''+id+'\',\''+name.replace(/'/g,'').replace(/"/g,'')+'\')"><i class="ti ti-pencil"></i> Write a review</button>'
+    +'</div>';
+  // Sort row
+  if(list.length){
+    section+='<div class="sort-row">'
+      +'<span style="font-size:12px;color:var(--mu)">Sort:</span>'
+      +'<button class="sort-btn on" onclick="sortReviews(\''+type+'\','+id+',\'newest\',this)">Newest</button>'
+      +'<button class="sort-btn" onclick="sortReviews(\''+type+'\','+id+',\'highest\',this)">Highest rated</button>'
+      +'<button class="sort-btn" onclick="sortReviews(\''+type+'\','+id+',\'helpful\',this)">Most helpful</button>'
+      +'</div>';
+  }
+  // Review list
+  section+='<div class="review-list" id="review-list-'+type+'-'+id+'">';
+  section+=renderReviewList(list);
+  section+='</div></div>';
+  return section;
+}
+
+function renderReviewList(list){
+  if(!list.length)return '<p class="lead" style="color:var(--mu);padding:.5rem 0">No reviews yet. Be the first to share your experience.</p>';
+  return list.map(function(r){
+    var tagHtml=r.tags?r.tags.slice(0,3).map(function(t){return '<span class="review-tag"><i class="ti ti-check" style="font-size:10px"></i>'+t+'</span>'}).join(' '):'';
+    return '<div class="review-item" id="rev-'+r.id+'">'
+      +'<div class="review-header">'
+      +'<div class="review-avatar">'+r.ini+'</div>'
+      +'<div class="review-meta">'
+      +'<div class="review-name">'+r.name+(r.verified?'<span class="verified-badge"><i class="ti ti-check" style="font-size:9px"></i> Verified</span>':'')+'</div>'
+      +'<div class="review-date">'+r.date+'</div>'
+      +'</div>'
+      +'<div class="review-stars">'+renderStars(r.rating,14)+'</div>'
+      +'</div>'
+      +(tagHtml?'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.5rem">'+tagHtml+'</div>':'')
+      +(r.body?'<div class="review-body">'+r.body+'</div>':'')
+      +'<div class="review-helpful">'
+      +'<span style="font-size:11.5px;color:var(--mu)">Helpful?</span>'
+      +'<button class="review-helpful-btn'+(r.voted?' voted':'')+'" onclick="voteHelpful(\''+r.id+'\')">'
+      +'<i class="ti ti-thumbs-up" style="font-size:12px"></i> '+r.helpful
+      +'</button>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function sortReviews(type,id,order,btn){
+  var list=reviewsDB[type]&&reviewsDB[type][id]?reviewsDB[type][id].slice():[];
+  if(order==='newest')list.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+  else if(order==='highest')list.sort(function(a,b){return b.rating-a.rating});
+  else if(order==='helpful')list.sort(function(a,b){return b.helpful-a.helpful});
+  var el=document.getElementById('review-list-'+type+'-'+id);
+  if(el)el.innerHTML=renderReviewList(list);
+  document.querySelectorAll('.sort-row .sort-btn').forEach(function(b){b.classList.remove('on')});
+  if(btn)btn.classList.add('on');
+}
+
+function voteHelpful(rid){
+  // find review across all types
+  var found=null;
+  Object.keys(reviewsDB).forEach(function(type){
+    Object.keys(reviewsDB[type]).forEach(function(id){
+      reviewsDB[type][id].forEach(function(r){if(r.id===rid){found=r;}});
+    });
+  });
+  if(!found)return;
+  if(found.voted){found.voted=false;found.helpful--;}else{found.voted=true;found.helpful++;}
+  var btn=document.querySelector('#rev-'+rid+' .review-helpful-btn');
+  if(btn){btn.innerHTML='<i class="ti ti-thumbs-up" style="font-size:12px"></i> '+found.helpful;btn.classList.toggle('voted',found.voted);}
+}
+
+// ── REVIEW MODAL ──
+var currentReviewCtx={type:'',id:0,name:''};
+function openReviewModal(type,id,name){
+  currentReviewCtx={type:type,id:parseInt(id)||id,name:name};
+  document.getElementById('review-modal-title').textContent='Review '+name;
+  document.getElementById('review-modal-sub').textContent='Your review helps growers and buyers across Malaysia.';
+  document.getElementById('review-entity-type').value=type;
+  document.getElementById('review-entity-id').value=id;
+  document.getElementById('review-name-input').value='';
+  document.getElementById('review-text-input').value='';
+  document.getElementById('star-label').textContent='';
+  setModalStars(0);
+  document.querySelectorAll('#review-tags-wrap .sort-btn').forEach(function(b){b.classList.remove('on')});
+  openModal('review');
+}
+function setModalStars(v){
+  modalStarVal=v;
+  document.querySelectorAll('#star-input-modal i').forEach(function(star,i){
+    star.classList.toggle('lit',i<v);
+    star.className='ti '+(i<v?'ti-star-filled':'ti-star');
+  });
+  document.getElementById('star-label').textContent=v?starLabels[v]:'Tap to rate';
+}
+function toggleReviewTag(btn){btn.classList.toggle('on');}
+function submitReview(){
+  if(!modalStarVal){showToast('review-err','Please select a star rating first.');return;}
+  var name=document.getElementById('review-name-input').value.trim()||'Anonymous';
+  var body=document.getElementById('review-text-input').value.trim();
+  var tags=[];
+  document.querySelectorAll('#review-tags-wrap .sort-btn.on').forEach(function(b){tags.push(b.textContent.trim());});
+  var type=currentReviewCtx.type;
+  var id=currentReviewCtx.id;
+  if(!reviewsDB[type])reviewsDB[type]={};
+  if(!reviewsDB[type][id])reviewsDB[type][id]=[];
+  var newRev={id:'u'+Date.now(),name:name,ini:name[0].toUpperCase(),rating:modalStarVal,date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),body:body,tags:tags,helpful:0,voted:false,verified:false};
+  reviewsDB[type][id].unshift(newRev);
+  closeModal('review');
+  // refresh visible review section
+  var secEl=document.getElementById('reviews-section-'+type+'-'+id);
+  if(secEl){
+    var parentTab=secEl.closest('.profile-tab-content');
+    var name2=currentReviewCtx.name;
+    secEl.outerHTML=buildReviewsSection(type,id,name2);
+  }
+  showToast('review-ok','Your review has been posted. Shukran!');
+}
+
+// Extend msgs for new toasts
+msgs['review-err']='Please select a star rating first.';
+msgs['review-ok']='Your review has been posted. Shukran!';
+
+// ── PATCH: inject ratings into farm profiles ──
+var _origOpenFarmProfile=openFarmProfile;
+openFarmProfile=function(id){
+  _origOpenFarmProfile(id);
+  // After rendering, inject reviews tab
+  var f=farms.find(function(x){return x.id===id});if(!f)return;
+  // Find the reviews tab content and inject
+  setTimeout(function(){
+    var ptab=document.getElementById('ptab-fp-posts');
+    if(!ptab)return;
+    // Add a Reviews tab button if not already present
+    var tabs=document.querySelector('.profile-tabs');
+    if(tabs&&!tabs.querySelector('[data-rev-tab="farm"]')){
+      var btn=document.createElement('button');
+      btn.className='profile-tab';
+      btn.setAttribute('data-rev-tab','farm');
+      var list=reviewsDB.farm&&reviewsDB.farm[id]?reviewsDB.farm[id]:[];
+      var avg=avgRating(list);
+      btn.innerHTML='Reviews'+(list.length?' <span style="font-size:10px;background:rgba(184,115,51,.12);color:var(--am);padding:2px 7px;border-radius:10px;font-weight:600">'+avg.toFixed(1)+'★</span>':'');
+      btn.onclick=function(){switchProfileTab(this,'fp-reviews')};
+      tabs.appendChild(btn);
+      var cont=document.createElement('div');
+      cont.className='profile-tab-content';
+      cont.id='ptab-fp-reviews';
+      cont.style.padding='1.5rem';
+      cont.innerHTML=buildReviewsSection('farm',id,f.name);
+      tabs.parentNode.insertBefore(cont,tabs.nextSibling.nextSibling.nextSibling||null);
+      tabs.parentNode.appendChild(cont);
+    }
+    // Also patch the rating chip on the farm card hero
+    var heroRole=document.querySelector('.profile-role');
+    if(heroRole&&!heroRole.querySelector('.rating-chip')){
+      var list2=reviewsDB.farm&&reviewsDB.farm[id]?reviewsDB.farm[id]:[];
+      if(list2.length){
+        var chip=document.createElement('span');
+        chip.className='rating-chip';
+        chip.style.marginLeft='8px';
+        chip.style.cursor='pointer';
+        chip.innerHTML='<i class="ti ti-star-filled"></i>'+avgRating(list2).toFixed(1)+' ('+list2.length+')';
+        chip.onclick=function(){
+          var rTab=document.querySelector('[data-rev-tab="farm"]');
+          if(rTab)switchProfileTab(rTab,'fp-reviews');
+        };
+        heroRole.appendChild(chip);
+      }
+    }
+  },50);
+};
+
+// ── PATCH: inject ratings into farmer profiles ──
+var _origOpenFarmerProfile=openFarmerProfile;
+openFarmerProfile=function(id){
+  _origOpenFarmerProfile(id);
+  var fa=farmers.find(function(x){return x.id===id});if(!fa)return;
+  setTimeout(function(){
+    var tabs=document.querySelector('.profile-tabs');
+    if(tabs&&!tabs.querySelector('[data-rev-tab="farmer"]')){
+      var list=reviewsDB.farmer&&reviewsDB.farmer[id]?reviewsDB.farmer[id]:[];
+      var btn=document.createElement('button');
+      btn.className='profile-tab';
+      btn.setAttribute('data-rev-tab','farmer');
+      btn.innerHTML='Reviews'+(list.length?' <span style="font-size:10px;background:rgba(184,115,51,.12);color:var(--am);padding:2px 7px;border-radius:10px;font-weight:600">'+avgRating(list).toFixed(1)+'★</span>':'');
+      btn.onclick=function(){switchProfileTab(this,'fa-reviews')};
+      tabs.appendChild(btn);
+      var cont=document.createElement('div');
+      cont.className='profile-tab-content';
+      cont.id='ptab-fa-reviews';
+      cont.style.padding='1.5rem';
+      cont.innerHTML=buildReviewsSection('farmer',id,fa.name);
+      tabs.parentNode.appendChild(cont);
+    }
+    // Rating scores row below bio in the profile hero
+    var bioEl=document.querySelector('.profile-bio');
+    if(bioEl&&!bioEl.parentNode.querySelector('.farmer-scores-row')){
+      var list2=reviewsDB.farmer&&reviewsDB.farmer[id]?reviewsDB.farmer[id]:[];
+      var scoreRow=document.createElement('div');
+      scoreRow.className='farmer-scores-row';
+      scoreRow.style.cssText='display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem';
+      var avg2=list2.length?avgRating(list2).toFixed(1):'—';
+      scoreRow.innerHTML=
+        '<div class="farmer-score"><div class="farmer-score-n">'+avg2+'<i class="ti ti-star-filled" style="font-size:16px;color:var(--am);margin-left:3px"></i></div><div class="farmer-score-l">Overall<br>rating</div></div>'
+        +'<div class="farmer-score"><div class="farmer-score-n">'+list2.length+'</div><div class="farmer-score-l">Reviews<br>received</div></div>'
+        +'<div class="farmer-score"><div class="farmer-score-n" style="font-size:17px">'+fa.rate+'</div><div class="farmer-score-l">Rate'+fa.unit+'</div></div>';
+      bioEl.parentNode.insertBefore(scoreRow,bioEl.nextSibling);
+    }
+  },50);
+};
+
+// ── PATCH: inject ratings into product modal ──
+var _origOpenProduct=openProduct;
+openProduct=function(id){
+  _origOpenProduct(id);
+  var p=products.find(function(x){return x.id===id});if(!p)return;
+  setTimeout(function(){
+    var mc=document.getElementById('product-modal-content');
+    if(!mc||mc.querySelector('.reviews-product'))return;
+    var list=reviewsDB.product&&reviewsDB.product[id]?reviewsDB.product[id]:[];
+    var avg=avgRating(list);
+    // Inject rating chip after price
+    var priceEl=mc.querySelector('[style*="font-family:DM Serif Display"]');
+    if(priceEl&&!priceEl.parentNode.querySelector('.rating-chip')){
+      var chip=document.createElement('div');
+      chip.style.cssText='display:flex;align-items:center;gap:.5rem;margin-bottom:.875rem';
+      chip.innerHTML=
+        '<div style="display:flex;gap:2px">'+renderStars(avg,14)+'</div>'
+        +'<span style="font-size:12.5px;font-weight:600;color:var(--am)">'+
+          (list.length?avg.toFixed(1)+' / 5':'No ratings yet')
+        +'</span>'
+        +'<span style="font-size:12px;color:var(--mu)">'+(list.length?'('+list.length+' review'+(list.length!==1?'s':'')+')'  :'')+'</span>';
+      priceEl.parentNode.insertBefore(chip,priceEl);
+    }
+    // Inject review section at bottom
+    var revDiv=document.createElement('div');
+    revDiv.className='reviews-product';
+    revDiv.style.marginTop='1.25rem';
+    revDiv.innerHTML='<div style="height:.5px;background:var(--bd);margin-bottom:1.25rem"></div>'
+      +'<div style="font-family:DM Serif Display,serif;font-size:18px;margin-bottom:.75rem;color:var(--f)">Reviews</div>'
+      +buildReviewsSection('product',id,p.name);
+    mc.appendChild(revDiv);
+  },30);
+};
+
+// ── PATCH: show rating chips on hire grid cards ──
+var _origRenderHire=renderHire;
+renderHire=function(f){
+  _origRenderHire(f);
+  setTimeout(function(){
+    document.querySelectorAll('#hire-grid .service-card').forEach(function(card,i){
+      var visibleFarmers=farmers.filter(function(x){return f==='all'||x.cat.includes(f)});
+      var fa=visibleFarmers[i];if(!fa)return;
+      var list=reviewsDB.farmer&&reviewsDB.farmer[fa.id]?reviewsDB.farmer[fa.id]:[];
+      if(!list.length)return;
+      var avg=avgRating(list);
+      var footer=card.querySelector('.service-footer');
+      if(!footer||footer.querySelector('.rating-chip'))return;
+      var chip=document.createElement('span');
+      chip.className='rating-chip';
+      chip.innerHTML='<i class="ti ti-star-filled"></i>'+avg.toFixed(1)+' ('+list.length+')';
+      chip.style.marginTop='4px';
+      footer.querySelector('.stars').innerHTML=chip.outerHTML;
+    });
+  },30);
+};
+
+// ── PATCH: show rating chips on farm directory cards ──
+var _origRenderFarms=renderFarms;
+renderFarms=function(filter){
+  _origRenderFarms(filter);
+  setTimeout(function(){
+    var fn=farmFilterMap[filter]||farmFilterMap.all;
+    var visible=farms.filter(fn);
+    document.querySelectorAll('#farms-grid .card').forEach(function(card,i){
+      var f=visible[i];if(!f)return;
+      var list=reviewsDB.farm&&reviewsDB.farm[f.id]?reviewsDB.farm[f.id]:[];
+      if(!list.length)return;
+      var avg=avgRating(list);
+      // inject rating chip next to connect button
+      var btns=card.querySelector('[style*="display:flex"][style*="gap:.5rem"]');
+      if(!btns||btns.querySelector('.rating-chip'))return;
+      var chip=document.createElement('span');
+      chip.className='rating-chip';
+      chip.innerHTML='<i class="ti ti-star-filled"></i>'+avg.toFixed(1);
+      chip.style.fontSize='11px';
+      btns.insertBefore(chip,btns.firstChild);
+    });
+  },30);
+};
+
+// ── PATCH: inject review chip on product cards in market ──
+var _origRenderProducts=renderProducts;
+renderProducts=function(cat,search){
+  _origRenderProducts(cat,search);
+  setTimeout(function(){
+    document.querySelectorAll('.product-card').forEach(function(card){
+      var onclick=card.getAttribute('onclick')||'';
+      var match=onclick.match(/openProduct\((\d+)\)/);
+      if(!match)return;
+      var pid=parseInt(match[1]);
+      var list=reviewsDB.product&&reviewsDB.product[pid]?reviewsDB.product[pid]:[];
+      if(!list.length)return;
+      var avg=avgRating(list);
+      var body=card.querySelector('.product-body');
+      if(!body||body.querySelector('.rating-chip'))return;
+      var chip=document.createElement('div');
+      chip.style.cssText='display:flex;align-items:center;gap:4px;margin-bottom:.375rem';
+      chip.innerHTML='<div style="display:flex;gap:1px">'+renderStars(avg,12)+'</div>'
+        +'<span style="font-size:11.5px;font-weight:600;color:var(--am)">'+avg.toFixed(1)+'</span>'
+        +'<span style="font-size:11px;color:var(--mu)">('+list.length+')</span>';
+      body.insertBefore(chip,body.firstChild);
+    });
+  },30);
+};
 </script>
 </body>
 </html>
