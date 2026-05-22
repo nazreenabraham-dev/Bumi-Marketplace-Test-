@@ -588,10 +588,10 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <li><a onclick="goPage('home')" id="nav-home" class="active">Home</a></li>
     <li><a onclick="goPage('market')" id="nav-market">Pasar</a></li>
     <li><a onclick="goPage('hire')" id="nav-hire">Hire</a></li>
-    <li><a onclick="goPage('community')" id="nav-community">Community</a></li>
+    <li><a onclick="goPage('community')" id="nav-community">Komuniti</a></li>
     <li><a onclick="goPage('plots')" id="nav-plots">Plots</a></li>
     <li><a onclick="goPage('farms')" id="nav-farms">Farms</a></li>
-    <li><a onclick="goPage('diary')" id="nav-diary">Diary</a></li>
+    <li><a onclick="goPage('dashboard')" id="nav-dashboard">My Kebun</a></li>
     <li><a onclick="goPage('b2b')" id="nav-b2b" style="color:var(--am)">B2B</a></li>
     <li><a onclick="goPage('verify')" id="nav-verify">Verify</a></li>
   </ul>
@@ -613,11 +613,11 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <li><a onclick="goPage('home');closeMobileNav()">Home</a></li>
     <li><a onclick="goPage('market');closeMobileNav()">Pasar — Marketplace</a></li>
     <li><a onclick="goPage('hire');closeMobileNav()">Hire a Farmer</a></li>
-    <li><a onclick="goPage('community');closeMobileNav()">Community</a></li>
+    <li><a onclick="goPage('community');closeMobileNav()">Komuniti &amp; Diary</a></li>
     <li><a onclick="goPage('plots');closeMobileNav()">Plots</a></li>
     <li><a onclick="goPage('farms');closeMobileNav()">Farm Directory</a></li>
     <li><a onclick="goPage('verify');closeMobileNav()">Verify my Farm</a></li>
-    <li><a onclick="goPage('dashboard');closeMobileNav()">My Dashboard</a></li>
+    <li><a onclick="goPage('dashboard');closeMobileNav()" style="color:var(--gl)">My Kebun</a></li>
   </ul>
   <div class="mobile-nav-actions">
     <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="openModal('signup');closeMobileNav()">Join free — zero cost</button>
@@ -778,13 +778,13 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
       </div>
       <div class="g3 mt2">
         <div class="feature-card"><i class="ti ti-receipt feat-icon"></i><div class="feat-name">Built-in Invoicing &amp; Receipts</div><div class="feat-desc">Every sale auto-generates a professional invoice. Send via WhatsApp or email. All records downloadable as PDF.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('dashboard')">See invoice system →</button></div>
-        <div class="feature-card"><i class="ti ti-chart-bar feat-icon"></i><div class="feat-name">Farm Dashboard &amp; Analytics</div><div class="feat-desc">Track earnings, inventory levels, harvest logs, and order history in one clean dashboard. See what's selling and what's running low.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('dashboard')">Open your dashboard →</button></div>
+        <div class="feature-card"><i class="ti ti-chart-bar feat-icon"></i><div class="feat-name">My Kebun — Dashboard &amp; Analytics</div><div class="feat-desc">Track earnings, inventory levels, harvest logs, and order history in one clean dashboard. See what's selling and what's running low.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('dashboard')">Open My Kebun →</button></div>
         <div class="feature-card"><i class="ti ti-credit-card feat-icon"></i><div class="feat-name">Online Payments — Fully Integrated</div><div class="feat-desc">Accept DuitNow, FPX, Visa, Mastercard, and e-wallets. Funds hit your account within 1 working day. Escrow protection for both sides.</div></div>
         <div class="feature-card" style="border-color:rgba(107,143,58,.3);background:rgba(107,143,58,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:var(--g);color:var(--lc);font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-stethoscope feat-icon" style="color:var(--g)"></i><div class="feat-name">AI Plant Doctor</div><div class="feat-desc">Upload a photo of any sick plant or crop. Bumi's AI identifies the disease, pest, or deficiency and gives you a Malaysian-specific treatment plan in seconds.</div><button class="btn btn-green btn-sm mt1" onclick="goPage('dashboard');setTimeout(function(){showDash(null,'plant')},100)">Try Plant Doctor →</button></div>
         <div class="feature-card" style="border-color:rgba(37,211,102,.25);background:rgba(37,211,102,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-brand-whatsapp feat-icon" style="color:#25d366"></i><div class="feat-name">WhatsApp-First Ordering</div><div class="feat-desc">Every farm has a direct WhatsApp button. Most Malaysian smallholder buyers order via WhatsApp — now every product and farm profile connects instantly.</div></div>
         <div class="feature-card" style="border-color:rgba(52,120,255,.2);background:rgba(52,120,255,.02)"><div style="display:inline-flex;align-items:center;gap:6px;background:#3478ff;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-map feat-icon" style="color:#3478ff"></i><div class="feat-name">Farm Map — All 29 Farms</div><div class="feat-desc">See every farm on an interactive map, filtered by region. Perfect for discovering what's near you. Tap any pin for the full farm profile.</div><button class="btn btn-outline btn-sm mt1" style="border-color:#3478ff;color:#3478ff" onclick="goPage('farms');setTimeout(function(){toggleFarmMap(true)},100)">View farm map →</button></div>
         <div class="feature-card" style="border-color:rgba(184,115,51,.3);background:rgba(184,115,51,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:var(--am);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-building-store feat-icon" style="color:var(--am)"></i><div class="feat-name">B2B Buyer Portal</div><div class="feat-desc">Cafés and restaurants get bulk pricing, weekly scheduling, consolidated invoicing across farms, and a shareable source list for accountants.</div><button class="btn btn-amber btn-sm mt1" onclick="goPage('b2b')">Open B2B Portal →</button></div>
-        <div class="feature-card"><i class="ti ti-notebook feat-icon"></i><div class="feat-name">Farmer Diary &amp; Growing Log</div><div class="feat-desc">A public, timestamped growing journal. Farmers share real field entries — harvests, observations, challenges. Builds buyer trust and creates organic content.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('diary')">Read the Diary →</button></div>
+        <div class="feature-card"><i class="ti ti-notebook feat-icon"></i><div class="feat-name">Farmer Diary &amp; Growing Log</div><div class="feat-desc">A public, timestamped growing journal. Farmers share real field entries — harvests, observations, challenges. Builds buyer trust and creates organic content.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('community');setTimeout(function(){switchCommunityTab('diary')},50)">Read the Diary →</button></div>
         <div class="feature-card"><i class="ti ti-package feat-icon"></i><div class="feat-name">Inventory &amp; Stock Management</div><div class="feat-desc">Log produce, set stock quantities, receive low-stock alerts. Track from planting to harvest to sale — single pot to 1,000 rows.</div></div>
         <div class="feature-card"><i class="ti ti-users feat-icon"></i><div class="feat-name">Community Plots &amp; Land Sharing</div><div class="feat-desc">List your land for co-farming. Join community plots. Co-invest in shared growing spaces and receive your harvest share each cycle.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('plots')">Explore plots →</button></div>
         <div class="feature-card"><i class="ti ti-certificate feat-icon"></i><div class="feat-name">Organic &amp; Halal Verification</div><div class="feat-desc">Physical farm audit by a trained Bumi verifier. Organic badge free in year one. Halal + Organic available from RM 333.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('verify')">Learn more →</button></div>
@@ -900,39 +900,83 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 
 <!-- COMMUNITY PAGE -->
 <div class="page" id="page-community">
-  <section class="section" style="padding-bottom:1rem">
-    <div class="container flex-between">
-      <div>
-        <div class="eyebrow">Komuniti</div>
-        <h2 class="serif">The living feed of Malaysian growers.</h2>
+  <!-- PAGE HEADER -->
+  <section class="section" style="padding-bottom:0;background:var(--dk)">
+    <div class="container">
+      <div class="flex-between" style="align-items:flex-end;flex-wrap:wrap;gap:1rem">
+        <div>
+          <div class="eyebrow eyebrow-lt">Komuniti &amp; Buku Ladang</div>
+          <h2 class="serif" style="color:var(--lc);margin-bottom:.375rem">The living voice of Malaysian growers.</h2>
+          <p class="lead" style="color:rgba(168,196,106,.45);max-width:520px;margin:0">Community updates, growing diaries, and collective wisdom — all in one place.</p>
+        </div>
+        <button class="btn btn-green" onclick="openModal('post')"><i class="ti ti-pencil"></i> Share an update</button>
       </div>
-      <button class="btn btn-green" onclick="openModal('post')"><i class="ti ti-pencil"></i> Share an update</button>
+      <!-- PRIMARY TABS -->
+      <div style="display:flex;gap:0;margin-top:1.5rem;border-bottom:.5px solid rgba(107,143,58,.18)">
+        <button id="ctab-btn-feed" onclick="switchCommunityTab('feed')" style="font-size:13.5px;font-weight:500;padding:.75rem 1.5rem;border:none;background:none;cursor:pointer;color:var(--gl);border-bottom:2px solid var(--g);font-family:'DM Sans',sans-serif;letter-spacing:.02em">Komuniti Feed</button>
+        <button id="ctab-btn-diary" onclick="switchCommunityTab('diary')" style="font-size:13.5px;font-weight:500;padding:.75rem 1.5rem;border:none;background:none;cursor:pointer;color:rgba(168,196,106,.4);border-bottom:2px solid transparent;font-family:'DM Sans',sans-serif;letter-spacing:.02em">Buku Ladang — Farmer Diary</button>
+      </div>
     </div>
   </section>
-  <div class="filter-bar" style="position:static">
-    <button class="filter-btn on" onclick="filterFeed(this,'all')">All posts</button>
-    <button class="filter-btn" onclick="filterFeed(this,'harvest')">Harvests</button>
-    <button class="filter-btn" onclick="filterFeed(this,'learn')">Learning</button>
-    <button class="filter-btn" onclick="filterFeed(this,'plot')">Plots &amp; Spaces</button>
-  </div>
-  <div class="community-layout" style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto">
-    <div id="feed-grid"></div>
-    <div class="community-sidebar">
-      <div style="background:var(--wh);border:1px solid var(--bd);border-radius:16px;padding:1.25rem;margin-bottom:1rem">
-        <div class="eyebrow">Upcoming Workshops</div>
-        <div id="workshops-sidebar"></div>
-      </div>
-      <div style="background:var(--f);border-radius:16px;padding:1.25rem">
-        <div class="eyebrow eyebrow-lt">Community Stats</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem">
-          <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">43</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Active Growers</div></div>
-          <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">18</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Plots Available</div></div>
-          <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">12</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Community Kebuns</div></div>
-          <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">RM14k</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Paid to Farmers</div></div>
+
+  <!-- ── COMMUNITY FEED TAB ── -->
+  <div id="ctab-feed">
+    <div class="filter-bar" style="position:static">
+      <button class="filter-btn on" onclick="filterFeed(this,'all')">All posts</button>
+      <button class="filter-btn" onclick="filterFeed(this,'harvest')">Harvests</button>
+      <button class="filter-btn" onclick="filterFeed(this,'learn')">Learning</button>
+      <button class="filter-btn" onclick="filterFeed(this,'plot')">Plots &amp; Spaces</button>
+    </div>
+    <div class="community-layout" style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto">
+      <div id="feed-grid"></div>
+      <div class="community-sidebar">
+        <div style="background:var(--wh);border:1px solid var(--bd);border-radius:16px;padding:1.25rem;margin-bottom:1rem">
+          <div class="eyebrow">Upcoming Workshops</div>
+          <div id="workshops-sidebar"></div>
+        </div>
+        <div style="background:var(--f);border-radius:16px;padding:1.25rem">
+          <div class="eyebrow eyebrow-lt">Community Stats</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem">
+            <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">43</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Active Growers</div></div>
+            <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">18</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Plots Available</div></div>
+            <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">12</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Community Kebuns</div></div>
+            <div style="text-align:center;padding:.75rem;background:rgba(107,143,58,.08);border-radius:10px"><div style="font-family:DM Serif Display,serif;font-size:22px;color:var(--lc)">RM14k</div><div style="font-size:11px;color:rgba(168,196,106,.4)">Paid to Farmers</div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- ── FARMER DIARY TAB ── -->
+  <div id="ctab-diary" style="display:none">
+    <div class="diary-filter-tabs">
+      <button class="diary-tab on" onclick="filterDiary(this,'all')">All entries</button>
+      <button class="diary-tab" onclick="filterDiary(this,'harvest')">🌿 Harvests</button>
+      <button class="diary-tab" onclick="filterDiary(this,'planting')">🌱 Plantings</button>
+      <button class="diary-tab" onclick="filterDiary(this,'observation')">🔍 Observations</button>
+      <button class="diary-tab" onclick="filterDiary(this,'challenge')">⚠ Challenges</button>
+      <button class="diary-tab" onclick="filterDiary(this,'mukha')">Mukha Tree</button>
+      <button class="diary-tab" onclick="filterDiary(this,'alittlewild')">A Little Wild</button>
+      <button class="diary-tab" onclick="filterDiary(this,'kkb')">KKB</button>
+    </div>
+    <div class="diary-layout">
+      <div id="diary-feed"></div>
+      <div>
+        <div class="diary-sidebar-card">
+          <div class="eyebrow">Submit a diary entry</div>
+          <p style="font-size:12.5px;color:var(--mu);margin-bottom:.875rem">Are you a farmer on Bumi? Log your growing entries — builds buyer trust, educates the community, and creates organic content for your farm.</p>
+          <div class="form-group"><label class="form-label">Your entry</label><textarea class="form-input" rows="3" style="resize:none" placeholder="What happened on the farm today?"></textarea></div>
+          <div class="form-group"><label class="form-label">Entry type</label><select class="form-select"><option>Harvest</option><option>Planting</option><option>Observation</option><option>Challenge</option></select></div>
+          <button class="btn btn-green w-full btn-sm" onclick="showToast('post')">Post to diary</button>
+        </div>
+        <div class="diary-sidebar-card">
+          <div class="eyebrow">Active Diarists</div>
+          <div id="diary-active-farms"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('hire')">Hire</a></div></footer>
 </div>
 
@@ -1021,9 +1065,9 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <footer style="margin-top:2rem"><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')">Pasar</a></div></footer>
 </div>
 
-<!-- DASHBOARD PAGE -->
+<!-- MY KEBUN PAGE -->
 <div class="page" id="page-dashboard">
-  <!-- MOBILE DASHBOARD NAV -->
+  <!-- MOBILE KEBUN NAV -->
   <div class="dash-mobile-nav" id="dash-mobile-nav">
     <button class="dash-mobile-btn active" onclick="showDash(this,'overview')"><i class="ti ti-layout-dashboard"></i> Overview</button>
     <button class="dash-mobile-btn" onclick="showDash(this,'orders')"><i class="ti ti-shopping-cart"></i> Orders</button>
@@ -1037,7 +1081,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <div class="dash-layout">
     <div class="dash-sidebar">
       <div style="padding:1rem 1.5rem;margin-bottom:.5rem">
-        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(168,196,106,.35);margin-bottom:4px">Logged in as</div>
+        <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(168,196,106,.35);margin-bottom:6px">My Kebun</div>
         <div style="font-size:14px;font-weight:500;color:var(--lc)">Nazreen · Mukha Tree</div>
         <div style="display:flex;gap:4px;margin-top:6px"><span class="tag tag-organic" style="font-size:10px">Organic ✓</span></div>
       </div>
@@ -1051,12 +1095,12 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
       <div class="dash-nav-item" onclick="showDash(this,'plant')" style="position:relative"><i class="ti ti-stethoscope"></i><span>Plant Doctor</span><span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--g);color:var(--wh);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px">AI</span></div>
       <div style="height:1px;background:rgba(107,143,58,.1);margin:.75rem 1.5rem"></div>
       <div class="dash-nav-item" onclick="goPage('verify')"><i class="ti ti-certificate"></i><span>Verification</span></div>
-      <div class="dash-nav-item" onclick="goPage('community')"><i class="ti ti-users"></i><span>Community</span></div>
+      <div class="dash-nav-item" onclick="goPage('community')"><i class="ti ti-users"></i><span>Komuniti</span></div>
     </div>
     <div class="dash-main">
       <div class="dash-section active" id="dash-overview">
         <div class="dash-header flex-between">
-          <div><div class="dash-title serif">Farm Overview</div><div class="dash-sub">Good morning, Nazreen. Here is what is happening on your farm today.</div></div>
+          <div><div class="dash-title serif">My Kebun</div><div class="dash-sub">Good morning, Nazreen. Here is what is growing on your farm today.</div></div>
           <button class="btn btn-green btn-sm" onclick="openModal('add-listing')">+ Add listing</button>
         </div>
         <div class="kpi-row">
@@ -1496,43 +1540,6 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 </div></div>
 
 <!-- FARMER DIARY PAGE -->
-<div class="page" id="page-diary">
-  <section class="section" style="padding-bottom:1rem;background:var(--dk)">
-    <div class="container">
-      <div class="eyebrow eyebrow-lt">Buku Ladang — Farmer Diary</div>
-      <h2 class="serif" style="color:var(--lc)">From the field, in their own words.</h2>
-      <p class="lead" style="color:rgba(168,196,106,.5);max-width:580px">Real timestamped growing entries from Malaysian farmers. Every planting, harvest, challenge, and observation. Unfiltered. Authentic. Instructive.</p>
-    </div>
-  </section>
-  <div class="diary-filter-tabs">
-    <button class="diary-tab on" onclick="filterDiary(this,'all')">All entries</button>
-    <button class="diary-tab" onclick="filterDiary(this,'harvest')">🌿 Harvests</button>
-    <button class="diary-tab" onclick="filterDiary(this,'planting')">🌱 Plantings</button>
-    <button class="diary-tab" onclick="filterDiary(this,'observation')">🔍 Observations</button>
-    <button class="diary-tab" onclick="filterDiary(this,'challenge')">⚠ Challenges</button>
-    <button class="diary-tab" onclick="filterDiary(this,'mukha')">Mukha Tree</button>
-    <button class="diary-tab" onclick="filterDiary(this,'alittlewild')">A Little Wild</button>
-    <button class="diary-tab" onclick="filterDiary(this,'kkb')">KKB</button>
-  </div>
-  <div class="diary-layout">
-    <div id="diary-feed"></div>
-    <div>
-      <div class="diary-sidebar-card">
-        <div class="eyebrow">Submit a diary entry</div>
-        <p style="font-size:12.5px;color:var(--mu);margin-bottom:.875rem">Are you a farmer on Bumi? Log your growing entries — builds buyer trust, educates the community, and creates organic content for your farm.</p>
-        <div class="form-group"><label class="form-label">Your entry</label><textarea class="form-input" rows="3" style="resize:none" placeholder="What happened on the farm today?"></textarea></div>
-        <div class="form-group"><label class="form-label">Entry type</label><select class="form-select"><option>Harvest</option><option>Planting</option><option>Observation</option><option>Challenge</option></select></div>
-        <button class="btn btn-green w-full btn-sm" onclick="showToast('post')">Post to diary</button>
-      </div>
-      <div class="diary-sidebar-card">
-        <div class="eyebrow">Active Diarists</div>
-        <div id="diary-active-farms"></div>
-      </div>
-    </div>
-  </div>
-  <footer><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('community')">Community</a></div></footer>
-</div>
-
 <!-- B2B BUYER PORTAL PAGE -->
 <div class="page" id="page-b2b">
   <div class="b2b-hero">
@@ -1723,13 +1730,35 @@ var revData=[980,1100,1350,1200,1580,1400,1750,1900,2100,1950,2200,2340];
 
 // ── NAVIGATION ──
 function goPage(p){
+  // 'diary' now lives inside community page
+  if(p==='diary'){goPage('community');setTimeout(function(){switchCommunityTab('diary')},60);return;}
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active')});
   var pg=document.getElementById('page-'+p);
   if(pg)pg.classList.add('active');
   document.querySelectorAll('.nav-links li a').forEach(function(a){a.classList.remove('active')});
-  var na=document.getElementById('nav-'+p);
+  // dashboard maps to nav-dashboard
+  var navKey=p==='dashboard'?'dashboard':p;
+  var na=document.getElementById('nav-'+navKey);
   if(na)na.classList.add('active');
   window.scrollTo(0,0);
+}
+
+// ── COMMUNITY TABS ──
+function switchCommunityTab(tab){
+  var feedBtn=document.getElementById('ctab-btn-feed');
+  var diaryBtn=document.getElementById('ctab-btn-diary');
+  var feedEl=document.getElementById('ctab-feed');
+  var diaryEl=document.getElementById('ctab-diary');
+  var activeStyle='color:var(--gl);border-bottom:2px solid var(--g)';
+  var inactiveStyle='color:rgba(168,196,106,.4);border-bottom:2px solid transparent';
+  if(tab==='feed'){
+    feedEl.style.display='';diaryEl.style.display='none';
+    feedBtn.style.cssText=activeStyle;diaryBtn.style.cssText=inactiveStyle;
+  }else{
+    feedEl.style.display='none';diaryEl.style.display='';
+    diaryBtn.style.cssText=activeStyle;feedBtn.style.cssText=inactiveStyle;
+    renderDiary('all');
+  }
 }
 
 // ── MODALS ──
@@ -1766,7 +1795,7 @@ function closeMobileNav(){
 }
 
 // ── TOAST ──
-var msgs={signup:'Welcome to Bumi! Check your email to confirm.',connect:'Connection request sent. They will reply via Bumi.',cart:'Added to your basket. Checkout to pay securely.',book:'Booking request sent! Invoice generated on confirmation.',post:'Your post is now live in the community.',plot:'Request sent! The farmer will be in touch within 24 hours.',verify:'Application received. Verifier will contact you within 5 working days.',pdf:'Invoice PDF ready to download.',whatsapp:'Invoice sent via WhatsApp.',email:'Receipt emailed to buyer.',invoice:'Invoice opened.',listing:'Listing published! Now live on Bumi.',harvest:'Harvest logged successfully.','community-post':'Harvest logged and shared to the community feed.',login:'Welcome back. Opening your farm dashboard...'};
+var msgs={signup:'Welcome to Bumi! Check your email to confirm.',connect:'Connection request sent. They will reply via Bumi.',cart:'Added to your basket. Checkout to pay securely.',book:'Booking request sent! Invoice generated on confirmation.',post:'Your post is now live in the community.',plot:'Request sent! The farmer will be in touch within 24 hours.',verify:'Application received. Verifier will contact you within 5 working days.',pdf:'Invoice PDF ready to download.',whatsapp:'Invoice sent via WhatsApp.',email:'Receipt emailed to buyer.',invoice:'Invoice opened.',listing:'Listing published! Now live on Bumi.',harvest:'Harvest logged successfully.','community-post':'Harvest logged and shared to the community feed.',login:'Welcome back. Opening My Kebun...'};
 function showToast(t,msg){
   var el=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg||msgs[t]||'Done!';
