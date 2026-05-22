@@ -6,6 +6,7 @@
 <title>Bumi — Malaysia's Regenerative Farm Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -177,6 +178,125 @@ tr:hover td{background:rgba(107,143,58,.03)}
 .verify-tier{background:var(--wh);border:1px solid var(--bd);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden}
 .verify-tier.featured{border:2px solid var(--g);background:var(--f);color:var(--lc)}
 .verify-tier.featured-am{border:2px solid var(--am)}
+
+/* ─── CART DRAWER ─── */
+#cart-drawer{position:fixed;top:0;right:-420px;width:420px;max-width:95vw;height:100vh;background:var(--wh);z-index:500;box-shadow:-8px 0 40px rgba(17,26,9,.18);transition:.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+#cart-drawer.open{right:0}
+.cart-overlay{position:fixed;inset:0;background:rgba(17,26,9,.45);z-index:499;display:none;backdrop-filter:blur(2px)}
+.cart-overlay.open{display:block}
+.cart-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.cart-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--f)}
+.cart-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mu);padding:4px 8px;border-radius:8px}
+.cart-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem}
+.cart-item{display:flex;gap:.875rem;padding:.875rem 0;border-bottom:1px solid var(--bd)}
+.cart-item-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--f),var(--g));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:13.5px;font-weight:500;color:var(--f);margin-bottom:2px}
+.cart-item-farm{font-size:12px;color:var(--mu);margin-bottom:6px}
+.cart-item-price{font-family:'DM Serif Display',serif;font-size:16px;color:var(--f)}
+.cart-qty{display:flex;align-items:center;gap:8px}
+.cart-qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--bd);background:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--mu);transition:.15s}
+.cart-qty-btn:hover{background:var(--g);color:var(--lc);border-color:var(--g)}
+.cart-qty-n{font-size:14px;font-weight:500;min-width:20px;text-align:center}
+.cart-foot{padding:1.25rem 1.5rem;border-top:1px solid var(--bd);flex-shrink:0}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:.875rem;font-size:14px}
+.cart-total-row.big{font-size:16px;font-weight:600;padding-top:.875rem;border-top:1px solid var(--bd);margin-top:.5rem}
+.cart-empty{text-align:center;padding:3rem 1.5rem;color:var(--mu)}
+#cart-badge{position:absolute;top:-6px;right:-6px;background:var(--g);color:var(--wh);font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+#cart-badge.show{display:flex}
+.cart-btn-wrap{position:relative;display:inline-flex}
+
+/* ─── CHECKOUT MODAL ─── */
+.checkout-step{display:none}.checkout-step.active{display:block}
+.checkout-progress{display:flex;gap:0;margin-bottom:1.5rem}
+.cp-step{flex:1;text-align:center;font-size:11px;color:var(--mu);padding:.5rem;border-bottom:2px solid var(--bd);transition:.2s}
+.cp-step.active{color:var(--g);border-bottom-color:var(--g);font-weight:600}
+.cp-step.done{color:var(--g);border-bottom-color:var(--gl)}
+.payment-option{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;border:1.5px solid var(--bd);border-radius:12px;cursor:pointer;transition:.15s;margin-bottom:.5rem}
+.payment-option:hover,.payment-option.sel{border-color:var(--g);background:rgba(107,143,58,.05)}
+.payment-option input{accent-color:var(--g)}
+.payment-label{font-size:13.5px;font-weight:500;flex:1}
+.payment-sub{font-size:11.5px;color:var(--mu)}
+
+/* ─── MAP VIEW ─── */
+#farm-map-container{display:none;padding:1.25rem 1.5rem;background:var(--wh);border-bottom:1px solid var(--bd)}
+#farm-map-container.open{display:block}
+#farm-map{height:420px;border-radius:14px;overflow:hidden;border:1px solid var(--bd)}
+.map-toggle-bar{display:flex;gap:.75rem;align-items:center;padding:.75rem 1.5rem;background:var(--wh);border-bottom:1px solid var(--bd)}
+.map-toggle-btn{display:flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 16px;border-radius:20px;cursor:pointer;border:1px solid var(--bd);background:transparent;color:var(--mu);font-family:'DM Sans',sans-serif;transition:.15s}
+.map-toggle-btn.on{background:var(--f);color:var(--lc);border-color:var(--f)}
+.leaflet-popup-content-wrapper{border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px}
+.leaflet-popup-content{margin:10px 14px}
+
+/* ─── WHATSAPP BUTTON ─── */
+.btn-wa{background:#25d366;color:#fff}.btn-wa:hover{background:#1aab54}
+
+/* ─── B2B PORTAL ─── */
+.b2b-hero{background:var(--dk);padding:3rem 1.5rem;border-bottom:.5px solid rgba(107,143,58,.15)}
+.b2b-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 200px)}
+.b2b-sidebar{background:var(--f);padding:1.5rem 0}
+.b2b-nav-item{display:flex;align-items:center;gap:10px;padding:.75rem 1.5rem;font-size:13.5px;color:rgba(238,244,222,.5);cursor:pointer;transition:.15s;border-left:3px solid transparent}
+.b2b-nav-item:hover{color:var(--lc);background:rgba(107,143,58,.08)}
+.b2b-nav-item.active{color:var(--gl);border-left-color:var(--g);background:rgba(107,143,58,.1)}
+.b2b-main{padding:1.5rem;background:var(--pp)}
+.b2b-section{display:none}.b2b-section.active{display:block}
+.source-item{display:flex;align-items:center;gap:.875rem;padding:.875rem;background:var(--wh);border:1px solid var(--bd);border-radius:12px;margin-bottom:.625rem}
+.source-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--g);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;flex-shrink:0}
+.source-check.checked{background:var(--g)}.source-check.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
+.schedule-day{background:var(--wh);border:1px solid var(--bd);border-radius:12px;padding:1rem;margin-bottom:.625rem}
+.schedule-day-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.schedule-day-name{font-size:14px;font-weight:500}
+.bulk-tier{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;cursor:pointer;transition:.15s}
+.bulk-tier:hover{border-color:var(--g);box-shadow:0 4px 16px rgba(107,143,58,.1)}
+.bulk-tier.sel{border-color:var(--g);background:rgba(107,143,58,.04)}
+.bulk-saving{background:var(--g);color:var(--wh);font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px}
+
+/* ─── FARMER DIARY ─── */
+.diary-entry{background:var(--wh);border:1px solid var(--bd);border-radius:16px;overflow:hidden;margin-bottom:1.25rem;transition:.15s}
+.diary-entry:hover{box-shadow:0 4px 20px rgba(30,45,18,.08)}
+.diary-entry-head{padding:1rem 1.25rem;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:.75rem}
+.diary-farm-dot{width:10px;height:10px;border-radius:50%;background:var(--g);flex-shrink:0}
+.diary-entry-body{padding:1.25rem}
+.diary-entry-img{height:180px;border-radius:10px;background:linear-gradient(135deg,var(--f),var(--g));display:flex;align-items:center;justify-content:center;font-size:72px;margin-bottom:1rem}
+.diary-entry-text{font-size:14px;line-height:1.8;color:var(--f);margin-bottom:.875rem}
+.diary-entry-meta{display:flex;gap:1rem;font-size:12px;color:var(--mu)}
+.diary-filter-tabs{display:flex;gap:.5rem;padding:1rem 1.5rem;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--bd);background:var(--wh)}
+.diary-tab{font-size:12.5px;padding:6px 16px;border-radius:20px;cursor:pointer;border:1px solid var(--bd);background:transparent;color:var(--mu);font-family:'DM Sans',sans-serif;transition:.15s;white-space:nowrap}
+.diary-tab.on,.diary-tab:hover{background:var(--f);color:var(--lc);border-color:var(--f)}
+.diary-layout{display:grid;grid-template-columns:1fr 300px;gap:1.5rem;padding:1.5rem;max-width:1100px;margin:0 auto}
+.diary-sidebar-card{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+
+/* ─── PLANT DOCTOR (DASHBOARD) ─── */
+.plant-drop-zone{border:2px dashed var(--bd);border-radius:14px;padding:2.5rem;text-align:center;cursor:pointer;transition:.2s;background:var(--pp)}
+.plant-drop-zone:hover,.plant-drop-zone.drag-over{border-color:var(--g);background:rgba(107,143,58,.04)}
+.plant-drop-zone i{font-size:40px;color:var(--g);margin-bottom:.75rem;display:block}
+.plant-preview{width:100%;max-height:280px;object-fit:cover;border-radius:12px;margin-bottom:1rem}
+.diagnosis-card{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;margin-top:1rem}
+.diagnosis-severity{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:.875rem}
+.sev-ok{background:rgba(107,143,58,.12);color:var(--g)}
+.sev-warn{background:rgba(212,160,23,.12);color:var(--gold)}
+.sev-alert{background:rgba(192,57,43,.1);color:var(--red)}
+.treatment-step{display:flex;gap:.875rem;padding:.75rem 0;border-bottom:1px solid var(--bd)}
+.treatment-step:last-child{border:none}
+.treatment-num{width:28px;height:28px;border-radius:50%;background:var(--g);color:var(--wh);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plant-mode-btn{flex:1;padding:.75rem;border-radius:12px;border:1.5px solid var(--bd);background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;transition:.15s;text-align:center}
+.plant-mode-btn.active{border-color:var(--g);background:rgba(107,143,58,.06);color:var(--g);font-weight:600}
+.typing-dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--g);margin:0 2px;animation:bounce .8s infinite}
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* ─── PLOT CALCULATOR ─── */
+.calc-card{background:var(--f);color:var(--lc);border-radius:20px;padding:2rem;margin-top:2rem}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;background:rgba(168,196,106,.2);outline:none;cursor:pointer}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gl);cursor:pointer;border:3px solid var(--dk)}
+.calc-result{font-family:'DM Serif Display',serif;font-size:44px;color:var(--gl);line-height:1}
+.calc-result-label{font-size:13px;color:rgba(168,196,106,.5);margin-top:4px}
+.calc-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;margin-top:1.5rem}
+.calc-b-item{background:rgba(107,143,58,.1);border-radius:12px;padding:.875rem;text-align:center}
+.calc-b-n{font-family:'DM Serif Display',serif;font-size:22px;color:var(--gl)}
+.calc-b-l{font-size:11px;color:rgba(168,196,106,.4);margin-top:2px}
+
 .promo-ribbon{position:absolute;top:16px;right:-28px;background:var(--gold);color:var(--dk);font-size:10px;font-weight:700;padding:4px 36px;transform:rotate(45deg);letter-spacing:.08em}
 .vt-badge{display:inline-block;font-size:10px;padding:4px 12px;border-radius:16px;margin-bottom:.875rem;letter-spacing:.07em;text-transform:uppercase;font-weight:600}
 .vt-badge-free{background:rgba(107,143,58,.12);color:var(--g)}
@@ -471,9 +591,15 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <li><a onclick="goPage('community')" id="nav-community">Community</a></li>
     <li><a onclick="goPage('plots')" id="nav-plots">Plots</a></li>
     <li><a onclick="goPage('farms')" id="nav-farms">Farms</a></li>
+    <li><a onclick="goPage('diary')" id="nav-diary">Diary</a></li>
+    <li><a onclick="goPage('b2b')" id="nav-b2b" style="color:var(--am)">B2B</a></li>
     <li><a onclick="goPage('verify')" id="nav-verify">Verify</a></li>
   </ul>
   <div class="nav-r">
+    <div class="cart-btn-wrap">
+      <button class="nav-login" onclick="openCartDrawer()" style="display:flex;align-items:center;gap:5px"><i class="ti ti-shopping-cart" style="font-size:16px"></i> Basket</button>
+      <span id="cart-badge">0</span>
+    </div>
     <button class="nav-login" onclick="openModal('login')">Log in</button>
     <button class="nav-cta" onclick="openModal('signup')">Join free</button>
     <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -654,6 +780,11 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
         <div class="feature-card"><i class="ti ti-receipt feat-icon"></i><div class="feat-name">Built-in Invoicing &amp; Receipts</div><div class="feat-desc">Every sale auto-generates a professional invoice. Send via WhatsApp or email. All records downloadable as PDF.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('dashboard')">See invoice system →</button></div>
         <div class="feature-card"><i class="ti ti-chart-bar feat-icon"></i><div class="feat-name">Farm Dashboard &amp; Analytics</div><div class="feat-desc">Track earnings, inventory levels, harvest logs, and order history in one clean dashboard. See what's selling and what's running low.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('dashboard')">Open your dashboard →</button></div>
         <div class="feature-card"><i class="ti ti-credit-card feat-icon"></i><div class="feat-name">Online Payments — Fully Integrated</div><div class="feat-desc">Accept DuitNow, FPX, Visa, Mastercard, and e-wallets. Funds hit your account within 1 working day. Escrow protection for both sides.</div></div>
+        <div class="feature-card" style="border-color:rgba(107,143,58,.3);background:rgba(107,143,58,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:var(--g);color:var(--lc);font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-stethoscope feat-icon" style="color:var(--g)"></i><div class="feat-name">AI Plant Doctor</div><div class="feat-desc">Upload a photo of any sick plant or crop. Bumi's AI identifies the disease, pest, or deficiency and gives you a Malaysian-specific treatment plan in seconds.</div><button class="btn btn-green btn-sm mt1" onclick="goPage('dashboard');setTimeout(function(){showDash(null,'plant')},100)">Try Plant Doctor →</button></div>
+        <div class="feature-card" style="border-color:rgba(37,211,102,.25);background:rgba(37,211,102,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:#25d366;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-brand-whatsapp feat-icon" style="color:#25d366"></i><div class="feat-name">WhatsApp-First Ordering</div><div class="feat-desc">Every farm has a direct WhatsApp button. Most Malaysian smallholder buyers order via WhatsApp — now every product and farm profile connects instantly.</div></div>
+        <div class="feature-card" style="border-color:rgba(52,120,255,.2);background:rgba(52,120,255,.02)"><div style="display:inline-flex;align-items:center;gap:6px;background:#3478ff;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-map feat-icon" style="color:#3478ff"></i><div class="feat-name">Farm Map — All 29 Farms</div><div class="feat-desc">See every farm on an interactive map, filtered by region. Perfect for discovering what's near you. Tap any pin for the full farm profile.</div><button class="btn btn-outline btn-sm mt1" style="border-color:#3478ff;color:#3478ff" onclick="goPage('farms');setTimeout(function(){toggleFarmMap(true)},100)">View farm map →</button></div>
+        <div class="feature-card" style="border-color:rgba(184,115,51,.3);background:rgba(184,115,51,.03)"><div style="display:inline-flex;align-items:center;gap:6px;background:var(--am);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px;letter-spacing:.06em;margin-bottom:.875rem">✦ NEW</div><i class="ti ti-building-store feat-icon" style="color:var(--am)"></i><div class="feat-name">B2B Buyer Portal</div><div class="feat-desc">Cafés and restaurants get bulk pricing, weekly scheduling, consolidated invoicing across farms, and a shareable source list for accountants.</div><button class="btn btn-amber btn-sm mt1" onclick="goPage('b2b')">Open B2B Portal →</button></div>
+        <div class="feature-card"><i class="ti ti-notebook feat-icon"></i><div class="feat-name">Farmer Diary &amp; Growing Log</div><div class="feat-desc">A public, timestamped growing journal. Farmers share real field entries — harvests, observations, challenges. Builds buyer trust and creates organic content.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('diary')">Read the Diary →</button></div>
         <div class="feature-card"><i class="ti ti-package feat-icon"></i><div class="feat-name">Inventory &amp; Stock Management</div><div class="feat-desc">Log produce, set stock quantities, receive low-stock alerts. Track from planting to harvest to sale — single pot to 1,000 rows.</div></div>
         <div class="feature-card"><i class="ti ti-users feat-icon"></i><div class="feat-name">Community Plots &amp; Land Sharing</div><div class="feat-desc">List your land for co-farming. Join community plots. Co-invest in shared growing spaces and receive your harvest share each cycle.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('plots')">Explore plots →</button></div>
         <div class="feature-card"><i class="ti ti-certificate feat-icon"></i><div class="feat-name">Organic &amp; Halal Verification</div><div class="feat-desc">Physical farm audit by a trained Bumi verifier. Organic badge free in year one. Halal + Organic available from RM 333.</div><button class="btn btn-outline btn-sm mt1" onclick="goPage('verify')">Learn more →</button></div>
@@ -725,9 +856,11 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
 
 <!-- MARKETPLACE PAGE -->
 <div class="page" id="page-market">
-  <div class="search-bar">
-    <i class="ti ti-search" style="color:var(--mu);font-size:20px"></i>
-    <input class="search-input" type="text" id="mkt-search" placeholder="Search produce, farms, locations..." oninput="filterProducts()">
+<div class="search-bar" style="gap:.75rem">
+    <i class="ti ti-search" style="color:var(--mu);font-size:20px;flex-shrink:0"></i>
+    <input class="search-input" type="text" id="mkt-search" placeholder="Search produce, farms, locations, tags…" oninput="filterProducts()" autocomplete="off">
+    <div id="mkt-search-count" style="font-size:12px;color:var(--mu);white-space:nowrap;flex-shrink:0"></div>
+    <button class="btn btn-outline btn-sm" id="mkt-search-clear" style="display:none;flex-shrink:0" onclick="document.getElementById('mkt-search').value='';filterProducts();this.style.display='none'"><i class="ti ti-x"></i></button>
   </div>
   <div class="filter-bar" style="top:130px">
     <button class="filter-btn on" onclick="filterCat(this,'all')">All</button>
@@ -834,6 +967,45 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
           </div>
         </div>
       </div>
+      <!-- INVESTMENT CALCULATOR -->
+      <div class="calc-card mt3">
+        <div class="eyebrow eyebrow-lt">Plot Investment Calculator</div>
+        <h2 class="serif" style="color:var(--lc);margin-bottom:.5rem">What does your contribution grow?</h2>
+        <p style="font-size:14px;color:rgba(168,196,106,.5);margin-bottom:1.5rem;font-weight:300">Adjust your monthly contribution to see your estimated harvest share.</p>
+        <div class="g2" style="gap:2rem;align-items:flex-start">
+          <div>
+            <div style="margin-bottom:1.5rem">
+              <label style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(168,196,106,.45);margin-bottom:.875rem;display:block">Monthly contribution</label>
+              <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.625rem">
+                <input type="range" class="calc-slider" id="calc-amount" min="50" max="500" step="10" value="100" oninput="updateCalc()">
+                <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--lc);min-width:90px">RM <span id="calc-amount-display">100</span></div>
+              </div>
+            </div>
+            <div style="margin-bottom:1.5rem">
+              <label style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(168,196,106,.45);margin-bottom:.875rem;display:block">Plot type</label>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                <button class="filter-btn on" id="plot-type-veggie" onclick="setCalcPlot(this,'veggie',3.2,28)" style="background:rgba(107,143,58,.2);border-color:var(--g);color:var(--lc)">Vegetables</button>
+                <button class="filter-btn" id="plot-type-herb" onclick="setCalcPlot(this,'herb',2.0,21)" style="color:rgba(238,244,222,.5);border-color:rgba(107,143,58,.2)">Herbs &amp; Ulam</button>
+                <button class="filter-btn" id="plot-type-fruit" onclick="setCalcPlot(this,'fruit',0.8,90)" style="color:rgba(238,244,222,.5);border-color:rgba(107,143,58,.2)">Fruit Trees</button>
+                <button class="filter-btn" id="plot-type-mixed" onclick="setCalcPlot(this,'mixed',2.4,35)" style="color:rgba(238,244,222,.5);border-color:rgba(107,143,58,.2)">Mixed Forest</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="margin-bottom:1.25rem">
+              <div class="calc-result" id="calc-kg">~3.2</div>
+              <div class="calc-result-label">kg of produce per month</div>
+            </div>
+            <div class="calc-breakdown">
+              <div class="calc-b-item"><div class="calc-b-n" id="calc-sqm">32</div><div class="calc-b-l">sq metres of plot</div></div>
+              <div class="calc-b-item"><div class="calc-b-n" id="calc-cycle">28</div><div class="calc-b-l">day cycle</div></div>
+              <div class="calc-b-item"><div class="calc-b-n" id="calc-value">RM 22</div><div class="calc-b-l">market value / month</div></div>
+            </div>
+            <button class="btn btn-gold mt2" style="width:100%;justify-content:center" onclick="openModal('joinplot')">Join this plot — RM <span id="calc-join-amount">100</span>/month</button>
+          </div>
+        </div>
+      </div>
+
       <div class="card card-pad mt3">
         <div class="flex-between">
           <div>
@@ -860,6 +1032,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <button class="dash-mobile-btn" onclick="showDash(this,'harvests')"><i class="ti ti-leaf"></i> Harvests</button>
     <button class="dash-mobile-btn" onclick="showDash(this,'earnings')"><i class="ti ti-chart-bar"></i> Earnings</button>
     <button class="dash-mobile-btn" onclick="showDash(this,'listings')"><i class="ti ti-list"></i> Listings</button>
+    <button class="dash-mobile-btn" onclick="showDash(this,'plant')"><i class="ti ti-stethoscope"></i> Plant Doctor</button>
   </div>
   <div class="dash-layout">
     <div class="dash-sidebar">
@@ -875,6 +1048,7 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
       <div class="dash-nav-item" onclick="showDash(this,'harvests')"><i class="ti ti-leaf"></i><span>Harvest Log</span></div>
       <div class="dash-nav-item" onclick="showDash(this,'earnings')"><i class="ti ti-chart-bar"></i><span>Earnings</span></div>
       <div class="dash-nav-item" onclick="showDash(this,'listings')"><i class="ti ti-list"></i><span>My Listings</span></div>
+      <div class="dash-nav-item" onclick="showDash(this,'plant')" style="position:relative"><i class="ti ti-stethoscope"></i><span>Plant Doctor</span><span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--g);color:var(--wh);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px">AI</span></div>
       <div style="height:1px;background:rgba(107,143,58,.1);margin:.75rem 1.5rem"></div>
       <div class="dash-nav-item" onclick="goPage('verify')"><i class="ti ti-certificate"></i><span>Verification</span></div>
       <div class="dash-nav-item" onclick="goPage('community')"><i class="ti ti-users"></i><span>Community</span></div>
@@ -965,6 +1139,60 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
         <div class="dash-header flex-between"><div><div class="dash-title serif">My Listings</div><div class="dash-sub">All active produce listings.</div></div><button class="btn btn-green btn-sm" onclick="openModal('add-listing')">+ New listing</button></div>
         <div class="table-wrap"><table id="listings-table"></table></div>
       </div>
+
+      <!-- ── PLANT DOCTOR ── -->
+      <div class="dash-section" id="dash-plant">
+        <div class="dash-header">
+          <div class="dash-title serif">AI Plant Doctor</div>
+          <div class="dash-sub">Upload a photo of any plant, leaf, or crop. Bumi's AI diagnoses diseases, pests, and deficiencies — with Malaysian-specific treatment advice.</div>
+        </div>
+        <div class="g2" style="gap:1.5rem;align-items:flex-start">
+          <div>
+            <div style="display:flex;gap:.75rem;margin-bottom:1rem">
+              <button class="plant-mode-btn active" id="pdoc-mode-photo" onclick="setPlantMode('photo')"><i class="ti ti-camera"></i> Photo diagnosis</button>
+              <button class="plant-mode-btn" id="pdoc-mode-text" onclick="setPlantMode('text')"><i class="ti ti-message"></i> Ask a question</button>
+            </div>
+            <div id="pdoc-photo-mode">
+              <div class="plant-drop-zone" id="plant-drop" onclick="document.getElementById('plant-file').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handlePlantDrop(event)">
+                <i class="ti ti-cloud-upload"></i>
+                <div style="font-weight:500;margin-bottom:4px">Drop a photo here or click to upload</div>
+                <div style="font-size:12.5px;color:var(--mu)">JPG, PNG up to 10MB. Leaf close-ups work best.</div>
+              </div>
+              <input type="file" id="plant-file" accept="image/*" style="display:none" onchange="handlePlantFile(this.files[0])">
+              <img id="plant-preview" class="plant-preview" style="display:none">
+              <div id="plant-photo-context" style="display:none;margin-top:.875rem">
+                <div class="form-group"><label class="form-label">What crop or plant is this? (optional)</label><input class="form-input" id="plant-crop-name" placeholder="e.g. Kangkung, Ulam Raja, Chili…"></div>
+                <div class="form-group"><label class="form-label">What symptoms are you seeing?</label><input class="form-input" id="plant-symptoms" placeholder="e.g. yellow leaves, white spots, wilting…"></div>
+                <button class="btn btn-green w-full" onclick="runPlantDiagnosis()"><i class="ti ti-stethoscope"></i> Diagnose my plant</button>
+              </div>
+            </div>
+            <div id="pdoc-text-mode" style="display:none">
+              <div class="form-group"><label class="form-label">Describe your issue</label><textarea class="form-input" id="plant-question" rows="4" placeholder="e.g. My kangkung leaves are turning yellow at the edges and curling inward. I'm growing in raised beds with compost soil. What's wrong?"></textarea></div>
+              <button class="btn btn-green w-full" onclick="runPlantQuestion()"><i class="ti ti-send"></i> Ask Plant Doctor</button>
+            </div>
+          </div>
+          <div>
+            <div id="plant-diagnosis-area">
+              <div style="background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:2rem;text-align:center;color:var(--mu)">
+                <i class="ti ti-leaf-2" style="font-size:40px;display:block;margin-bottom:.875rem;color:var(--g);opacity:.4"></i>
+                <div style="font-size:14px;font-weight:500;margin-bottom:4px">Ready to diagnose</div>
+                <div style="font-size:12.5px">Upload a photo or describe your issue — the AI will identify the problem and give you a step-by-step treatment plan.</div>
+              </div>
+            </div>
+            <div style="background:rgba(107,143,58,.05);border:1px solid rgba(107,143,58,.12);border-radius:12px;padding:1rem;margin-top:1rem">
+              <div style="font-size:11.5px;font-weight:600;color:var(--g);margin-bottom:.5rem"><i class="ti ti-bolt"></i> Quick diagnose</div>
+              <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+                <button onclick="quickPlant('Yellow leaves')" class="btn btn-outline btn-sm">Yellow leaves</button>
+                <button onclick="quickPlant('White powder on leaves')" class="btn btn-outline btn-sm">White powder</button>
+                <button onclick="quickPlant('Brown spots on fruit')" class="btn btn-outline btn-sm">Brown spots</button>
+                <button onclick="quickPlant('Wilting despite watering')" class="btn btn-outline btn-sm">Wilting</button>
+                <button onclick="quickPlant('Holes in leaves')" class="btn btn-outline btn-sm">Leaf holes</button>
+                <button onclick="quickPlant('Root rot')" class="btn btn-outline btn-sm">Root rot</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1042,6 +1270,14 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
     <button class="filter-btn" onclick="filterFarms(this,'halal')">✓ Halal</button>
     <button class="filter-btn" onclick="filterFarms(this,'jb')">Janda Baik</button>
     <button class="filter-btn" onclick="filterFarms(this,'kl')">Klang Valley</button>
+  </div>
+  <div class="map-toggle-bar">
+    <button class="map-toggle-btn on" id="farms-list-btn" onclick="toggleFarmMap(false)"><i class="ti ti-layout-grid"></i> List view</button>
+    <button class="map-toggle-btn" id="farms-map-btn" onclick="toggleFarmMap(true)"><i class="ti ti-map"></i> Map view — all 29 farms</button>
+    <span style="font-size:12px;color:var(--mu);margin-left:auto">Pin a farm to see its profile</span>
+  </div>
+  <div id="farm-map-container">
+    <div id="farm-map"></div>
   </div>
   <div style="padding:.5rem 1.5rem"><div style="font-size:12px;color:var(--mu)" id="farms-count">Loading...</div></div>
   <div class="g3 farms-grid-pad" id="farms-grid"></div>
@@ -1185,6 +1421,184 @@ footer{background:var(--dk);padding:2rem 1.5rem;display:flex;justify-content:spa
   <button class="btn btn-green w-full" style="font-size:14px;padding:.875rem" onclick="submitReview()">Post review</button>
 </div></div>
 
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCartDrawer()"></div>
+<div id="cart-drawer">
+  <div class="cart-head">
+    <div class="cart-title">Your Basket <span id="cart-count-head" style="font-size:14px;color:var(--mu);font-family:'DM Sans',sans-serif;font-weight:400"></span></div>
+    <button class="cart-close" onclick="closeCartDrawer()">×</button>
+  </div>
+  <div class="cart-body" id="cart-items-list">
+    <div class="cart-empty"><i class="ti ti-shopping-bag" style="font-size:40px;color:var(--g);opacity:.3;display:block;margin-bottom:.75rem"></i><div style="font-weight:500;margin-bottom:4px">Your basket is empty</div><div style="font-size:12.5px">Browse the Pasar to find fresh produce.</div><button class="btn btn-green btn-sm mt1" onclick="closeCartDrawer();goPage('market')">Browse Pasar</button></div>
+  </div>
+  <div class="cart-foot" id="cart-footer" style="display:none">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cart-subtotal">RM 0.00</span></div>
+    <div class="cart-total-row"><span style="color:var(--mu)">Delivery (estimate)</span><span style="color:var(--mu)">RM 8.00</span></div>
+    <div class="cart-total-row big"><span>Total</span><span id="cart-total-display">RM 0.00</span></div>
+    <button class="btn btn-green w-full mt1" style="font-size:15px;padding:.875rem" onclick="closeCartDrawer();openModal('checkout')">Checkout →</button>
+    <div style="display:flex;gap:.5rem;margin-top:.75rem">
+      <button class="btn btn-wa w-full" style="font-size:13px;padding:.65rem" onclick="checkoutWhatsApp()"><i class="ti ti-brand-whatsapp"></i> Order via WhatsApp</button>
+    </div>
+    <p style="font-size:11px;color:var(--mu);text-align:center;margin-top:.625rem">🔒 Secure payment via DuitNow, FPX, or e-wallet</p>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-bg" id="modal-checkout"><div class="modal" style="max-width:560px">
+  <button class="modal-close" onclick="closeModal('checkout')">×</button>
+  <div class="modal-title serif">Checkout</div>
+  <div class="checkout-progress">
+    <div class="cp-step active" id="cp1">1 · Details</div>
+    <div class="cp-step" id="cp2">2 · Delivery</div>
+    <div class="cp-step" id="cp3">3 · Payment</div>
+    <div class="cp-step" id="cp4">4 · Confirm</div>
+  </div>
+  <!-- Step 1 -->
+  <div class="checkout-step active" id="cstep-1">
+    <div class="form-row"><div class="form-group"><label class="form-label">First name</label><input class="form-input" type="text" placeholder="Ahmad"></div><div class="form-group"><label class="form-label">Last name</label><input class="form-input" type="text" placeholder="Rozali"></div></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="ahmad@email.com"></div>
+    <div class="form-group"><label class="form-label">WhatsApp number</label><input class="form-input" type="tel" placeholder="+60 12-345 6789"><div class="help-tip"><i class="ti ti-info-circle"></i> Order updates &amp; tracking sent via WhatsApp</div></div>
+    <button class="btn btn-green w-full mt1" onclick="goCheckoutStep(2)">Continue →</button>
+  </div>
+  <!-- Step 2 -->
+  <div class="checkout-step" id="cstep-2">
+    <div class="form-group"><label class="form-label">Delivery address</label><input class="form-input" type="text" placeholder="Street, area, postcode"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">City</label><input class="form-input" type="text" placeholder="Kuala Lumpur"></div><div class="form-group"><label class="form-label">State</label><select class="form-select"><option>Kuala Lumpur</option><option>Selangor</option><option>Penang</option><option>Johor</option><option>Pahang</option></select></div></div>
+    <div class="form-group"><label class="form-label">Delivery preference</label><select class="form-select"><option>Next available delivery slot</option><option>Morning slot (7–11am)</option><option>Afternoon slot (12–4pm)</option><option>Self-collect from farm</option></select></div>
+    <div style="display:flex;gap:.75rem">
+      <button class="btn btn-outline" onclick="goCheckoutStep(1)">← Back</button>
+      <button class="btn btn-green" style="flex:1" onclick="goCheckoutStep(3)">Continue →</button>
+    </div>
+  </div>
+  <!-- Step 3 -->
+  <div class="checkout-step" id="cstep-3">
+    <div style="margin-bottom:1rem;font-size:13.5px;font-weight:500;color:var(--f)">Choose payment method</div>
+    <div class="payment-option sel" id="pay-duitnow" onclick="selectPayment(this)"><input type="radio" name="pay" checked><div><div class="payment-label">DuitNow QR</div><div class="payment-sub">Scan &amp; pay instantly. Most popular in Malaysia.</div></div></div>
+    <div class="payment-option" id="pay-fpx" onclick="selectPayment(this)"><input type="radio" name="pay"><div><div class="payment-label">FPX Online Banking</div><div class="payment-sub">Direct bank transfer. Maybank, CIMB, RHB &amp; more.</div></div></div>
+    <div class="payment-option" id="pay-ewallet" onclick="selectPayment(this)"><input type="radio" name="pay"><div><div class="payment-label">E-Wallet</div><div class="payment-sub">Touch 'n Go, Boost, GrabPay, MAE.</div></div></div>
+    <div class="payment-option" id="pay-wa" onclick="selectPayment(this)"><input type="radio" name="pay"><div><div class="payment-label" style="color:#25d366"><i class="ti ti-brand-whatsapp"></i> WhatsApp order</div><div class="payment-sub">Message the farm directly. Pay via bank transfer.</div></div></div>
+    <div style="display:flex;gap:.75rem;margin-top:1.25rem">
+      <button class="btn btn-outline" onclick="goCheckoutStep(2)">← Back</button>
+      <button class="btn btn-green" style="flex:1" onclick="goCheckoutStep(4)">Review order →</button>
+    </div>
+  </div>
+  <!-- Step 4 -->
+  <div class="checkout-step" id="cstep-4">
+    <div style="background:var(--pp);border-radius:12px;padding:1rem;margin-bottom:1rem" id="checkout-order-summary"></div>
+    <div class="cart-total-row" style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:.5rem"><span>Subtotal</span><span id="chk-subtotal">RM 0</span></div>
+    <div class="cart-total-row" style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:.875rem;color:var(--mu)"><span>Delivery</span><span>RM 8.00</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:600;padding-top:.875rem;border-top:1px solid var(--bd);margin-bottom:1.25rem"><span>Total</span><span id="chk-total">RM 0</span></div>
+    <div style="display:flex;gap:.75rem">
+      <button class="btn btn-outline" onclick="goCheckoutStep(3)">← Back</button>
+      <button class="btn btn-green" style="flex:1" onclick="placeOrder()"><i class="ti ti-check"></i> Place order</button>
+    </div>
+  </div>
+</div></div>
+
+<!-- FARMER DIARY PAGE -->
+<div class="page" id="page-diary">
+  <section class="section" style="padding-bottom:1rem;background:var(--dk)">
+    <div class="container">
+      <div class="eyebrow eyebrow-lt">Buku Ladang — Farmer Diary</div>
+      <h2 class="serif" style="color:var(--lc)">From the field, in their own words.</h2>
+      <p class="lead" style="color:rgba(168,196,106,.5);max-width:580px">Real timestamped growing entries from Malaysian farmers. Every planting, harvest, challenge, and observation. Unfiltered. Authentic. Instructive.</p>
+    </div>
+  </section>
+  <div class="diary-filter-tabs">
+    <button class="diary-tab on" onclick="filterDiary(this,'all')">All entries</button>
+    <button class="diary-tab" onclick="filterDiary(this,'harvest')">🌿 Harvests</button>
+    <button class="diary-tab" onclick="filterDiary(this,'planting')">🌱 Plantings</button>
+    <button class="diary-tab" onclick="filterDiary(this,'observation')">🔍 Observations</button>
+    <button class="diary-tab" onclick="filterDiary(this,'challenge')">⚠ Challenges</button>
+    <button class="diary-tab" onclick="filterDiary(this,'mukha')">Mukha Tree</button>
+    <button class="diary-tab" onclick="filterDiary(this,'alittlewild')">A Little Wild</button>
+    <button class="diary-tab" onclick="filterDiary(this,'kkb')">KKB</button>
+  </div>
+  <div class="diary-layout">
+    <div id="diary-feed"></div>
+    <div>
+      <div class="diary-sidebar-card">
+        <div class="eyebrow">Submit a diary entry</div>
+        <p style="font-size:12.5px;color:var(--mu);margin-bottom:.875rem">Are you a farmer on Bumi? Log your growing entries — builds buyer trust, educates the community, and creates organic content for your farm.</p>
+        <div class="form-group"><label class="form-label">Your entry</label><textarea class="form-input" rows="3" style="resize:none" placeholder="What happened on the farm today?"></textarea></div>
+        <div class="form-group"><label class="form-label">Entry type</label><select class="form-select"><option>Harvest</option><option>Planting</option><option>Observation</option><option>Challenge</option></select></div>
+        <button class="btn btn-green w-full btn-sm" onclick="showToast('post')">Post to diary</button>
+      </div>
+      <div class="diary-sidebar-card">
+        <div class="eyebrow">Active Diarists</div>
+        <div id="diary-active-farms"></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('community')">Community</a></div></footer>
+</div>
+
+<!-- B2B BUYER PORTAL PAGE -->
+<div class="page" id="page-b2b">
+  <div class="b2b-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow-lt">B2B Buyer Portal — Bumi Pro</div>
+      <h2 class="serif" style="color:var(--lc)">Built for cafés, restaurants &amp; caterers.</h2>
+      <p style="font-size:15px;color:rgba(168,196,106,.5);max-width:560px;font-weight:300;line-height:1.8">Bulk pricing, weekly scheduling, consolidated invoicing across multiple farms, and a shareable source list your accountant will love. Currently used by Mukha Café and expanding.</p>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem">
+        <button class="btn btn-green btn-lg" onclick="openModal('signup')">Apply for B2B access</button>
+        <a href="https://wa.me/60123456789?text=Hi%2C%20I%27m%20interested%20in%20B2B%20sourcing%20through%20Bumi" target="_blank" class="btn btn-wa btn-lg"><i class="ti ti-brand-whatsapp"></i> WhatsApp our team</a>
+      </div>
+    </div>
+  </div>
+  <div class="b2b-layout">
+    <div class="b2b-sidebar">
+      <div style="padding:1rem 1.5rem;margin-bottom:.5rem">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(168,196,106,.35);margin-bottom:4px">Logged in as</div>
+        <div style="font-size:14px;font-weight:500;color:var(--lc)">Mukha Café · TTDI</div>
+        <div style="display:flex;gap:4px;margin-top:6px"><span class="tag" style="font-size:10px;background:rgba(184,115,51,.15);color:var(--am)">B2B Pro</span></div>
+      </div>
+      <div class="b2b-nav-item active" onclick="showB2B(this,'pricing')"><i class="ti ti-tag" style="font-size:18px"></i><span>Bulk Pricing</span></div>
+      <div class="b2b-nav-item" onclick="showB2B(this,'schedule')"><i class="ti ti-calendar-event" style="font-size:18px"></i><span>Weekly Schedule</span></div>
+      <div class="b2b-nav-item" onclick="showB2B(this,'invoices')"><i class="ti ti-file-invoice" style="font-size:18px"></i><span>Invoices</span></div>
+      <div class="b2b-nav-item" onclick="showB2B(this,'sourcelist')"><i class="ti ti-list-check" style="font-size:18px"></i><span>Source List</span></div>
+    </div>
+    <div class="b2b-main">
+      <!-- Bulk Pricing -->
+      <div class="b2b-section active" id="b2b-pricing">
+        <div class="dash-header"><div class="dash-title serif">Bulk Pricing</div><div class="dash-sub">Volume tiers across all Bumi farms. Prices auto-apply at checkout.</div></div>
+        <div class="g3" style="margin-bottom:1.5rem" id="b2b-pricing-grid"></div>
+        <div style="background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem">
+          <div style="font-size:14px;font-weight:500;margin-bottom:.875rem">Your pricing tier</div>
+          <div style="display:flex;gap:.875rem;flex-wrap:wrap" id="b2b-tier-selector">
+            <div class="bulk-tier sel" onclick="selectB2BTier(this,'starter')" style="flex:1;min-width:140px"><div style="font-size:12px;color:var(--mu);margin-bottom:4px">Starter</div><div style="font-family:'DM Serif Display',serif;font-size:22px">5% off</div><div style="font-size:12px;color:var(--mu)">RM 500–1,999/mo</div></div>
+            <div class="bulk-tier" onclick="selectB2BTier(this,'growth')" style="flex:1;min-width:140px"><div style="font-size:12px;color:var(--mu);margin-bottom:4px">Growth</div><div style="font-family:'DM Serif Display',serif;font-size:22px">10% off</div><div style="font-size:12px;color:var(--mu)">RM 2,000–4,999/mo</div><span class="bulk-saving" style="margin-top:6px;display:inline-block">Most popular</span></div>
+            <div class="bulk-tier" onclick="selectB2BTier(this,'premium')" style="flex:1;min-width:140px"><div style="font-size:12px;color:var(--mu);margin-bottom:4px">Premium</div><div style="font-family:'DM Serif Display',serif;font-size:22px">18% off</div><div style="font-size:12px;color:var(--mu)">RM 5,000+/mo</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Schedule -->
+      <div class="b2b-section" id="b2b-schedule">
+        <div class="dash-header"><div class="dash-title serif">Weekly Order Schedule</div><div class="dash-sub">Set recurring orders. Farms prepare in advance. You never run out.</div></div>
+        <div id="b2b-schedule-grid"></div>
+        <button class="btn btn-green" onclick="showToast('cart','Schedule saved! Farms notified.')"><i class="ti ti-device-floppy"></i> Save schedule</button>
+      </div>
+      <!-- Invoices -->
+      <div class="b2b-section" id="b2b-invoices">
+        <div class="dash-header"><div class="dash-title serif">Consolidated Invoices</div><div class="dash-sub">All farms, one invoice. Monthly statements ready for your accountant.</div></div>
+        <div id="b2b-invoices-list"></div>
+      </div>
+      <!-- Source List -->
+      <div class="b2b-section" id="b2b-sourcelist">
+        <div class="dash-header flex-between">
+          <div><div class="dash-title serif">My Source List</div><div class="dash-sub">Share with accountants, auditors, or your head chef.</div></div>
+          <div style="display:flex;gap:.75rem">
+            <button class="btn btn-outline btn-sm" onclick="showToast('pdf','Source list PDF downloaded.')"><i class="ti ti-download"></i> Download PDF</button>
+            <button class="btn btn-wa btn-sm" onclick="showToast('whatsapp','Source list shared via WhatsApp.')"><i class="ti ti-brand-whatsapp"></i> Share</button>
+          </div>
+        </div>
+        <div id="b2b-source-list"></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="foot-brand">Bumi</div><div class="foot-copy">© 2025 Bumi Sdn. Bhd.</div><div class="foot-links"><a onclick="goPage('home')">Home</a><a onclick="goPage('market')">Pasar</a></div></footer>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"><i class="ti ti-check" style="color:var(--gl);font-size:18px"></i><span id="toast-msg"></span></div>
 
@@ -1213,19 +1627,19 @@ var products=[
 ];
 
 var farmers=[
-  {id:1,name:'Nazreen Abraham Stein',role:'Farm Steward · Syntropic Agroforestry · Community Events',loc:'TTDI, Kuala Lumpur',bio:'Farm Steward at Mukha Tree community farm in TTDI. Practitioner of syntropic agroforestry with experience in composting, soil health, and community-centred ecological growing. Hosts workshops, events, and gatherings at the farm.',rate:'RM 420',unit:'/session',cat:['consult','design','workshop','visit'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/mukha.tree/'},
-  {id:2,name:'Nuraishah Shamsuddin',role:'Urban Farming · Community Gardens · Soil Health',loc:'Kuala Lumpur',bio:'Urban farmer and food sovereignty advocate. Works with community gardens, edible schoolyards, and soil-building programmes across Klang Valley.',rate:'RM 500',unit:'/session',cat:['consult','setup','workshop'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/nuraishahshamsuddin/'},
-  {id:3,name:'Irfan Mohamed',role:'Permaculture Design · Landscape Ecology',loc:'Selangor',bio:'Permaculture practitioner and landscape ecologist. Designs multi-layer food systems, water harvesting, and regenerative landscapes for homes and communities.',rate:'RM 555',unit:'/session',cat:['consult','design','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/irfan.mohamed.984/'},
+  {id:1,name:'Nazreen Abraham Stein',role:'Farm Steward · Syntropic Agroforestry · Community Events',loc:'TTDI, Kuala Lumpur',bio:'Farm Steward at Mukha Tree community farm in TTDI. Practitioner of syntropic agroforestry with experience in composting, soil health, and community-centred ecological growing. Hosts workshops, events, and gatherings at the farm.',rate:'RM 420',unit:'/session',cat:['consult','design','workshop','visit'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/mukha.tree/',wa:'60122345678',lat:3.1432,lng:101.6281},
+  {id:2,name:'Nuraishah Shamsuddin',role:'Urban Farming · Community Gardens · Soil Health',loc:'Kuala Lumpur',bio:'Urban farmer and food sovereignty advocate. Works with community gardens, edible schoolyards, and soil-building programmes across Klang Valley.',rate:'RM 500',unit:'/session',cat:['consult','setup','workshop'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/nuraishahshamsuddin/',wa:'60129876543',lat:3.4589,lng:101.8671},
+  {id:3,name:'Irfan Mohamed',role:'Permaculture Design · Landscape Ecology',loc:'Selangor',bio:'Permaculture practitioner and landscape ecologist. Designs multi-layer food systems, water harvesting, and regenerative landscapes for homes and communities.',rate:'RM 555',unit:'/session',cat:['consult','design','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/irfan.mohamed.984/',wa:'60113456789',lat:1.7267,lng:103.8982},
   {id:4,name:'Abdul Azim Che Abdul Rahim',role:'Regenerative Agriculture · Organic Practices · Training',loc:'Malaysia',bio:'Regenerative agriculture practitioner and trainer. Specialises in transitioning conventional farms to organic and permaculture-based systems across Peninsular Malaysia.',rate:'RM 500',unit:'/session',cat:['consult','design','workshop'],rating:5,organic:true,halal:true,url:''},
-  {id:5,name:'Kelefeh (Khairul Aswad)',role:'Edible Landscaping · Native Plants · Rewilding',loc:'Kuala Lumpur',bio:'Landscape practitioner and native plant advocate. Designs edible landscapes for urban homes and institutions with a focus on native species and rewilding.',rate:'RM 550',unit:'/half-day',cat:['design','setup','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/kelefeh/'},
-  {id:6,name:'Eats, Shoots & Roots Team',role:'Edible Garden Design · Schools · Community Programmes',loc:'Kuala Lumpur',bio:'Growing communities through growing food since 2012. Edible garden design, school edible garden programmes, and community plots. Led by experienced garden educators.',rate:'RM 750',unit:'/day',cat:['setup','workshop','design'],rating:5,organic:true,halal:false,url:'https://eatsshootsandroots.org/'},
-  {id:7,name:'Urban Hijau Team',role:'Urban Farming · Corporate Workshops · Integrated Systems',loc:'Kuala Lumpur',bio:'Urban Hijau produces locally grown wholesome food and trains communities and corporates in integrated urban sustainable systems. Workshops and on-site programmes throughout KL.',rate:'RM 900',unit:'/workshop',cat:['workshop','setup','consult'],rating:5,organic:true,halal:true,url:'https://www.uhijau.org/'},
-  {id:8,name:'Sunda Shelves',role:'Botany · Native Flora Education · Guided Walks',loc:'Kuala Lumpur',bio:"Nature-based education and botanical walks through Malaysia's urban and wild spaces. Connects communities with indigenous flora, ecology, and environmental literacy.",rate:'RM 400',unit:'/walk',cat:['workshop','visit'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/sunda.shelves/'},
-  {id:9,name:'Biotope Malaya',role:'Aquatic Ecology · Native Biotopes · Biodiversity',loc:'Malaysia',bio:'Specialists in native Malaysian aquatic ecosystems and biotopes. Education on freshwater biodiversity, riparian restoration, and ecological planting for water bodies.',rate:'RM 550',unit:'/session',cat:['consult','workshop'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/biotope_malaya/'},
-  {id:10,name:'Abas & Safia (Tirtha Quddus)',role:'Permaculture Homestead · Farm Stays · Crafting & Wellness',loc:'Janda Baik, Bentong, Pahang',bio:"Owners of Tirtha Quddus — a 3-acre family homestead in Janda Baik. Abas and Safia offer farm stays, volunteer programmes, crafting workshops (soap-making, weaving, sewing), permaculture farm tours, and retreats.",rate:'RM 900',unit:'/day',cat:['workshop','visit','consult'],rating:5,organic:true,halal:true,url:'https://tirthaquddus.com/'},
-  {id:11,name:'Pete Teo & Lisa Ngan',role:'Organic Farming · Farm-to-Table · Janda Baik',loc:'Janda Baik, Bentong, Pahang',bio:"Co-founders of A Little Farm on the Hill — a 6-acre certified organic farm in Janda Baik taken over in 2014. Pete is a musician-filmmaker; Lisa is an architect. The farm grows 90+ varieties of vegetables, herbs, and fruits and hosts farm-to-table lunches, cheese-making, yoga, and gardening classes.",rate:'RM 750',unit:'/visit',cat:['visit','workshop'],rating:5,organic:true,halal:false,url:'https://alittlefarmonthehill.com/'},
-  {id:12,name:'Amy Tan & Vladislav Kuta',role:'Sustainable Living · Permaculture Education · Tigabiri',loc:'Gopeng, Perak',bio:"Founders of Tigabiri and before it, Permaculture Perak in Lenggong (2008–2019), featured on National Geographic's 'Living Free with Kimi Werner'. After eviction, they rebuilt at Gopeng. They offer a Self-Sufficient Living Course — online and on-site — covering composting, propagation, and sustainable homesteading.",rate:'RM 880',unit:'/programme',cat:['workshop','visit','setup'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/tigabiri/'},
-  {id:13,name:'Didik Alam',role:'Nature-based Education · Schools · Forest Learning',loc:'Malaysia',bio:'Environmental education practitioners connecting children and communities with nature through forest learning, nature play, and outdoor ecological programmes.',rate:'RM 480',unit:'/programme',cat:['workshop','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/didik.alam/'}
+  {id:5,name:'Kelefeh (Khairul Aswad)',role:'Edible Landscaping · Native Plants · Rewilding',loc:'Kuala Lumpur',bio:'Landscape practitioner and native plant advocate. Designs edible landscapes for urban homes and institutions with a focus on native species and rewilding.',rate:'RM 550',unit:'/half-day',cat:['design','setup','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/kelefeh/',wa:'60111234567',lat:3.1478,lng:101.6953},
+  {id:6,name:'Eats, Shoots & Roots Team',role:'Edible Garden Design · Schools · Community Programmes',loc:'Kuala Lumpur',bio:'Growing communities through growing food since 2012. Edible garden design, school edible garden programmes, and community plots. Led by experienced garden educators.',rate:'RM 750',unit:'/day',cat:['setup','workshop','design'],rating:5,organic:true,halal:false,url:'https://eatsshootsandroots.org/',wa:'60192345678',lat:3.166,lng:101.7158},
+  {id:7,name:'Urban Hijau Team',role:'Urban Farming · Corporate Workshops · Integrated Systems',loc:'Kuala Lumpur',bio:'Urban Hijau produces locally grown wholesome food and trains communities and corporates in integrated urban sustainable systems. Workshops and on-site programmes throughout KL.',rate:'RM 900',unit:'/workshop',cat:['workshop','setup','consult'],rating:5,organic:true,halal:true,url:'https://www.uhijau.org/',wa:'60163456789',lat:3.0738,lng:101.5183},
+  {id:8,name:'Sunda Shelves',role:'Botany · Native Flora Education · Guided Walks',loc:'Kuala Lumpur',bio:"Nature-based education and botanical walks through Malaysia's urban and wild spaces. Connects communities with indigenous flora, ecology, and environmental literacy.",rate:'RM 400',unit:'/walk',cat:['workshop','visit'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/sunda.shelves/',wa:'60123456780',lat:3.1569,lng:101.7123},
+  {id:9,name:'Biotope Malaya',role:'Aquatic Ecology · Native Biotopes · Biodiversity',loc:'Malaysia',bio:'Specialists in native Malaysian aquatic ecosystems and biotopes. Education on freshwater biodiversity, riparian restoration, and ecological planting for water bodies.',rate:'RM 550',unit:'/session',cat:['consult','workshop'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/biotope_malaya/',wa:'60134567890',lat:3.4612,lng:101.879},
+  {id:10,name:'Abas & Safia (Tirtha Quddus)',role:'Permaculture Homestead · Farm Stays · Crafting & Wellness',loc:'Janda Baik, Bentong, Pahang',bio:"Owners of Tirtha Quddus — a 3-acre family homestead in Janda Baik. Abas and Safia offer farm stays, volunteer programmes, crafting workshops (soap-making, weaving, sewing), permaculture farm tours, and retreats.",rate:'RM 900',unit:'/day',cat:['workshop','visit','consult'],rating:5,organic:true,halal:true,url:'https://tirthaquddus.com/',wa:'60155678901',lat:3.145,lng:101.6889},
+  {id:11,name:'Pete Teo & Lisa Ngan',role:'Organic Farming · Farm-to-Table · Janda Baik',loc:'Janda Baik, Bentong, Pahang',bio:"Co-founders of A Little Farm on the Hill — a 6-acre certified organic farm in Janda Baik taken over in 2014. Pete is a musician-filmmaker; Lisa is an architect. The farm grows 90+ varieties of vegetables, herbs, and fruits and hosts farm-to-table lunches, cheese-making, yoga, and gardening classes.",rate:'RM 750',unit:'/visit',cat:['visit','workshop'],rating:5,organic:true,halal:false,url:'https://alittlefarmonthehill.com/',wa:'60146789012',lat:3.156,lng:101.6948},
+  {id:12,name:'Amy Tan & Vladislav Kuta',role:'Sustainable Living · Permaculture Education · Tigabiri',loc:'Gopeng, Perak',bio:"Founders of Tigabiri and before it, Permaculture Perak in Lenggong (2008–2019), featured on National Geographic's 'Living Free with Kimi Werner'. After eviction, they rebuilt at Gopeng. They offer a Self-Sufficient Living Course — online and on-site — covering composting, propagation, and sustainable homesteading.",rate:'RM 880',unit:'/programme',cat:['workshop','visit','setup'],rating:5,organic:true,halal:false,url:'https://www.instagram.com/tigabiri/',wa:'60137890123',lat:2.9905,lng:101.54},
+  {id:13,name:'Didik Alam',role:'Nature-based Education · Schools · Forest Learning',loc:'Malaysia',bio:'Environmental education practitioners connecting children and communities with nature through forest learning, nature play, and outdoor ecological programmes.',rate:'RM 480',unit:'/programme',cat:['workshop','visit'],rating:5,organic:true,halal:true,url:'https://www.instagram.com/didik.alam/',wa:'60128901234',lat:3.1399,lng:101.6869}
 ];
 
 var posts=[
@@ -1253,35 +1667,35 @@ var workshops=[
 ];
 
 var farms=[
-  {id:1,name:'Mukha Tree',type:'Community Farm & Event Space',loc:'TTDI, Kuala Lumpur',desc:'A community farm and event space in TTDI, KL. Grows food via syntropic agroforestry and hosts workshops, community events, and cultural gatherings. Nazreen Abraham Stein is the Farm Steward.',tags:['Syntropic','Organic','Community','Urban'],organic:true,halal:false,url:'https://www.instagram.com/mukha.tree/'},
-  {id:2,name:'Tirtha Quddus',type:'Permaculture Farm & Homestay',loc:'Janda Baik, Bentong, Pahang',desc:'A 3-acre family homestead in Janda Baik owned and run by Abas and Safia. More than a farm — a unique stay where nature, craft, and inner wellness meet. Permaculture farming, crafting, creativity, and volunteering opportunities.',tags:['Permaculture','Farmstay','Janda Baik','Pahang'],organic:true,halal:true,url:'https://tirthaquddus.com/'},
-  {id:3,name:'A Little Wild',type:'Syntropic Agroforestry Farm',loc:'Kota Tinggi, Johor',desc:"Southeast Asia's first commercial-scale Syntropic Agroforestry farm. Founded in 2020, regenerating 138 acres of former oil palm plantation into a food forest in Kota Tinggi, Johor. Fruit sales, farm tours, and workshops. Farmer: Derek Gripper.",tags:['Syntropic','Agroforestry','Johor','Regenerative'],organic:true,halal:false,url:'https://alittlewild.com/'},
-  {id:4,name:'Tiga Biri',type:'Sustainable Living Education Farm',loc:'Gopeng, Perak',desc:'Run by Amy Tan and Vladislav Kuta, who founded the pioneering Permaculture Perak in Lenggong (2008–2019, featured on National Geographic). After eviction, they rebuilt at Gopeng. Tigabiri continues their mission: empowering change through farming, resilience, and sustainability skills.',tags:['Permaculture','Education','Perak','Self-sufficient'],organic:true,halal:false,url:'https://www.instagram.com/tigabiri/'},
-  {id:5,name:'Soul Soil',type:'Urban Microgreens & Living Soil',loc:'Kuala Lumpur',desc:'Urban microgreens, living soil products, and regenerative growing guides. Nutrient-dense food for city growers.',tags:['Microgreens','Urban','Soil'],organic:true,halal:false,url:'https://www.instagram.com/soulsoil.my/'},
-  {id:6,name:'Seeds Malaysia',type:'Seed & Seedling Platform',loc:'Kuala Lumpur',desc:'Community seed saving, heritage seeds, and seedling resources for Malaysian growers.',tags:['Seeds','Heritage','Community'],organic:true,halal:false,url:'https://www.instagram.com/seeds.msia/'},
-  {id:7,name:'Kebun Rahmat',type:'Community Vegetable Garden',loc:'Selangor',desc:'A community vegetable garden growing seasonal Malaysian vegetables with care and gratitude.',tags:['Community','Vegetables','Selangor'],organic:false,halal:true,url:'https://www.instagram.com/_kebunrahmat/'},
-  {id:8,name:'Urban Hijau',type:'Urban Farming NGO',loc:'Kuala Lumpur',desc:'Activating sustainability through locally grown wholesome food and training in integrated urban sustainable systems. Workshops, corporate programmes, and community food production.',tags:['NGO','Urban','Workshop','KL'],organic:true,halal:true,url:'https://www.uhijau.org/'},
-  {id:9,name:'Janda Baik Goat Farm',type:'Livestock Farm',loc:'Janda Baik, Pahang',desc:'Free-range goat farm in the hills of Janda Baik. Kampung-raised, grass-fed goats. Halal slaughter.',tags:['Goats','Halal','Free-range','Janda Baik'],organic:false,halal:true,url:'https://www.instagram.com/jandabaikgoatfarm/'},
-  {id:10,name:'Eats, Shoots & Roots',type:'Edible Garden Community',loc:'Kuala Lumpur',desc:'Growing communities through growing food since 2012. Edible garden design, school programmes, community plots, and educational resources across Malaysia.',tags:['Education','Schools','Community','KL'],organic:true,halal:false,url:'https://eatsshootsandroots.org/'},
-  {id:11,name:'Cucuk Tanam',type:'Urban Growing Starter Kits',loc:'Kuala Lumpur',desc:'Making urban growing accessible for everyone. Seedling kits and growing guides for balcony, window, and small space growers.',tags:['Urban','Starter kits','Balcony'],organic:true,halal:false,url:'https://www.instagram.com/cucuk.tanam/'},
-  {id:12,name:'Mekar Flora',type:'Native & Heritage Plants',loc:'Selangor',desc:'Native Malaysian and heritage flowering plants for biodiversity, pollinators, and sustainable gardens.',tags:['Native','Heritage','Biodiversity'],organic:true,halal:false,url:'https://www.instagram.com/mekar.flora/'},
-  {id:13,name:'Biotope Malaya',type:'Aquatic Ecology & Biodiversity',loc:'Malaysia',desc:'Specialists in native Malaysian aquatic ecosystems, biotopes, and freshwater biodiversity education. Riparian restoration and ecological planting.',tags:['Aquatic','Biodiversity','Ecology'],organic:true,halal:false,url:'https://www.instagram.com/biotope_malaya/'},
-  {id:14,name:'Forest House',type:'Conservation Landscaping',loc:'Shah Alam, Selangor',desc:'Conservation-oriented landscaping and civil works contractor since 2004. Restores and designs native Malaysian green spaces for developers, institutions, and communities.',tags:['Conservation','Landscaping','Native'],organic:true,halal:false,url:'https://www.foresthouse.my/'},
-  {id:15,name:'Free Tree Society',type:'Non-profit Environmental Organisation',loc:'Bangsar, Kuala Lumpur',desc:'Founded in 2012 by Baida Hercus in Bangsar. Since 2013, has given away over 40,000 plants to homeowners, schools, marginalised communities, and wildlife habitats — fostering environmental stewardship one tree at a time.',tags:['Non-profit','Trees','Community','Bangsar'],organic:true,halal:false,url:'https://www.freetreesociety.org/'},
-  {id:16,name:'Sentosa Janda Baik',type:'Creative Arts & Eco Events Space',loc:'Janda Baik, Pahang',desc:'Creative arts and events space in Janda Baik. Hosts cultural, ecological, and community events in a natural hill setting.',tags:['Arts','Events','Janda Baik'],organic:false,halal:false,url:'https://sentosajandabaik.com/'},
-  {id:17,name:'The Kasbah Langkawi',type:'Eco Café & Guesthouse',loc:'Langkawi, Kedah',desc:"Travellers café and guesthouse in Langkawi with commitment to local sourcing and sustainability.",tags:['Café','Langkawi','Guesthouse'],organic:false,halal:true,url:'https://kasbah.my/'},
-  {id:18,name:'A Little Farm on the Hill',type:'Organic Farm & Farm-to-Table Restaurant',loc:'Janda Baik, Bentong, Pahang',desc:'Founded in 2014 by musician-filmmaker Pete Teo and architect Lisa Ngan. A 6-acre certified organic farm in Janda Baik growing 90+ varieties of vegetables, herbs, and fruits. Supplies KL restaurants and hosts farm-to-table lunches, cheese-making, and gardening classes.',tags:['Organic','Farm-to-table','Janda Baik','Pahang'],organic:true,halal:false,url:'https://alittlefarmonthehill.com/'},
-  {id:19,name:'Mukha Café',type:'Non-profit Farm-to-Table Café',loc:'TTDI, Kuala Lumpur',desc:'A non-profit café in the heart of TTDI inspired by the 15th-century Mocha trading port in Yemen. Promotes spiritual, cultural, and intellectual initiatives. Some ingredients ethically sourced from local farms. Sustained by 75% café proceeds and 25% community sponsorship.',tags:['Café','Non-profit','TTDI','Community','KL'],organic:false,halal:true,url:'https://www.instagram.com/mukhacafe/'},
-  {id:20,name:'Daun Touch Me Truck',type:'Mobile Herb & Plant Truck',loc:'Kuala Lumpur',desc:'Mobile plant and herb truck rolling through KL neighbourhoods. Rare herbs, edible plants, and growing supplies.',tags:['Mobile','Herbs','Plants','KL'],organic:true,halal:false,url:'https://www.instagram.com/dauntouchmetruck/'},
-  {id:21,name:'FOBK',type:'Friends of Bukit Kiara',loc:'Bukit Kiara, KL',desc:"Community conservation group protecting and restoring Bukit Kiara, one of KL's last remaining forest reserves. Advocacy, community walks, and reforestation efforts.",tags:['Conservation','Forest','KL','NGO'],organic:true,halal:false,url:'https://fobk.org/'},
-  {id:22,name:'The Habitat Foundation',type:'Biodiversity Conservation',loc:'Penang Hill, Penang',desc:'Charitable trust dedicated to biodiversity conservation, education, and sustainability through partnerships and innovation, centred on Penang Hill.',tags:['Conservation','Biodiversity','Penang'],organic:true,halal:false,url:'https://www.habitatfoundation.org.my/'},
-  {id:23,name:'Rimba Ilmu',type:'University Botanic Garden',loc:'Universiti Malaya, Kuala Lumpur',desc:"Malaysia's oldest university botanic garden at Universiti Malaya. Over 60 hectares, 1,200+ labelled plant species. A conservation site, research facility, and urban forest sanctuary open to the public.",tags:['Botanic','Research','Conservation','UM'],organic:true,halal:false,url:'https://www.instagram.com/rimbailmuum/'},
-  {id:24,name:'Rimbun Dahan',type:'Private Arboretum & Arts Residency',loc:'Kuang, near Sungai Buloh, Selangor',desc:"The 14-acre home of architect Hijjas Kasturi and his wife Angela Hijjas in Kuang, Selangor. Angela's indigenous Southeast Asian garden was awarded arboretum status. Malaysia's oldest art residency (since 1994), hosting over 100 international artists. Director: Angela Hijjas.",tags:['Arboretum','Arts','Residency','Conservation'],organic:true,halal:false,url:'https://rimbundahan.org/'},
-  {id:25,name:'Sunda Shelves',type:'Botanical Education & Walks',loc:'Kuala Lumpur',desc:"Nature-based botanical education and guided walks through Malaysia's urban and wild spaces. Connects communities with indigenous flora, ecology, and environmental literacy.",tags:['Botany','Walks','Education','Native'],organic:true,halal:false,url:'https://www.instagram.com/sunda.shelves/'},
-  {id:26,name:'Gerai Orang Asal',type:'Indigenous Produce & Craft',loc:'Kuala Lumpur',desc:'Platform supporting Orang Asal (indigenous) communities to sell produce, crafts, and forest products directly to buyers. Connecting indigenous knowledge with urban communities.',tags:['Indigenous','Orang Asal','Community'],organic:true,halal:true,url:'https://www.instagram.com/gerai.orangasal/'},
-  {id:27,name:'Didik Alam',type:'Nature-based Education',loc:'Malaysia',desc:'Environmental education practitioners connecting children and communities with nature through forest learning, nature play, and outdoor ecological programmes.',tags:['Education','Children','Nature'],organic:true,halal:true,url:'https://www.instagram.com/didik.alam/'},
-  {id:28,name:'Kebun-Kebun Bangsar',type:'Community Farm & Urban Park',loc:'Lorong Bukit Pantai, Bangsar, Kuala Lumpur',desc:'Founded in 2016 by landscape architect Ng Sek San (of Sekeping). A non-profit community farm on a hillside in Bangsar. Practises permaculture farming, donates fresh vegetables to the underserved weekly, and hosts gotong-royong volunteer sessions every Saturday. Free entry by donation.',tags:['Community','Non-profit','Bangsar','Permaculture','KL'],organic:true,halal:true,url:'https://www.kebunkebunbangsar.org/'},
-  {id:29,name:'Lovely Organic Farm',type:'Certified Organic Farm',loc:'Selangor',desc:'Certified organic farm in Selangor growing seasonal Malaysian vegetables. Direct farm to doorstep delivery and community supported agriculture.',tags:['Organic','Certified','Vegetables','CSA'],organic:true,halal:true,url:'https://web.facebook.com/lovelyorganicfarm/'}
+  {id:1,name:'Mukha Tree',type:'Community Farm & Event Space',loc:'TTDI, Kuala Lumpur',desc:'A community farm and event space in TTDI, KL. Grows food via syntropic agroforestry and hosts workshops, community events, and cultural gatherings. Nazreen Abraham Stein is the Farm Steward.',tags:['Syntropic','Organic','Community','Urban'],organic:true,halal:false,url:'https://www.instagram.com/mukha.tree/',wa:'60122345678',lat:3.1432,lng:101.6281},
+  {id:2,name:'Tirtha Quddus',type:'Permaculture Farm & Homestay',loc:'Janda Baik, Bentong, Pahang',desc:'A 3-acre family homestead in Janda Baik owned and run by Abas and Safia. More than a farm — a unique stay where nature, craft, and inner wellness meet. Permaculture farming, crafting, creativity, and volunteering opportunities.',tags:['Permaculture','Farmstay','Janda Baik','Pahang'],organic:true,halal:true,url:'https://tirthaquddus.com/',wa:'60129876543',lat:3.4589,lng:101.8671},
+  {id:3,name:'A Little Wild',type:'Syntropic Agroforestry Farm',loc:'Kota Tinggi, Johor',desc:"Southeast Asia's first commercial-scale Syntropic Agroforestry farm. Founded in 2020, regenerating 138 acres of former oil palm plantation into a food forest in Kota Tinggi, Johor. Fruit sales, farm tours, and workshops. Farmer: Derek Gripper.",tags:['Syntropic','Agroforestry','Johor','Regenerative'],organic:true,halal:false,url:'https://alittlewild.com/',wa:'60113456789',lat:1.7267,lng:103.8982},
+  {id:4,name:'Tiga Biri',type:'Sustainable Living Education Farm',loc:'Gopeng, Perak',desc:'Run by Amy Tan and Vladislav Kuta, who founded the pioneering Permaculture Perak in Lenggong (2008–2019, featured on National Geographic). After eviction, they rebuilt at Gopeng. Tigabiri continues their mission: empowering change through farming, resilience, and sustainability skills.',tags:['Permaculture','Education','Perak','Self-sufficient'],organic:true,halal:false,url:'https://www.instagram.com/tigabiri/',wa:'60167654321',lat:4.3784,lng:101.0989},
+  {id:5,name:'Soul Soil',type:'Urban Microgreens & Living Soil',loc:'Kuala Lumpur',desc:'Urban microgreens, living soil products, and regenerative growing guides. Nutrient-dense food for city growers.',tags:['Microgreens','Urban','Soil'],organic:true,halal:false,url:'https://www.instagram.com/soulsoil.my/',wa:'60111234567',lat:3.1478,lng:101.6953},
+  {id:6,name:'Seeds Malaysia',type:'Seed & Seedling Platform',loc:'Kuala Lumpur',desc:'Community seed saving, heritage seeds, and seedling resources for Malaysian growers.',tags:['Seeds','Heritage','Community'],organic:true,halal:false,url:'https://www.instagram.com/seeds.msia/',wa:'60192345678',lat:3.166,lng:101.7158},
+  {id:7,name:'Kebun Rahmat',type:'Community Vegetable Garden',loc:'Selangor',desc:'A community vegetable garden growing seasonal Malaysian vegetables with care and gratitude.',tags:['Community','Vegetables','Selangor'],organic:false,halal:true,url:'https://www.instagram.com/_kebunrahmat/',wa:'60163456789',lat:3.0738,lng:101.5183},
+  {id:8,name:'Urban Hijau',type:'Urban Farming NGO',loc:'Kuala Lumpur',desc:'Activating sustainability through locally grown wholesome food and training in integrated urban sustainable systems. Workshops, corporate programmes, and community food production.',tags:['NGO','Urban','Workshop','KL'],organic:true,halal:true,url:'https://www.uhijau.org/',wa:'60123456780',lat:3.1569,lng:101.7123},
+  {id:9,name:'Janda Baik Goat Farm',type:'Livestock Farm',loc:'Janda Baik, Pahang',desc:'Free-range goat farm in the hills of Janda Baik. Kampung-raised, grass-fed goats. Halal slaughter.',tags:['Goats','Halal','Free-range','Janda Baik'],organic:false,halal:true,url:'https://www.instagram.com/jandabaikgoatfarm/',wa:'60134567890',lat:3.4612,lng:101.879},
+  {id:10,name:'Eats, Shoots & Roots',type:'Edible Garden Community',loc:'Kuala Lumpur',desc:'Growing communities through growing food since 2012. Edible garden design, school programmes, community plots, and educational resources across Malaysia.',tags:['Education','Schools','Community','KL'],organic:true,halal:false,url:'https://eatsshootsandroots.org/',wa:'60155678901',lat:3.145,lng:101.6889},
+  {id:11,name:'Cucuk Tanam',type:'Urban Growing Starter Kits',loc:'Kuala Lumpur',desc:'Making urban growing accessible for everyone. Seedling kits and growing guides for balcony, window, and small space growers.',tags:['Urban','Starter kits','Balcony'],organic:true,halal:false,url:'https://www.instagram.com/cucuk.tanam/',wa:'60146789012',lat:3.156,lng:101.6948},
+  {id:12,name:'Mekar Flora',type:'Native & Heritage Plants',loc:'Selangor',desc:'Native Malaysian and heritage flowering plants for biodiversity, pollinators, and sustainable gardens.',tags:['Native','Heritage','Biodiversity'],organic:true,halal:false,url:'https://www.instagram.com/mekar.flora/',wa:'60137890123',lat:2.9905,lng:101.54},
+  {id:13,name:'Biotope Malaya',type:'Aquatic Ecology & Biodiversity',loc:'Malaysia',desc:'Specialists in native Malaysian aquatic ecosystems, biotopes, and freshwater biodiversity education. Riparian restoration and ecological planting.',tags:['Aquatic','Biodiversity','Ecology'],organic:true,halal:false,url:'https://www.instagram.com/biotope_malaya/',wa:'60128901234',lat:3.1399,lng:101.6869},
+  {id:14,name:'Forest House',type:'Conservation Landscaping',loc:'Shah Alam, Selangor',desc:'Conservation-oriented landscaping and civil works contractor since 2004. Restores and designs native Malaysian green spaces for developers, institutions, and communities.',tags:['Conservation','Landscaping','Native'],organic:true,halal:false,url:'https://www.foresthouse.my/',wa:'60119012345',lat:3.0732,lng:101.5185},
+  {id:15,name:'Free Tree Society',type:'Non-profit Environmental Organisation',loc:'Bangsar, Kuala Lumpur',desc:'Founded in 2012 by Baida Hercus in Bangsar. Since 2013, has given away over 40,000 plants to homeowners, schools, marginalised communities, and wildlife habitats — fostering environmental stewardship one tree at a time.',tags:['Non-profit','Trees','Community','Bangsar'],organic:true,halal:false,url:'https://www.freetreesociety.org/',wa:'60170123456',lat:3.1201,lng:101.6759},
+  {id:16,name:'Sentosa Janda Baik',type:'Creative Arts & Eco Events Space',loc:'Janda Baik, Pahang',desc:'Creative arts and events space in Janda Baik. Hosts cultural, ecological, and community events in a natural hill setting.',tags:['Arts','Events','Janda Baik'],organic:false,halal:false,url:'https://sentosajandabaik.com/',wa:'60181234567',lat:3.455,lng:101.866},
+  {id:17,name:'The Kasbah Langkawi',type:'Eco Café & Guesthouse',loc:'Langkawi, Kedah',desc:"Travellers café and guesthouse in Langkawi with commitment to local sourcing and sustainability.",tags:['Café','Langkawi','Guesthouse'],organic:false,halal:true,url:'https://kasbah.my/',wa:'60192345679',lat:6.3697,lng:99.8541},
+  {id:18,name:'A Little Farm on the Hill',type:'Organic Farm & Farm-to-Table Restaurant',loc:'Janda Baik, Bentong, Pahang',desc:'Founded in 2014 by musician-filmmaker Pete Teo and architect Lisa Ngan. A 6-acre certified organic farm in Janda Baik growing 90+ varieties of vegetables, herbs, and fruits. Supplies KL restaurants and hosts farm-to-table lunches, cheese-making, and gardening classes.',tags:['Organic','Farm-to-table','Janda Baik','Pahang'],organic:true,halal:false,url:'https://alittlefarmonthehill.com/',wa:'60173456780',lat:3.462,lng:101.882},
+  {id:19,name:'Mukha Café',type:'Non-profit Farm-to-Table Café',loc:'TTDI, Kuala Lumpur',desc:'A non-profit café in the heart of TTDI inspired by the 15th-century Mocha trading port in Yemen. Promotes spiritual, cultural, and intellectual initiatives. Some ingredients ethically sourced from local farms. Sustained by 75% café proceeds and 25% community sponsorship.',tags:['Café','Non-profit','TTDI','Community','KL'],organic:false,halal:true,url:'https://www.instagram.com/mukhacafe/',wa:'60164567891',lat:3.1419,lng:101.631},
+  {id:20,name:'Daun Touch Me Truck',type:'Mobile Herb & Plant Truck',loc:'Kuala Lumpur',desc:'Mobile plant and herb truck rolling through KL neighbourhoods. Rare herbs, edible plants, and growing supplies.',tags:['Mobile','Herbs','Plants','KL'],organic:true,halal:false,url:'https://www.instagram.com/dauntouchmetruck/',wa:'60155678902',lat:3.15,lng:101.702},
+  {id:21,name:'FOBK',type:'Friends of Bukit Kiara',loc:'Bukit Kiara, KL',desc:"Community conservation group protecting and restoring Bukit Kiara, one of KL's last remaining forest reserves. Advocacy, community walks, and reforestation efforts.",tags:['Conservation','Forest','KL','NGO'],organic:true,halal:false,url:'https://fobk.org/',wa:'60146789013',lat:3.168,lng:101.6411},
+  {id:22,name:'The Habitat Foundation',type:'Biodiversity Conservation',loc:'Penang Hill, Penang',desc:'Charitable trust dedicated to biodiversity conservation, education, and sustainability through partnerships and innovation, centred on Penang Hill.',tags:['Conservation','Biodiversity','Penang'],organic:true,halal:false,url:'https://www.habitatfoundation.org.my/',wa:'60137890124',lat:5.4164,lng:100.2681},
+  {id:23,name:'Rimba Ilmu',type:'University Botanic Garden',loc:'Universiti Malaya, Kuala Lumpur',desc:"Malaysia's oldest university botanic garden at Universiti Malaya. Over 60 hectares, 1,200+ labelled plant species. A conservation site, research facility, and urban forest sanctuary open to the public.",tags:['Botanic','Research','Conservation','UM'],organic:true,halal:false,url:'https://www.instagram.com/rimbailmuum/',wa:'60128901235',lat:3.121,lng:101.656},
+  {id:24,name:'Rimbun Dahan',type:'Private Arboretum & Arts Residency',loc:'Kuang, near Sungai Buloh, Selangor',desc:"The 14-acre home of architect Hijjas Kasturi and his wife Angela Hijjas in Kuang, Selangor. Angela's indigenous Southeast Asian garden was awarded arboretum status. Malaysia's oldest art residency (since 1994), hosting over 100 international artists. Director: Angela Hijjas.",tags:['Arboretum','Arts','Residency','Conservation'],organic:true,halal:false,url:'https://rimbundahan.org/',wa:'60119012346',lat:3.2601,lng:101.5481},
+  {id:25,name:'Sunda Shelves',type:'Botanical Education & Walks',loc:'Kuala Lumpur',desc:"Nature-based botanical education and guided walks through Malaysia's urban and wild spaces. Connects communities with indigenous flora, ecology, and environmental literacy.",tags:['Botany','Walks','Education','Native'],organic:true,halal:false,url:'https://www.instagram.com/sunda.shelves/',wa:'60170123457',lat:3.16,lng:101.695},
+  {id:26,name:'Gerai Orang Asal',type:'Indigenous Produce & Craft',loc:'Kuala Lumpur',desc:'Platform supporting Orang Asal (indigenous) communities to sell produce, crafts, and forest products directly to buyers. Connecting indigenous knowledge with urban communities.',tags:['Indigenous','Orang Asal','Community'],organic:true,halal:true,url:'https://www.instagram.com/gerai.orangasal/',wa:'60181234568',lat:3.152,lng:101.701},
+  {id:27,name:'Didik Alam',type:'Nature-based Education',loc:'Malaysia',desc:'Environmental education practitioners connecting children and communities with nature through forest learning, nature play, and outdoor ecological programmes.',tags:['Education','Children','Nature'],organic:true,halal:true,url:'https://www.instagram.com/didik.alam/',wa:'60192345670',lat:3.2,lng:101.68},
+  {id:28,name:'Kebun-Kebun Bangsar',type:'Community Farm & Urban Park',loc:'Lorong Bukit Pantai, Bangsar, Kuala Lumpur',desc:'Founded in 2016 by landscape architect Ng Sek San (of Sekeping). A non-profit community farm on a hillside in Bangsar. Practises permaculture farming, donates fresh vegetables to the underserved weekly, and hosts gotong-royong volunteer sessions every Saturday. Free entry by donation.',tags:['Community','Non-profit','Bangsar','Permaculture','KL'],organic:true,halal:true,url:'https://www.kebunkebunbangsar.org/',wa:'60163456780',lat:3.125,lng:101.6701},
+  {id:29,name:'Lovely Organic Farm',type:'Certified Organic Farm',loc:'Selangor',desc:'Certified organic farm in Selangor growing seasonal Malaysian vegetables. Direct farm to doorstep delivery and community supported agriculture.',tags:['Organic','Certified','Vegetables','CSA'],organic:true,halal:true,url:'https://web.facebook.com/lovelyorganicfarm/',wa:'60154567892',lat:3.05,lng:101.502}
 ];
 
 var orders=[
@@ -1370,29 +1784,42 @@ function setLang(l){
 // ── PRODUCTS ──
 function renderProducts(cat,search){
   var g=document.getElementById('product-grid');if(!g)return;
+  var q=(search||'').toLowerCase().trim();
   var items=products.filter(function(p){
     var co=cat==='all'||(cat==='organic'&&p.organic)||(cat==='halal'&&p.halal)||p.cat===cat;
-    var so=!search||p.name.toLowerCase().includes(search.toLowerCase())||p.farm.toLowerCase().includes(search.toLowerCase());
+    var so=!q||p.name.toLowerCase().includes(q)||p.farm.toLowerCase().includes(q)||
+            (p.desc&&p.desc.toLowerCase().includes(q))||(p.cat&&p.cat.toLowerCase().includes(q))||
+            (p.tags&&p.tags.some(function(t){return t.toLowerCase().includes(q)}));
     return co&&so;
   });
+  var cnt=document.getElementById('mkt-search-count');
+  if(cnt)cnt.textContent=q?items.length+' result'+(items.length!==1?'s':''):'';
   g.innerHTML=items.map(function(p){
     var b='';
     if(p.organic)b+='<span class="tag tag-organic" style="font-size:10.5px"><i class="ti ti-leaf" style="font-size:11px"></i> Organic</span> ';
     if(p.halal)b+='<span class="tag tag-halal" style="font-size:10.5px"><i class="ti ti-star" style="font-size:11px"></i> Halal</span>';
+    // highlight search term
+    var nm=p.name,fm=p.farm;
+    if(q){nm=nm.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:rgba(168,196,106,.35);border-radius:2px">$1</mark>');fm=fm.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:rgba(168,196,106,.35);border-radius:2px">$1</mark>')}
     return '<div class="product-card" onclick="openProduct('+p.id+')">'
       +'<div class="product-img">'+p.icon+'</div>'
       +'<div class="product-body"><div class="product-tags">'+b+'</div>'
-      +'<div class="product-name">'+p.name+'</div><div class="product-farm">'+p.farm+'</div>'
+      +'<div class="product-name">'+nm+'</div><div class="product-farm">'+fm+'</div>'
       +'<div class="product-footer"><div class="product-price">'+p.price+'</div>'
-      +'<button class="btn btn-green btn-sm" onclick="event.stopPropagation();showToast(\'cart\')">Add</button>'
+      +'<button class="btn btn-green btn-sm" onclick="event.stopPropagation();addToCart('+p.id+')"><i class="ti ti-shopping-cart"></i> Add</button>'
       +'</div></div></div>';
-  }).join('')||'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--mu)">No produce found.</div>';
+  }).join('')||'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--mu)"><i class="ti ti-search" style="font-size:36px;display:block;margin-bottom:.75rem;opacity:.3"></i>No produce matching "<strong>'+search+'</strong>" found.<br><button class="btn btn-outline btn-sm mt1" onclick="document.getElementById(\'mkt-search\').value=\'\';filterProducts()">Clear search</button></div>';
 }
 function openProduct(id){
   var p=products.find(function(x){return x.id===id});if(!p)return;
   var b='';
   if(p.organic)b+='<span class="tag tag-organic" style="margin-right:6px"><i class="ti ti-leaf" style="font-size:11px"></i> Organic Verified</span>';
   if(p.halal)b+='<span class="tag tag-halal"><i class="ti ti-star" style="font-size:11px"></i> Halal Certified</span>';
+  // find farm to get WhatsApp
+  var farm=farms.find(function(f){return f.name===p.farm||p.url===f.url});
+  var waNum=farm&&farm.wa?farm.wa:'60123456789';
+  var waMsg=encodeURIComponent('Hi, I found you on Bumi and would like to order: '+p.name+' ('+p.price+'). Reference: Bumi listing.');
+  var waUrl='https://wa.me/'+waNum+'?text='+waMsg;
   document.getElementById('product-modal-content').innerHTML=
     '<div style="height:140px;border-radius:12px;background:linear-gradient(135deg,var(--f),var(--g));display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:1.25rem">'+p.icon+'</div>'
     +'<div style="margin-bottom:.75rem">'+b+'</div>'
@@ -1401,11 +1828,20 @@ function openProduct(id){
     +'<div style="font-size:14px;color:var(--mu);line-height:1.75;margin-bottom:1rem">'+p.desc+'</div>'
     +'<div style="font-family:DM Serif Display,serif;font-size:28px;margin-bottom:1rem">'+p.price+'</div>'
     +'<div style="font-size:12px;color:var(--mu);margin-bottom:1rem;padding:.75rem;background:var(--pp);border-radius:10px"><i class="ti ti-receipt" style="color:var(--g)"></i> A receipt will be automatically generated and sent to you after payment.</div>'
-    +'<div style="display:flex;gap:.75rem"><button class="btn btn-green" style="flex:1;justify-content:center" onclick="showToast(\'cart\');closeModal(\'product\')">Add to basket</button><button class="btn btn-outline" onclick="closeModal(\'product\')">Back</button></div>';
+    +'<div style="display:flex;gap:.75rem;flex-wrap:wrap">'
+    +'<button class="btn btn-green" style="flex:1;justify-content:center;min-width:140px" onclick="addToCart('+p.id+');closeModal(\'product\')"><i class="ti ti-shopping-cart"></i> Add to basket</button>'
+    +'<a href="'+waUrl+'" target="_blank" class="btn btn-wa" style="min-width:140px;justify-content:center"><i class="ti ti-brand-whatsapp"></i> WhatsApp farm</a>'
+    +'<button class="btn btn-outline" onclick="closeModal(\'product\')">Back</button>'
+    +'</div>';
   openModal('product');
 }
 function filterCat(el,c){document.querySelectorAll('#page-market .filter-btn').forEach(function(b){b.classList.remove('on')});el.classList.add('on');curFilter=c;renderProducts(c,document.getElementById('mkt-search')?document.getElementById('mkt-search').value:'');}
-function filterProducts(){renderProducts(curFilter,document.getElementById('mkt-search').value);}
+function filterProducts(){
+  var v=document.getElementById('mkt-search').value;
+  var clearBtn=document.getElementById('mkt-search-clear');
+  if(clearBtn)clearBtn.style.display=v?'flex':'none';
+  renderProducts(curFilter,v);
+}
 
 // ── HIRE ──
 function renderHire(f){
@@ -1560,8 +1996,9 @@ function renderFarms(filter){
       +'<div style="font-size:11.5px;color:var(--mu);margin-bottom:4px"><i class="ti ti-map-pin" style="font-size:11px"></i> '+f.loc+'</div>'
       +'<div style="font-size:12.5px;color:var(--mu);line-height:1.6;margin-bottom:.875rem">'+f.desc+'</div>'
       +'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.875rem">'+tagHtml+'</div>'
-      +'<div style="display:flex;gap:.5rem">'
+      +'<div style="display:flex;gap:.5rem;flex-wrap:wrap">'
       +(f.url?'<a href="'+f.url+'" target="_blank" onclick="event.stopPropagation()" class="btn btn-outline btn-sm" style="font-size:11px">Visit ↗</a>':'')
+      +(f.wa?'<a href="https://wa.me/'+f.wa+'?text='+encodeURIComponent('Hi, I found '+f.name+' on Bumi and would like to connect.')+'" target="_blank" onclick="event.stopPropagation()" class="btn btn-wa btn-sm" style="font-size:11px"><i class="ti ti-brand-whatsapp"></i> WhatsApp</a>':'')
       +'<button class="btn btn-green btn-sm" style="font-size:11px" onclick="event.stopPropagation();contactFarm(\''+f.name.replace(/'/g,'').replace(/&/g,'and')+'\')">Connect</button>'
       +'</div></div>';
   }).join('')||'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--mu)">No farms found.</div>';
@@ -1593,6 +2030,7 @@ function openFarmProfile(id){
     +'<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">'+tagHtml+'</div></div></div>'
     +'<div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">'
     +(f.url?'<a href="'+f.url+'" target="_blank" class="btn btn-outline" style="border-color:rgba(168,196,106,.3);color:rgba(238,244,222,.7)">Visit Website / Instagram ↗</a>':'')
+    +(f.wa?'<a href="https://wa.me/'+f.wa+'?text='+encodeURIComponent('Hi, I found you on Bumi and would like to connect with '+f.name+'. Reference: Bumi Farm Directory.')+'" target="_blank" class="btn btn-wa"><i class="ti ti-brand-whatsapp"></i> Message on WhatsApp</a>':'')
     +'<button class="btn btn-green" onclick="contactFarm(\''+fn+'\')">Connect on Bumi</button>'
     +'</div></div></div>'
     +'<div class="profile-tabs">'
@@ -1642,6 +2080,372 @@ renderPlots();
 renderWorkshopsSidebar();
 renderDashboard();
 renderFarms('all');
+renderDiary('all');
+renderB2B();
+updateCalc();
+
+// ══════════════════════════════════════════════
+// CART ENGINE
+// ══════════════════════════════════════════════
+var cart=[];
+function addToCart(pid){
+  var p=products.find(function(x){return x.id===pid});if(!p)return;
+  var existing=cart.find(function(i){return i.id===pid});
+  if(existing){existing.qty++;}else{cart.push({id:p.id,name:p.name,farm:p.farm,price:p.price,icon:p.icon,qty:1,rawPrice:parseFloat(p.price.replace('RM ',''))});}
+  updateCartBadge();
+  showToast('cart','Added: '+p.name);
+}
+function removeFromCart(pid){
+  var idx=cart.findIndex(function(i){return i.id===pid});
+  if(idx>-1){if(cart[idx].qty>1){cart[idx].qty--;}else{cart.splice(idx,1);}}
+  updateCartBadge();
+  renderCartItems();
+}
+function updateCartBadge(){
+  var total=cart.reduce(function(s,i){return s+i.qty},0);
+  var badge=document.getElementById('cart-badge');
+  if(badge){badge.textContent=total;badge.classList.toggle('show',total>0);}
+}
+function openCartDrawer(){
+  renderCartItems();
+  document.getElementById('cart-drawer').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+}
+function closeCartDrawer(){
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+}
+function renderCartItems(){
+  var el=document.getElementById('cart-items-list');
+  var foot=document.getElementById('cart-footer');
+  var cntHead=document.getElementById('cart-count-head');
+  if(!el)return;
+  var totalItems=cart.reduce(function(s,i){return s+i.qty},0);
+  if(cntHead)cntHead.textContent=totalItems?'('+totalItems+' item'+(totalItems!==1?'s':'')+')'  :'';
+  if(!cart.length){
+    el.innerHTML='<div class="cart-empty"><i class="ti ti-shopping-bag" style="font-size:40px;color:var(--g);opacity:.3;display:block;margin-bottom:.75rem"></i><div style="font-weight:500;margin-bottom:4px">Your basket is empty</div><div style="font-size:12.5px">Browse the Pasar to find fresh produce.</div><button class="btn btn-green btn-sm mt1" onclick="closeCartDrawer();goPage(\'market\')">Browse Pasar</button></div>';
+    if(foot)foot.style.display='none';
+    return;
+  }
+  if(foot)foot.style.display='block';
+  el.innerHTML=cart.map(function(i){
+    return '<div class="cart-item">'
+      +'<div class="cart-item-icon">'+i.icon+'</div>'
+      +'<div class="cart-item-info"><div class="cart-item-name">'+i.name+'</div><div class="cart-item-farm">'+i.farm+'</div>'
+      +'<div class="cart-qty"><button class="cart-qty-btn" onclick="removeFromCart('+i.id+')">−</button><span class="cart-qty-n">'+i.qty+'</span><button class="cart-qty-btn" onclick="addToCart('+i.id+')">+</button></div></div>'
+      +'<div><div class="cart-item-price">RM '+(i.rawPrice*i.qty).toFixed(2)+'</div></div>'
+      +'</div>';
+  }).join('');
+  var sub=cart.reduce(function(s,i){return s+i.rawPrice*i.qty},0);
+  document.getElementById('cart-subtotal').textContent='RM '+sub.toFixed(2);
+  document.getElementById('cart-total-display').textContent='RM '+(sub+8).toFixed(2);
+}
+function checkoutWhatsApp(){
+  var lines=cart.map(function(i){return i.name+' x'+i.qty+' ('+i.price+')'}).join(', ');
+  var sub=cart.reduce(function(s,i){return s+i.rawPrice*i.qty},0);
+  var msg='Hi, I found you on Bumi and would like to order: '+lines+'. Total: RM '+sub.toFixed(2)+'. Reference: Bumi Order.';
+  window.open('https://wa.me/60123456789?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ── CHECKOUT FLOW ──
+var currentCheckoutStep=1;
+function goCheckoutStep(n){
+  document.querySelectorAll('.checkout-step').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.cp-step').forEach(function(s,i){s.classList.toggle('active',i+1===n);s.classList.toggle('done',i+1<n)});
+  var step=document.getElementById('cstep-'+n);if(step)step.classList.add('active');
+  currentCheckoutStep=n;
+  if(n===4){renderCheckoutSummary();}
+}
+function renderCheckoutSummary(){
+  var el=document.getElementById('checkout-order-summary');
+  var sch=document.getElementById('chk-subtotal');
+  var tch=document.getElementById('chk-total');
+  if(!el)return;
+  var sub=cart.reduce(function(s,i){return s+i.rawPrice*i.qty},0);
+  el.innerHTML='<div style="font-size:13px;font-weight:500;margin-bottom:.75rem;color:var(--mu)">Order summary</div>'+cart.map(function(i){return '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:.375rem"><span>'+i.name+' × '+i.qty+'</span><span>RM '+(i.rawPrice*i.qty).toFixed(2)+'</span></div>'}).join('');
+  if(sch)sch.textContent='RM '+sub.toFixed(2);
+  if(tch)tch.textContent='RM '+(sub+8).toFixed(2);
+}
+function selectPayment(el){document.querySelectorAll('.payment-option').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');}
+function placeOrder(){
+  cart=[];updateCartBadge();closeModal('checkout');
+  showToast('cart','Order placed! You will receive a WhatsApp confirmation shortly.');
+}
+
+// ══════════════════════════════════════════════
+// FARM MAP
+// ══════════════════════════════════════════════
+var farmMap=null;
+function toggleFarmMap(show){
+  var container=document.getElementById('farm-map-container');
+  var grid=document.getElementById('farms-grid');
+  var listBtn=document.getElementById('farms-list-btn');
+  var mapBtn=document.getElementById('farms-map-btn');
+  var count=document.getElementById('farms-count');
+  if(show){
+    container.classList.add('open');
+    if(grid)grid.style.display='none';
+    if(count)count.style.display='none';
+    listBtn.classList.remove('on');mapBtn.classList.add('on');
+    if(!farmMap){initFarmMap();}
+  }else{
+    container.classList.remove('open');
+    if(grid)grid.style.display='';
+    if(count)count.style.display='';
+    listBtn.classList.add('on');mapBtn.classList.remove('on');
+  }
+}
+function initFarmMap(){
+  if(typeof L==='undefined'){
+    var script=document.createElement('script');
+    script.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload=function(){createFarmMap()};
+    document.head.appendChild(script);
+  }else{createFarmMap();}
+}
+function createFarmMap(){
+  var mapEl=document.getElementById('farm-map');
+  if(!mapEl||farmMap)return;
+  farmMap=L.map('farm-map').setView([3.8,109.0],6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:18}).addTo(farmMap);
+  var greenIcon=L.divIcon({className:'',html:'<div style="background:var(--g);width:14px;height:14px;border-radius:50%;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+  farms.forEach(function(f){
+    if(!f.lat||!f.lng)return;
+    var pop='<div style="min-width:180px">'
+      +'<div style="font-weight:600;font-size:13px;margin-bottom:3px">'+f.name+'</div>'
+      +'<div style="font-size:11.5px;color:#666;margin-bottom:6px">'+f.type+'<br>'+f.loc+'</div>'
+      +(f.organic?'<span style="background:rgba(107,143,58,.12);color:#5a7a2e;font-size:10px;padding:2px 8px;border-radius:10px;margin-right:4px">Organic</span>':'')
+      +(f.halal?'<span style="background:rgba(184,115,51,.1);color:#b87333;font-size:10px;padding:2px 8px;border-radius:10px">Halal</span>':'')
+      +'<br><div style="margin-top:8px;display:flex;gap:6px">'
+      +'<a href="javascript:openFarmProfile('+f.id+')" style="font-size:11.5px;color:#6b8f3a;font-weight:500">View profile →</a>'
+      +(f.wa?'<a href="https://wa.me/'+f.wa+'?text='+encodeURIComponent('Hi, I found you on Bumi!')+'" target="_blank" style="font-size:11.5px;color:#25d366;font-weight:500;margin-left:8px">WhatsApp</a>':'')
+      +'</div></div>';
+    L.marker([f.lat,f.lng],{icon:greenIcon}).addTo(farmMap).bindPopup(pop);
+  });
+  setTimeout(function(){farmMap.invalidateSize()},100);
+}
+
+// ══════════════════════════════════════════════
+// PLOT CALCULATOR
+// ══════════════════════════════════════════════
+var calcPlotType={kg:3.2,cycle:28};
+function updateCalc(){
+  var amt=parseInt(document.getElementById('calc-amount').value)||100;
+  document.getElementById('calc-amount-display').textContent=amt;
+  var sqm=Math.round(amt*0.32);
+  var kg=(sqm*calcPlotType.kg/100).toFixed(1);
+  var val=Math.round(kg*7);
+  document.getElementById('calc-kg').textContent='~'+kg;
+  document.getElementById('calc-sqm').textContent=sqm;
+  document.getElementById('calc-cycle').textContent=calcPlotType.cycle;
+  document.getElementById('calc-value').textContent='RM '+val;
+  if(document.getElementById('calc-join-amount'))document.getElementById('calc-join-amount').textContent=amt;
+}
+function setCalcPlot(el,type,kgPer100,cycle){
+  document.querySelectorAll('[id^="plot-type-"]').forEach(function(b){b.classList.remove('on');b.style.background='transparent';b.style.borderColor='rgba(107,143,58,.2)';b.style.color='rgba(238,244,222,.5)';});
+  el.classList.add('on');el.style.background='rgba(107,143,58,.2)';el.style.borderColor='var(--g)';el.style.color='var(--lc)';
+  calcPlotType={kg:kgPer100,cycle:cycle};
+  updateCalc();
+}
+
+// ══════════════════════════════════════════════
+// PLANT DOCTOR (AI)
+// ══════════════════════════════════════════════
+var plantImageData=null;
+function setPlantMode(m){
+  document.getElementById('pdoc-photo-mode').style.display=m==='photo'?'block':'none';
+  document.getElementById('pdoc-text-mode').style.display=m==='text'?'block':'none';
+  document.getElementById('pdoc-mode-photo').classList.toggle('active',m==='photo');
+  document.getElementById('pdoc-mode-text').classList.toggle('active',m==='text');
+}
+function handlePlantDrop(e){
+  e.preventDefault();document.getElementById('plant-drop').classList.remove('drag-over');
+  var file=e.dataTransfer.files[0];if(file)handlePlantFile(file);
+}
+function handlePlantFile(file){
+  if(!file||!file.type.startsWith('image/'))return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    plantImageData=ev.target.result;
+    var prev=document.getElementById('plant-preview');
+    prev.src=plantImageData;prev.style.display='block';
+    document.getElementById('plant-drop').style.display='none';
+    document.getElementById('plant-photo-context').style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+function quickPlant(symptom){
+  setPlantMode('text');
+  document.getElementById('plant-question').value='My crop is showing: '+symptom+'. I am growing in Malaysia. What could be the cause and how do I treat it?';
+  runPlantQuestion();
+}
+function showDiagnosisLoading(){
+  document.getElementById('plant-diagnosis-area').innerHTML=
+    '<div class="diagnosis-card" style="text-align:center;padding:2rem">'
+    +'<div class="typing-dots" style="justify-content:center;display:flex;margin-bottom:.875rem"><span></span><span></span><span></span></div>'
+    +'<div style="font-size:13.5px;color:var(--mu)">Diagnosing your plant…</div>'
+    +'</div>';
+}
+function renderDiagnosis(text){
+  var el=document.getElementById('plant-diagnosis-area');
+  el.innerHTML='<div class="diagnosis-card">'+
+    '<div style="font-family:DM Serif Display,serif;font-size:19px;margin-bottom:.875rem;color:var(--f)">Diagnosis</div>'+
+    '<div style="font-size:14px;line-height:1.8;color:var(--f);white-space:pre-wrap">'+text+'</div>'+
+    '<div style="margin-top:1.25rem;display:flex;gap:.75rem;flex-wrap:wrap">'+
+    '<button class="btn btn-outline btn-sm" onclick="showToast(\'post\',\'Diagnosis saved to your farm diary.\')"><i class="ti ti-notebook"></i> Save to diary</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="showToast(\'whatsapp\',\'Shared via WhatsApp.\')"><i class="ti ti-brand-whatsapp"></i> Share</button>'+
+    '</div></div>';
+}
+async function runPlantDiagnosis(){
+  var crop=document.getElementById('plant-crop-name').value||'unknown plant';
+  var symptoms=document.getElementById('plant-symptoms').value||'general issue';
+  showDiagnosisLoading();
+  var prompt='You are a plant pathologist specialising in tropical Malaysian agriculture. '
+    +'A farmer has uploaded a photo of their '+crop+' showing these symptoms: '+symptoms+'. '
+    +'Provide: 1) The most likely diagnosis (disease, pest, or deficiency) 2) Severity assessment 3) Step-by-step treatment using inputs available in Malaysia 4) Prevention tips. '
+    +'Be practical, specific, and concise. Mention specific Malaysian product names where relevant.';
+  try{
+    var messages=[{role:'user',content:[
+      {type:'text',text:prompt}
+    ]}];
+    if(plantImageData){
+      var b64=plantImageData.split(',')[1];
+      var mime=plantImageData.match(/data:([^;]+)/)[1];
+      messages[0].content.unshift({type:'image',source:{type:'base64',media_type:mime,data:b64}});
+    }
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:messages})});
+    var d=await res.json();
+    var txt=d.content&&d.content[0]?d.content[0].text:'Unable to diagnose. Please try again.';
+    renderDiagnosis(txt);
+  }catch(e){renderDiagnosis('Could not reach AI service. Check your connection and try again.');}
+}
+async function runPlantQuestion(){
+  var q=document.getElementById('plant-question').value.trim();if(!q)return;
+  showDiagnosisLoading();
+  var prompt='You are a plant pathologist and agronomist specialising in tropical Malaysian agriculture. Answer this farmer\'s question: '+q+'. Be practical and specific to Malaysian conditions, mentioning local products, weather, and growing conditions where relevant.';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    var d=await res.json();
+    var txt=d.content&&d.content[0]?d.content[0].text:'No response. Try again.';
+    renderDiagnosis(txt);
+  }catch(e){renderDiagnosis('Could not reach AI service. Check your connection and try again.');}
+}
+
+// ══════════════════════════════════════════════
+// FARMER DIARY
+// ══════════════════════════════════════════════
+var diaryEntries=[
+  {id:1,farm:'Mukha Tree',ini:'M',farmId:1,type:'harvest',date:'21 May 2025',time:'6:30am',crop:'Ulam Raja',icon:'🌿',body:'Third flush of the season. Harvested 4.2kg from the syntropic terrace beds this morning just before the rain. The succession planting system is paying off — we now have Ulam Raja at different maturity stages across three beds, meaning we can harvest weekly without exhausting any single spot. Soil smells incredible after last week\'s compost application.',tags:['Harvest','Syntropic','Ulam Raja','Compost'],likes:18},
+  {id:2,farm:'A Little Wild',ini:'A',farmId:3,type:'observation',date:'20 May 2025',time:'8:15am',crop:'Rambutan forest zone',icon:'🌳',body:'Spotted the first rambutan flowers of the season across Zone C of the food forest. This means our July fruit harvest window is on track. The nitrogen-fixing Indigofera trees planted in 2022 are visibly improving soil structure in this zone — the earthworm activity under them is extraordinary compared to the adjacent rows. Going to document soil density data this week.',tags:['Rambutan','Agroforestry','Phenology','Soil'],likes:24},
+  {id:3,farm:'Kebun-Kebun Bangsar',ini:'K',farmId:28,type:'challenge',date:'19 May 2025',time:'7:00am',crop:'Kangkung',icon:'⚠️',body:'Lost about 30% of the kangkung bed to what looks like a fungal issue — small brown spots spreading quickly in the humid corner near the slope. Our gotong-royong volunteers removed all affected material this Saturday. Treating with a diluted neem oil and copper sulphate spray. Adjusting spacing in the replanting to improve airflow. This is the second time this rainy season. Will trial raised beds with better drainage next cycle.',tags:['Kangkung','Fungal','Challenge','Learning'],likes:31},
+  {id:4,farm:'Tirtha Quddus',ini:'T',farmId:2,type:'planting',date:'18 May 2025',time:'5:45am',crop:'Moringa, Curry Leaf, Lemon Grass',icon:'🌱',body:'New guild planted in the lower terrace: Moringa as the pioneer tree, curry leaf as mid-story, and lemon grass as ground cover to suppress weeds and deter insects. Classic permaculture guild design — each plant serves three functions. The lemon grass also marks the edge of the bed visually, which helps new volunteers understand the boundaries. Abas is planning a photo documentation series of this guild through to maturity.',tags:['Planting','Moringa','Permaculture','Guild'],likes:15},
+  {id:5,farm:'Mukha Tree',ini:'M',farmId:1,type:'observation',date:'17 May 2025',time:'4:00pm',crop:'Compost system',icon:'🔍',body:'The hot compost pile we started six weeks ago hit 68°C in the centre — perfect for pathogen kill. Turned it this afternoon and found an incredible network of white mycelium throughout. The decomposition is faster than last season, which I attribute to adding spent coffee grounds from Mukha Café as a nitrogen booster. Going to let it rest another week before sifting and applying to the seedling nursery.',tags:['Compost','Soil','Mycelium','Observation'],likes:12},
+  {id:6,farm:'A Little Farm on the Hill',ini:'H',farmId:18,type:'harvest',date:'16 May 2025',time:'7:30am',crop:'Multi-variety salad greens',icon:'🥗',body:'Weekly harvest for our restaurant supply: 8kg of mixed salad greens across 14 varieties including oak leaf, mizuna, tatsoi, and our custom "Hillside Mix" that features heritage European varieties adapted to our altitude. Cut-and-come-again method means we haven\'t replanted these beds in three months. Lisa has been experimenting with rocket and watercress in the shaded creek-side beds — the results are outstanding.',tags:['Harvest','Salad','Farm-to-table','Heritage'],likes:27}
+];
+function filterDiary(el,f){
+  document.querySelectorAll('.diary-tab').forEach(function(b){b.classList.remove('on')});el.classList.add('on');
+  renderDiary(f);
+}
+function renderDiary(f){
+  var el=document.getElementById('diary-feed');if(!el)return;
+  var filtered=diaryEntries.filter(function(e){
+    if(f==='all')return true;
+    if(f==='harvest'||f==='planting'||f==='observation'||f==='challenge')return e.type===f;
+    if(f==='mukha')return e.farmId===1;
+    if(f==='alittlewild')return e.farmId===3;
+    if(f==='kkb')return e.farmId===28;
+    return true;
+  });
+  el.innerHTML=filtered.map(function(e){
+    var typeColor={'harvest':'var(--g)','planting':'#4a8c30','observation':'#3478ff','challenge':'var(--am)'};
+    var typeLabel={'harvest':'🌿 Harvest','planting':'🌱 Planting','observation':'🔍 Observation','challenge':'⚠ Challenge'};
+    return '<div class="diary-entry">'
+      +'<div class="diary-entry-head"><div class="diary-farm-dot" style="background:'+typeColor[e.type]+'"></div>'
+      +'<div style="flex:1"><div style="font-size:13.5px;font-weight:500;color:var(--f)">'+e.farm+'</div><div style="font-size:11.5px;color:var(--mu)">'+e.date+' · '+e.time+'</div></div>'
+      +'<span class="tag" style="font-size:10.5px;background:rgba(107,143,58,.08);color:'+typeColor[e.type]+'">'+typeLabel[e.type]+'</span>'
+      +'</div>'
+      +'<div class="diary-entry-body">'
+      +'<div class="diary-entry-img" style="background:linear-gradient(135deg,var(--f),var(--g))">'+e.icon+'</div>'
+      +'<div style="font-family:DM Serif Display,serif;font-size:17px;margin-bottom:.625rem;color:var(--f)">'+e.crop+'</div>'
+      +'<div class="diary-entry-text">'+e.body+'</div>'
+      +'<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.875rem">'+e.tags.map(function(t){return '<span class="tag tag-dark" style="font-size:10.5px">'+t+'</span>'}).join('')+'</div>'
+      +'<div class="diary-entry-meta"><span><i class="ti ti-heart"></i> '+e.likes+'</span>'
+      +'<button onclick="openFarmProfile('+e.farmId+')" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--g);font-family:DM Sans,sans-serif">View farm profile →</button></div>'
+      +'</div></div>';
+  }).join('')||'<div style="padding:3rem;text-align:center;color:var(--mu)">No entries found.</div>';
+  // Render active diarists sidebar
+  var sideEl=document.getElementById('diary-active-farms');
+  if(sideEl){
+    var farmIds=[...new Set(diaryEntries.map(function(e){return e.farmId}))];
+    sideEl.innerHTML=farmIds.map(function(fid){
+      var fm=farms.find(function(f){return f.id===fid});if(!fm)return '';
+      var count=diaryEntries.filter(function(e){return e.farmId===fid}).length;
+      return '<div style="display:flex;align-items:center;gap:.625rem;padding:.625rem 0;border-bottom:1px solid var(--bd);cursor:pointer" onclick="openFarmProfile('+fid+')">'
+        +'<div style="width:34px;height:34px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;color:var(--lc);font-family:DM Serif Display,serif;font-size:16px;flex-shrink:0">'+fm.name[0]+'</div>'
+        +'<div><div style="font-size:13px;font-weight:500">'+fm.name+'</div><div style="font-size:11.5px;color:var(--mu)">'+count+' entr'+(count===1?'y':'ies')+' · '+fm.loc+'</div></div>'
+        +'</div>';
+    }).join('');
+  }
+}
+
+// ══════════════════════════════════════════════
+// B2B PORTAL
+// ══════════════════════════════════════════════
+function showB2B(el,s){
+  document.querySelectorAll('.b2b-section').forEach(function(d){d.classList.remove('active')});
+  document.querySelectorAll('.b2b-nav-item').forEach(function(d){d.classList.remove('active')});
+  var sec=document.getElementById('b2b-'+s);if(sec)sec.classList.add('active');
+  if(el)el.classList.add('active');
+}
+function selectB2BTier(el,tier){
+  document.querySelectorAll('.bulk-tier').forEach(function(t){t.classList.remove('sel')});
+  el.classList.add('sel');
+}
+function renderB2B(){
+  // Bulk pricing grid
+  var pg=document.getElementById('b2b-pricing-grid');
+  if(pg){
+    var b2bProds=[
+      {icon:'🌿',name:'Ulam Raja (1kg)',farm:'Mukha Tree',regular:'RM 25',bulk:'RM 21.25',saving:'15%'},
+      {icon:'🥬',name:'Mixed Salad Greens (2kg)',farm:'A Little Farm',regular:'RM 48',bulk:'RM 40.80',saving:'15%'},
+      {icon:'🫚',name:'Pegaga (500g)',farm:'Mukha Tree',regular:'RM 20',bulk:'RM 17.00',saving:'15%'},
+      {icon:'🌶',name:'Red Chili (500g)',farm:'Lovely Organic',regular:'RM 15',bulk:'RM 12.75',saving:'15%'},
+      {icon:'🌿',name:'Curry Leaf (100g)',farm:'Tirtha Quddus',regular:'RM 8',bulk:'RM 6.80',saving:'15%'},
+      {icon:'🫙',name:'Compost 5kg',farm:'Mukha Tree',regular:'RM 22',bulk:'RM 18.70',saving:'15%'},
+    ];
+    pg.innerHTML=b2bProds.map(function(p){return '<div class="bulk-tier"><div style="font-size:28px;margin-bottom:.625rem">'+p.icon+'</div><div style="font-size:13.5px;font-weight:500;margin-bottom:2px">'+p.name+'</div><div style="font-size:12px;color:var(--mu);margin-bottom:.625rem">'+p.farm+'</div><div style="display:flex;align-items:center;gap:.5rem"><div style="font-family:DM Serif Display,serif;font-size:18px">'+p.bulk+'</div><span class="bulk-saving">Save '+p.saving+'</span></div><div style="font-size:11px;color:var(--mu);text-decoration:line-through">'+p.regular+' retail</div><button class="btn btn-green btn-sm" style="width:100%;justify-content:center;margin-top:.875rem" onclick="showToast(\'cart\',\'Added to B2B order.\')">Add to order</button></div>'}).join('');
+  }
+  // Schedule grid
+  var sg=document.getElementById('b2b-schedule-grid');
+  if(sg){
+    var days=['Monday','Wednesday','Friday'];
+    sg.innerHTML=days.map(function(d){return '<div class="schedule-day"><div class="schedule-day-head"><div class="schedule-day-name">'+d+'</div><span class="tag tag-green" style="font-size:10px">Weekly</span></div><div style="display:flex;gap:.625rem;flex-wrap:wrap">'+['Ulam Raja 1kg','Pegaga 500g','Salad Mix 2kg'].map(function(i){return '<div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .875rem;background:var(--pp);border-radius:10px;font-size:12.5px"><i class="ti ti-check" style="color:var(--g);font-size:12px"></i>'+i+'</div>'}).join('')+'<button class="btn btn-outline btn-sm" onclick="showToast(\'cart\',\'Item added to '+d+' schedule.\')"><i class="ti ti-plus"></i> Add</button></div></div>'}).join('');
+  }
+  // Invoices
+  var iv=document.getElementById('b2b-invoices-list');
+  if(iv){
+    var invs=[
+      {num:'B2B-0052',month:'May 2025',farms:'Mukha Tree, A Little Farm, Lovely Organic',total:'RM 2,340',status:'current'},
+      {num:'B2B-0048',month:'Apr 2025',farms:'Mukha Tree, A Little Farm',total:'RM 1,980',status:'paid'},
+      {num:'B2B-0043',month:'Mar 2025',farms:'Mukha Tree, Tirtha Quddus, A Little Wild',total:'RM 2,150',status:'paid'},
+    ];
+    iv.innerHTML='<div class="table-wrap"><table><tr><th>Invoice</th><th>Month</th><th>Farms</th><th>Total</th><th>Status</th><th></th></tr>'
+      +invs.map(function(i){var s=i.status==='current'?'<span class="status-badge status-pending">Current</span>':'<span class="status-badge status-paid">✓ Paid</span>';return '<tr><td>'+i.num+'</td><td>'+i.month+'</td><td style="color:var(--mu);font-size:12px">'+i.farms+'</td><td><strong>'+i.total+'</strong></td><td>'+s+'</td><td style="display:flex;gap:.5rem"><button class="btn btn-outline btn-sm" onclick="showToast(\'pdf\')"><i class="ti ti-download"></i></button><button class="btn btn-wa btn-sm" onclick="showToast(\'whatsapp\')"><i class="ti ti-brand-whatsapp"></i></button></td></tr>'}).join('')+'</table></div>';
+  }
+  // Source list
+  var sl=document.getElementById('b2b-source-list');
+  if(sl){
+    var sources=[
+      {id:1,name:'Mukha Tree',loc:'TTDI, KL',type:'Ulam, Herbs, Compost',cert:'Organic',contact:'wa.me/60122345678',checked:true},
+      {id:18,name:'A Little Farm on the Hill',loc:'Janda Baik',type:'Salad Greens, Herbs',cert:'Organic',contact:'wa.me/60173456780',checked:true},
+      {id:29,name:'Lovely Organic Farm',loc:'Selangor',type:'Vegetables, Chili',cert:'Organic + Halal',contact:'wa.me/60154567892',checked:true},
+      {id:2,name:'Tirtha Quddus',loc:'Janda Baik',type:'Curry Leaf, Moringa',cert:'Organic + Halal',contact:'wa.me/60129876543',checked:false},
+    ];
+    sl.innerHTML='<div style="background:var(--wh);border:1px solid var(--bd);border-radius:14px;overflow:hidden">'
+      +'<div style="padding:.875rem 1.25rem;border-bottom:1px solid var(--bd);font-size:13px;color:var(--mu)">Mukha Café · May 2025 Source List — for accountant reference</div>'
+      +sources.map(function(s){return '<div class="source-item"><div class="source-check '+(s.checked?'checked':'')+'" onclick="this.classList.toggle(\'checked\')"></div><div style="flex:1"><div style="font-size:13.5px;font-weight:500">'+s.name+'</div><div style="font-size:12px;color:var(--mu)">'+s.loc+' · '+s.type+'</div></div><span class="tag tag-organic" style="font-size:10px">'+s.cert+'</span><a href="https://'+s.contact+'" target="_blank" class="btn btn-wa btn-sm"><i class="ti ti-brand-whatsapp"></i></a></div>'}).join('')+'</div>';
+  }
+}
 
 // ══════════════════════════════════════════════
 // RATINGS & REVIEWS ENGINE
@@ -2099,5 +2903,6 @@ renderProducts=function(cat,search){
   },30);
 };
 </script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
 </html>
